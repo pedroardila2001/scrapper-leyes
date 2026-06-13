@@ -39,6 +39,41 @@ class Settings:
         default_factory=lambda: Path(os.environ.get("DATA_DIR", "data"))
     )
 
+    # ── Vector store (Qdrant) ───────────────────────────────────────────
+    qdrant_url: str | None = field(
+        default_factory=lambda: os.environ.get("QDRANT_URL")
+    )
+    qdrant_host: str = field(
+        default_factory=lambda: os.environ.get("QDRANT_HOST", "localhost")
+    )
+    qdrant_port: int = field(
+        default_factory=lambda: int(os.environ.get("QDRANT_PORT", "6333"))
+    )
+    qdrant_api_key: str | None = field(
+        default_factory=lambda: os.environ.get("QDRANT_API_KEY")
+    )
+    qdrant_collection: str = field(
+        default_factory=lambda: os.environ.get("QDRANT_COLLECTION", "legal_corpus")
+    )
+
+    # ── Embeddings (local, multilingual) ────────────────────────────────
+    # bge-m3 is multilingual (Spanish-capable) — replaces the English-only
+    # bge-small-en. Sparse via a real BM25 model, not a hardcoded placeholder.
+    embedding_model_dense: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_MODEL_DENSE", "BAAI/bge-m3")
+    )
+    embedding_model_sparse: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_MODEL_SPARSE", "Qdrant/bm25")
+    )
+
+    # ── Chunking ────────────────────────────────────────────────────────
+    chunk_max_chars: int = field(
+        default_factory=lambda: int(os.environ.get("CHUNK_MAX_CHARS", "2400"))
+    )
+    chunk_overlap_chars: int = field(
+        default_factory=lambda: int(os.environ.get("CHUNK_OVERLAP_CHARS", "200"))
+    )
+
     # ── Derived paths ───────────────────────────────────────────────────
     @property
     def catalog_db_path(self) -> Path:

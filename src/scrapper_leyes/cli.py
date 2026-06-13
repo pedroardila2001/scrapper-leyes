@@ -280,6 +280,43 @@ def parse(ctx: click.Context, suin_id: str) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Export commands
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+@main.group()
+def export() -> None:
+    """Exportar el corpus a stores de recuperación (vector, grafo)."""
+
+
+@export.command()
+@click.option("--tipo", default=None, help="Filter by norm type (e.g. LEY)")
+@click.option(
+    "--recreate",
+    is_flag=True,
+    help="Drop and rebuild the collection (default: incremental upsert)",
+)
+@click.pass_context
+def vector(ctx: click.Context, tipo: str | None, recreate: bool) -> None:
+    """Embeber y subir chunks a Qdrant (hybrid dense+sparse, bge-m3 + BM25)."""
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+
+    from scrapper_leyes.export_vector import VectorStoreExporter
+
+    console.print(
+        f"[bold]Exportando a Qdrant[/bold] "
+        f"(collection={settings.qdrant_collection}, "
+        f"dense={settings.embedding_model_dense}, sparse={settings.embedding_model_sparse})"
+    )
+    try:
+        exporter = VectorStoreExporter(settings, db, cache)
+        total = exporter.export_all(tipo=tipo, recreate=recreate)
+        console.print(f"\n[green]✓ {total:,} chunks indexados en Qdrant[/green]")
+    finally:
+        db.close()
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Test command (for Docker)
 # ═══════════════════════════════════════════════════════════════════════════
 
