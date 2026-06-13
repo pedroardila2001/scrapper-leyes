@@ -63,6 +63,9 @@ class Neo4jExporter:
 
             logger.info(f"Exported {exported_sent} sentencias to Neo4j")
 
+            # Thematic interconnection via embeddings (beyond explicit citations).
+            self._export_similarity_edges(session)
+
     def _ensure_indexes(self, session):
         """Create indexes and constraints for efficient graph operations."""
         try:
@@ -212,6 +215,105 @@ class Neo4jExporter:
                     target_id=target_id, nombre=target_name,
                     source_id=source_id, texto=cita_clean,
                 )
+
+    # ── Similarity edges (embeddings) ───────────────────────────────────
+
+    def _representative_text(self, row: dict[str, Any]) -> str:
+        """Short text that captures what a norm/sentencia is about, to embed."""
+        tipo = row.get("tipo")
+        suin_id = row.get("suin_id")
+        label = f"{tipo} {row.get('numero')} de {row.get('anio')}"
+        materia = row.get("materia") or ""
+
+        if tipo == "SENTENCIA":
+            corte = row.get("corte")
+            source = "corte_constitucional"
+            if corte == "csj":
+                source = "csj"
+            elif corte == "ce":
+                source = "consejo_estado"
+            parsed = self.cache.load_parsed(source, tipo, suin_id) if suin_id else None
+            if parsed:
+                txt = (
+                    parsed.get("consideraciones")
+                    or parsed.get("resuelve")
+                    or parsed.get("hechos")
+                    or ""
+                )[:1500]
+                return f"{label}. {txt}".strip()
+            return label
+
+        parsed = self.cache.load_parsed("suin", tipo, suin_id) if suin_id else None
+        if parsed:
+            titles = " · ".join(
+                a.get("title") or "" for a in parsed.get("articles", []) if a.get("title")
+            )[:600]
+            first = (parsed.get("articles") or [{}])[0].get("text", "")[:600]
+            return f"{label}. {materia}. {titles}. {first}".strip()
+        return f"{label}. {materia}".strip()
+
+    def _export_similarity_edges(
+        self, session, top_k: int = 5, threshold: float = 0.55
+    ) -> None:
+        """Create SIMILAR_A edges between thematically related documents.
+
+        Uses bge-m3 embeddings + cosine kNN so the graph is interconnected
+        beyond explicit citations/affectations. Edges carry a `score` and are
+        tagged so they're distinguishable from authoritative edges.
+        """
+        rows = self.db.conn.execute(
+            "SELECT * FROM catalog WHERE scrape_status = 'done' AND canonical_id IS NOT NULL"
+        ).fetchall()
+        items: list[tuple[str, str]] = []
+        for r in rows:
+            row = dict(r)
+            rep = self._representative_text(row)
+            if rep and rep.strip():
+                items.append((row["canonical_id"], rep))
+        if len(items) < 3:
+            return
+
+        try:
+            import numpy as np
+            from fastembed import TextEmbedding
+        except ImportError:
+            logger.warning("fastembed/numpy no disponible; se omiten aristas SIMILAR_A")
+            return
+
+        logger.info(
+            "Computando aristas de similitud para %d nodos (%s)...",
+            len(items), self.settings.embedding_model_dense,
+        )
+        model = TextEmbedding(self.settings.embedding_model_dense)
+        vecs = np.array(list(model.embed([t for _, t in items])), dtype="float32")
+        vecs /= np.linalg.norm(vecs, axis=1, keepdims=True) + 1e-9
+        sims = vecs @ vecs.T
+
+        edges = 0
+        seen_pairs: set[tuple[str, str]] = set()
+        for i in range(len(items)):
+            order = sims[i].argsort()[::-1]
+            added = 0
+            for j in order:
+                if j == i:
+                    continue
+                score = float(sims[i][j])
+                if score < threshold or added >= top_k:
+                    break
+                added += 1
+                a, b = items[i][0], items[j][0]
+                pair = (a, b) if a < b else (b, a)
+                if pair in seen_pairs:
+                    continue
+                seen_pairs.add(pair)
+                session.run(
+                    "MATCH (x {id: $a}), (y {id: $b}) "
+                    "MERGE (x)-[r:SIMILAR_A]-(y) "
+                    "SET r.score = $s, r.source = 'embedding'",
+                    a=a, b=b, s=round(score, 3),
+                )
+                edges += 1
+        logger.info("Creadas %d aristas SIMILAR_A", edges)
 
     @staticmethod
     def _citation_to_node_id(cita: str) -> tuple[str, str] | None:

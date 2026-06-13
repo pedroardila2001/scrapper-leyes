@@ -68,10 +68,13 @@ class Settings:
     )
 
     # ── Embeddings (local, multilingual) ────────────────────────────────
-    # bge-m3 is multilingual (Spanish-capable) — replaces the English-only
-    # bge-small-en. Sparse via a real BM25 model, not a hardcoded placeholder.
+    # jina-v2-base-es is a Spanish/English bilingual model supported by
+    # fastembed (768-dim) — replaces the English-only bge-small-en. Sparse via
+    # a real BM25 model, not a hardcoded placeholder.
     embedding_model_dense: str = field(
-        default_factory=lambda: os.environ.get("EMBEDDING_MODEL_DENSE", "BAAI/bge-m3")
+        default_factory=lambda: os.environ.get(
+            "EMBEDDING_MODEL_DENSE", "jinaai/jina-embeddings-v2-base-es"
+        )
     )
     embedding_model_sparse: str = field(
         default_factory=lambda: os.environ.get("EMBEDDING_MODEL_SPARSE", "Qdrant/bm25")

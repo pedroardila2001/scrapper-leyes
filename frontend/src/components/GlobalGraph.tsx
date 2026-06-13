@@ -63,6 +63,8 @@ export default function GlobalGraph() {
         <div className="graph-legend">
           <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.norma }} />Norma</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.sentencia }} />Sentencia</div>
+          <div className="legend-item"><span className="legend-dot" style={{ background: "#1d6b53", opacity: 0.4 }} />— similar (tema)</div>
+          <div className="legend-item"><span className="legend-dot" style={{ background: "#3f4651", opacity: 0.5 }} />→ cita / afecta</div>
         </div>
         {size.width > 0 && (
           <ForceGraph2D
@@ -74,9 +76,11 @@ export default function GlobalGraph() {
             nodeLabel={(node: any) => `${node.name}`}
             nodeVal={(node: any) => node.val || 5}
             linkLabel={(link: any) => link.label}
-            linkDirectionalArrowLength={3.5}
+            linkDirectionalArrowLength={(link: any) => (link.label === "SIMILAR_A" ? 0 : 3.5)}
             linkDirectionalArrowRelPos={1}
-            linkColor={() => "rgba(60, 70, 81, 0.25)"}
+            linkColor={(link: any) =>
+              link.label === "SIMILAR_A" ? "rgba(29, 107, 83, 0.22)" : "rgba(60, 70, 81, 0.4)"
+            }
             backgroundColor="#faf9f6"
             cooldownTicks={100}
             onEngineStop={() => fgRef.current?.zoomToFit(400, 60)}

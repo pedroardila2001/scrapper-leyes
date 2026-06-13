@@ -586,8 +586,9 @@ def get_global_graph(limit: int = Query(default=1000, le=5000)):
     query = f"""
     MATCH (n)
     WHERE (n:Norma OR n:Sentencia) AND n.suin_id IS NOT NULL
-    OPTIONAL MATCH (n)-[r]->(m)
-    WHERE type(r) IN ['CITA_A', 'MODIFICA', 'EXEQUIBLE', 'INEXEQUIBLE'] AND (m:Norma OR m:Sentencia) AND m.suin_id IS NOT NULL
+    OPTIONAL MATCH (n)-[r]-(m)
+    WHERE type(r) IN ['CITA_A', 'MODIFICA', 'EXEQUIBLE', 'INEXEQUIBLE', 'SIMILAR_A']
+      AND (m:Norma OR m:Sentencia) AND m.suin_id IS NOT NULL
     RETURN n, r, m
     LIMIT {limit}
     """
@@ -630,7 +631,9 @@ def get_global_graph(limit: int = Query(default=1000, le=5000)):
                 
             r = record.get("r")
             if r and n and m:
-                link_id = f"{n.get('id')}-{r.type}-{m.get('id')}"
+                # Dedupe undirected edges (e.g. SIMILAR_A) by sorting the pair.
+                pair = "|".join(sorted([str(n.get("id")), str(m.get("id"))]))
+                link_id = f"{pair}-{r.type}"
                 if link_id not in seen_links:
                     links.append({
                         "source": n.get("id"),
