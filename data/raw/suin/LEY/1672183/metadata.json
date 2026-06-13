@@ -1,0 +1,16 @@
+{
+  "suin_id": "1672183",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1672183",
+  "content_hash_sha256": "3f52eb5ac1b970f565ccb119c0b59846bc2c622f2d8ed4db2bef9c7f05fe2bfd",
+  "capture_timestamp": "2026-06-12T17:27:59.259957+00:00",
+  "http_status": 200,
+  "content_length": 64631,
+  "raw_filename": "1672183_3f52eb5a_20260612T172759Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "981",
+    "anio": "2005"
+  }
+}

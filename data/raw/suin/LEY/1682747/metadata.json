@@ -1,0 +1,16 @@
+{
+  "suin_id": "1682747",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1682747",
+  "content_hash_sha256": "e4a2734248451787beb7c824e54c3aa2665af79d02b74540eb6740a1deb71c7b",
+  "capture_timestamp": "2026-06-12T03:35:59.914571+00:00",
+  "http_status": 200,
+  "content_length": 116136,
+  "raw_filename": "1682747_e4a27342_20260612T033559Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1527",
+    "anio": "2012"
+  }
+}

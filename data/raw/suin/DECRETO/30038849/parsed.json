@@ -1,0 +1,113 @@
+{
+  "suin_id": "30038849",
+  "metadata": {
+    "tipo": "DECRETO",
+    "numero": "288",
+    "anio": "2020",
+    "fecha": "202002\r\nscript\r\nvar date = new Date(26/02/2020); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "AÑO CLV NO. 51.239, Bogotá, D. C., miércoles, 26 de febrero de 2020 PAG  1",
+    "entidad_emisora": "MINISTERIO DE RELACIONES EXTERIORES",
+    "epigrafe": "por el cual se modifica la planta de personal de la Unidad Administrativa Especial Migración Colombia.",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Relaciones Exteriores",
+    "marco_regulatorio": "false",
+    "en_estudio_depuracion": "false",
+    "subtipo": "DECRETO REGLAMENTARIO",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "26/02/2020",
+    "fecha_expedicion": "26/02/2020",
+    "fecha_vigencia": "26/02/2020",
+    "numero_diario_oficial": "51239",
+    "pagina_diario_oficial": "1",
+    "pagina_diario_oficial_pdf": "1"
+  },
+  "articles": [
+    {
+      "art_id": "30211016",
+      "number": "Artículo 1",
+      "number_normalized": "1",
+      "title": "Supresión de empleo",
+      "text": "Artículo 1o.Supresión de empleo.Suprimir de la planta de personal de la Unidad Administrativa Especial Migración Colombia, el siguiente empleo:\n\nNÚMERO DE CARGOS\n\nDENOMINACIÓN DEL CARGO\n\nCÓDIGO\n\nGRADO\n\nDESPACHO DEL DIRECTOR\n\n1 (uno)\n\nasesor\n\n1020\n\n17",
+      "canonical_id": "co:decreto:288:2020:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30211017",
+      "number": "Artículo 1",
+      "number_normalized": "1",
+      "title": "Supresión de empleo",
+      "text": "Artículo 1o.Supresión de empleo.Suprimir de la planta de personal de la Unidad Administrativa Especial Migración Colombia, el siguiente empleo:\n\nNÚMERO DE CARGOS\n\nDENOMINACIÓN DEL CARGO\n\nCÓDIGO\n\nGRADO\n\nDESPACHO DEL DIRECTOR\n\n1 (uno)\n\nasesor\n\n1020\n\n17",
+      "canonical_id": "co:decreto:288:2020:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30211018",
+      "number": "Artículo 1",
+      "number_normalized": "1",
+      "title": "Supresión de empleo",
+      "text": "Artículo 1o.Supresión de empleo.Suprimir de la planta de personal de la Unidad Administrativa Especial Migración Colombia, el siguiente empleo:\n\nNÚMERO DE CARGOS\n\nDENOMINACIÓN DEL CARGO\n\nCÓDIGO\n\nGRADO\n\nDESPACHO DEL DIRECTOR\n\n1 (uno)\n\nasesor\n\n1020\n\n17",
+      "canonical_id": "co:decreto:288:2020:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30211019",
+      "number": "Artículo 2º.Creación de empleos.",
+      "number_normalized": "2c",
+      "title": "Creación de empleos",
+      "text": "Artículo 2º.Creación de empleos.Crear en la planta de personal de la Unidad Administrativa Especial Migración Colombia, los siguientes empleos:\n\nNÚMERO DE CARGOS\n\nDENOMINACIÓN DEL CARGO\n\nCÓDIGO\n\nGRADO\n\nDESPACHO DEL DIRECTOR\n\n1 (Uno)\n\nProfesional de Migración\n\n2020\n\n01\n\nPLANTA GLOBAL\n\n1 (Uno)\n\nDirector Regional\n\n0042\n\n19\n\n1 (Uno)\n\nConductor Mecánico\n\n4103\n\n18\n\n1 (Uno)\n\nAuxiliar Administrativo\n\n4044\n\n10",
+      "canonical_id": "co:decreto:288:2020:art:2c",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30211020",
+      "number": "Artículo 3º.Provisión de empleos.",
+      "number_normalized": "3p",
+      "title": "Provisión de empleos",
+      "text": "Artículo 3º.Provisión de empleos.El Director General de la Unidad Administrativa Especial Migración Colombia, mediante resolución distribuirá los cargos de la planta global y ubicará el personal teniendo en cuenta la estructura, los planes, los programas y las necesidades del servicio.",
+      "canonical_id": "co:decreto:288:2020:art:3p",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30211021",
+      "number": "Artículo 4º.Vigencia.",
+      "number_normalized": "4v",
+      "title": "Vigencia",
+      "text": "Artículo 4º.Vigencia.El presente Decreto rige a partir de la fecha de su publicación y modifica en lo pertinente el Decreto 4063 de 2011, modificado por los Decretos 0069 de 2013, 1176 de 2014, 0167 de 2016 y 0494 de 2017.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:decreto:288:2020:art:4v",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30211018"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30211019"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30211020"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30211021"
+    }
+  ]
+}

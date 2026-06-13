@@ -1,0 +1,86 @@
+{
+  "suin_id": "30036080",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1945",
+    "anio": "2019",
+    "fecha": "201901\r\nscript\r\nvar date = new Date(04/01/2019); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL.  Año CLIV  No. 50.826, Enero, 04 de 2019. PAG.1.",
+    "epigrafe": "por medio del cual se declara patrimonio de la Nación el ‘Inti Raymi’ que se celebra cada 21 de junio como el fin y comienzo de año del pueblo pasto y quillasinga en el departamento de Nariño y putumayo.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Patrimonio cultural|Reconocimientos",
+    "es_codigo": "false",
+    "marco_regulatorio": "false",
+    "materia": "Homenajes, honores, reconocimientos, conmemoraciones, monumentos",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "04/01/2019",
+    "fecha_expedicion": "04/01/2019",
+    "fecha_vigencia": "04/01/2019"
+  },
+  "articles": [
+    {
+      "art_id": "30180823",
+      "number": "Artículo 1°.Objeto",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. Declárese patrimonio cultural de la Nación el ‘Inty Raymi’ que se celebra cada 21 de junio, como el fin y comienzo de año del pueblo pastos y quillasingas en el departamento de Nariño y Putumayo.",
+      "canonical_id": "co:ley:1945:2019:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30180824",
+      "number": "Artículo 1°.Objeto",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. Declárese patrimonio cultural de la Nación el ‘Inty Raymi’ que se celebra cada 21 de junio, como el fin y comienzo de año del pueblo pastos y quillasingas en el departamento de Nariño y Putumayo.",
+      "canonical_id": "co:ley:1945:2019:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30180825",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": null,
+      "text": "Artículo 2°.El Gobierno nacional podrá crear un fondo cultural de­nominado Inty Raymi Pastos y Quillasingas, adscrito al Ministerio de Cultura, que asignará anualmente la apropiación presupuestal necesa­ria, el cual preservará y garantizará la realización de su celebración del 21 de junio de cada año.",
+      "canonical_id": "co:ley:1945:2019:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30180826",
+      "number": "Artículo 3°.Vigencia",
+      "number_normalized": "3v",
+      "title": "Vigencia",
+      "text": "Artículo 3°.Vigencia. La presente ley rige a partir de su promulga­ción y deroga las disposiciones que le sean contrarias.",
+      "canonical_id": "co:ley:1945:2019:art:3v",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30180824"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30180825"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30180826"
+    }
+  ]
+}

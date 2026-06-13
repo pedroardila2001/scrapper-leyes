@@ -1,0 +1,23 @@
+{
+  "suin_id": "30020280",
+  "metadata": {
+    "tipo": "CONSTITUCION POLITICA",
+    "numero": "CP 1810",
+    "anio": "1810",
+    "fecha": "181008\r\nscript\r\nvar date = new Date(15/08/1810); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL número",
+    "epigrafe": "Acta de la constitución del estado libre e independiente del Socorro",
+    "estado_documento": "No vigente",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "marco_regulatorio": "false",
+    "en_estudio_depuracion": "false",
+    "es_estatuto": "false"
+  },
+  "articles": [],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": []
+}

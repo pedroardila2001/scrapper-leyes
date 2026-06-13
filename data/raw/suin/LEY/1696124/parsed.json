@@ -1,0 +1,100 @@
+{
+  "suin_id": "1696124",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1160",
+    "anio": "2007",
+    "fecha": "200709\r\nscript\r\nvar date = new Date(26/09/2007); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLIII. N. 46763. 26, SEPTIEMBRE, 2007. PÁG. 1.",
+    "entidad_emisora": "CONGRESO DE COLOMBIA",
+    "epigrafe": "por medio de la cual se aprueban los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994).",
+    "estado_documento": "Declarado Inexequible",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Deporte",
+    "marco_regulatorio": "false",
+    "materia": "Deporte|Relaciones exteriores",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY APROBATORIA DE TRATADO",
+    "fecha_diario_oficial": "26/09/2007",
+    "fecha_fin_vigencia": "28/05/2008",
+    "fecha_vigencia": "26/09/2007",
+    "numero_diario_oficial": "46763",
+    "pagina_diario_oficial": "1",
+    "pagina_diario_oficial_pdf": "1"
+  },
+  "articles": [
+    {
+      "art_id": "1696126",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébanse los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994).",
+      "canonical_id": "co:ley:1160:2007:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1696127",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébanse los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994).",
+      "canonical_id": "co:ley:1160:2007:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1696128",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": null,
+      "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994), que por el artículo 1° de esta ley se aprueba, obligarán al país a partir de la fecha en que se perfeccione el vínculo internacional respecto del mismo.",
+      "canonical_id": "co:ley:1160:2007:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1696129",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": null,
+      "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
+      "canonical_id": "co:ley:1160:2007:art:3",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [
+    {
+      "article_affected": "Documento completo",
+      "raw_type": "Declarado inexequible",
+      "normalized_type": "INEXEQUIBLE",
+      "mapped": true,
+      "source_text": "Sentencia de la Corte Constitucional  C-541 de 2008",
+      "source_suin_id": "20031473",
+      "source_anchor": "ver_20031479",
+      "context": null
+    }
+  ],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1696127"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1696128"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1696129"
+    }
+  ]
+}

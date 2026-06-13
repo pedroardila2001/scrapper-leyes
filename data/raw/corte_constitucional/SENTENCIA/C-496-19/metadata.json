@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-496-19",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2019/C-496-19.htm",
+  "content_hash_sha256": "b3993febd60cae55bb88c704ca8cc86875157dc91da58ed3c7df1cecb231909c",
+  "capture_timestamp": "2026-06-12T04:47:20.376673+00:00",
+  "http_status": 200,
+  "content_length": 250704,
+  "raw_filename": "C-496-19_b3993feb_20260612T044720Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-496",
+    "anio": "2019",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

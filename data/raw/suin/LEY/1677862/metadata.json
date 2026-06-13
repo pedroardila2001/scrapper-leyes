@@ -1,0 +1,16 @@
+{
+  "suin_id": "1677862",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1677862",
+  "content_hash_sha256": "600e2ff8b1d53f81ef9679c48109c08bfd4a4685147f5eeab37220545896e2c0",
+  "capture_timestamp": "2026-06-12T17:27:53.382850+00:00",
+  "http_status": 200,
+  "content_length": 54686,
+  "raw_filename": "1677862_600e2ff8_20260612T172753Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1345",
+    "anio": "2009"
+  }
+}

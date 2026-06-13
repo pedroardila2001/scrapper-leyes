@@ -1,0 +1,16 @@
+{
+  "suin_id": "1677847",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1677847",
+  "content_hash_sha256": "aec37c2289a818fc0367f41bf4facc25fa524c9b2df9d5e4238b7203f3efb613",
+  "capture_timestamp": "2026-06-12T03:36:01.794518+00:00",
+  "http_status": 200,
+  "content_length": 147926,
+  "raw_filename": "1677847_aec37c22_20260612T033601Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1343",
+    "anio": "2009"
+  }
+}

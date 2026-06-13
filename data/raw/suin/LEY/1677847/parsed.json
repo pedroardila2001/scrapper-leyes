@@ -1,0 +1,100 @@
+{
+  "suin_id": "1677847",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1343",
+    "anio": "2009",
+    "fecha": "200907\r\nscript\r\nvar date = new Date(31/07/2009); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLIV. N. 47427. 31, JULIO, 2009. PÁG. 26.",
+    "entidad_emisora": "CONGRESO DE LA REPUBLICA",
+    "epigrafe": "por medio de la cual se aprueba el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Comercio, Industria y Turismo",
+    "marco_regulatorio": "false",
+    "materia": "Propiedad industrial|Propiedad intelectual",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY APROBATORIA DE TRATADO",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "31/07/2009",
+    "fecha_vigencia": "08/11/2010",
+    "numero_diario_oficial": "47427",
+    "pagina_diario_oficial": "26",
+    "pagina_diario_oficial_pdf": "26"
+  },
+  "articles": [
+    {
+      "art_id": "1677850",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébanse el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994.",
+      "canonical_id": "co:ley:1343:2009:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677851",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébanse el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994.",
+      "canonical_id": "co:ley:1343:2009:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677852",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": null,
+      "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994, que por el artículo primero de esta Ley se aprueban, obligarán al país a partir de la fecha en que se perfeccione el vínculo internacional respecto de los mismos.",
+      "canonical_id": "co:ley:1343:2009:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677853",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": null,
+      "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
+      "canonical_id": "co:ley:1343:2009:art:3",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [
+    {
+      "article_affected": "Documento completo",
+      "raw_type": "Declarado exequible",
+      "normalized_type": "EXEQUIBLE",
+      "mapped": true,
+      "source_text": "Sentencia de la Corte Constitucional  C-261 de 2011",
+      "source_suin_id": "20018210",
+      "source_anchor": "ver_20018216",
+      "context": null
+    }
+  ],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1677851"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1677852"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1677853"
+    }
+  ]
+}

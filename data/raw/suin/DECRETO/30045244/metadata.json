@@ -1,0 +1,16 @@
+{
+  "suin_id": "30045244",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30045244",
+  "content_hash_sha256": "3d63f41c5d714a9dfbb50f22010c0b1c42adc719caf4e17301546a37a58b3262",
+  "capture_timestamp": "2026-06-12T18:15:35.521062+00:00",
+  "http_status": 200,
+  "content_length": 41183,
+  "raw_filename": "30045244_3d63f41c_20260612T181535Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "DECRETO",
+    "numero": "236",
+    "anio": "2023"
+  }
+}

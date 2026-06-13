@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-261-11",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2011/C-261-11.htm",
+  "content_hash_sha256": "fa9e0cd74a8830294cdf477ca9d860e9c1d1d1cf33c8253fba1f257fd6e96844",
+  "capture_timestamp": "2026-06-12T04:47:24.530185+00:00",
+  "http_status": 200,
+  "content_length": 344890,
+  "raw_filename": "C-261-11_fa9e0cd7_20260612T044724Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-261",
+    "anio": "2011",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

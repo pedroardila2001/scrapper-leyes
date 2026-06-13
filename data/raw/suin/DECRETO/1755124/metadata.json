@@ -1,0 +1,16 @@
+{
+  "suin_id": "1755124",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1755124",
+  "content_hash_sha256": "e2dee10bec65766f771813b6cac35cb3c1ca90b6ced66aca25fef4fd38cc6aef",
+  "capture_timestamp": "2026-06-12T18:15:39.506009+00:00",
+  "http_status": 200,
+  "content_length": 41381,
+  "raw_filename": "1755124_e2dee10b_20260612T181539Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "DECRETO",
+    "numero": "1941",
+    "anio": "1991"
+  }
+}

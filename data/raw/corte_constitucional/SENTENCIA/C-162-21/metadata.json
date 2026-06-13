@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-162-21",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2021/C-162-21.htm",
+  "content_hash_sha256": "fa1f305b4586a8adb022f19e6e4c58624b44d0d771d351d1273287c042812739",
+  "capture_timestamp": "2026-06-12T04:47:15.218147+00:00",
+  "http_status": 200,
+  "content_length": 309260,
+  "raw_filename": "C-162-21_fa1f305b_20260612T044715Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-162",
+    "anio": "2021",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

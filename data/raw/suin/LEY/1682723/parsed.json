@@ -1,0 +1,59 @@
+{
+  "suin_id": "1682723",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1525",
+    "anio": "2012",
+    "fecha": "201204\r\nscript\r\nvar date = new Date(26/04/2012); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLVII. N. 48413. 26, ABRIL, 2012. PAG. 3.",
+    "entidad_emisora": "CONGRESO DE LA REPUBLICA",
+    "epigrafe": "por medio de la cual la Nación se asocia a la celebración de los 476 años de la fundación del municipio de Jamundí en el departamento del Valle del Cauca, y se dictan otras disposiciones",
+    "estado_documento": "Vigencia en Estudio",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Hacienda y Crédito Público",
+    "marco_regulatorio": "false",
+    "materia": "Leyes de homenaje, Honores, conmemorativas y monumentos",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "comentarios": "Norma no vigente porque agotó su objeto",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "26/04/2012",
+    "fecha_vigencia": "26/04/2012",
+    "numero_diario_oficial": "48413",
+    "pagina_diario_oficial": "3",
+    "pagina_diario_oficial_pdf": "3"
+  },
+  "articles": [],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1682726"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1682727"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1682728"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "1682729"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "1682730"
+    }
+  ]
+}

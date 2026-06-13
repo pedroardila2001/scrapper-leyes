@@ -1,0 +1,42 @@
+{
+  "suin_id": "1674975",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1161",
+    "anio": "2007",
+    "fecha": "200709\r\nscript\r\nvar date = new Date(26/09/2007); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLIII. N. 46763. 26, SEPTIEMBRE, 2007. PÁG. 5.",
+    "entidad_emisora": "CONGRESO DE COLOMBIA",
+    "epigrafe": "por la cual se determina la relación laboral de los músicos sinfónicos con el Estado.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Trabajo",
+    "marco_regulatorio": "false",
+    "materia": "Laboral individual",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "fecha_diario_oficial": "26/09/2007",
+    "fecha_vigencia": "26/09/2007",
+    "numero_diario_oficial": "46763",
+    "pagina_diario_oficial": "5",
+    "pagina_diario_oficial_pdf": "5"
+  },
+  "articles": [],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1674978"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1674979"
+    }
+  ]
+}

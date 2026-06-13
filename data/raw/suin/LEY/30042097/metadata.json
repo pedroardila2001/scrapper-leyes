@@ -1,0 +1,16 @@
+{
+  "suin_id": "30042097",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30042097",
+  "content_hash_sha256": "1fdbbb111a5a6e08e4bf8c20152027c6b6294fff16116b3ef8ebba8a8d90eac8",
+  "capture_timestamp": "2026-06-12T03:35:39.012856+00:00",
+  "http_status": 200,
+  "content_length": 80155,
+  "raw_filename": "30042097_1fdbbb11_20260612T033539Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "2125",
+    "anio": "2021"
+  }
+}

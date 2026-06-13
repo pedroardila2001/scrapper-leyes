@@ -1,0 +1,16 @@
+{
+  "suin_id": "30020185",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30020185",
+  "content_hash_sha256": "4064338e76fce04b9050c41b93b9c2d97593a67c59da15c12fcd973383c42395",
+  "capture_timestamp": "2026-06-12T18:15:40.094194+00:00",
+  "http_status": 200,
+  "content_length": 41301,
+  "raw_filename": "30020185_4064338e_20260612T181540Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "CONSTITUCION",
+    "numero": "1831",
+    "anio": "1831"
+  }
+}

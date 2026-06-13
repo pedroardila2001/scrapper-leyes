@@ -1,0 +1,128 @@
+{
+  "suin_id": "30042096",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "2131",
+    "anio": "2021",
+    "fecha": "202108\r\nscript\r\nvar date = new Date(04/08/2021); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CLVII NO. 51.756, AGOSTO DE 2021, PAG.22 4 DE AGOSTO 2021",
+    "entidad_emisora": "PRESIDENCIA DE LA REPUBLICA",
+    "epigrafe": "Por medio de la cual la nación conmemora la vida y obra de Esthercita Forero, se establece el Día Nacional de “la Novia Eterna de Barranquilla” y se dictan otras disposiciones.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Homenajes",
+    "es_codigo": "false",
+    "sector": "Presidencia de la República",
+    "marco_regulatorio": "false",
+    "materia": "Homenajes, honores, reconocimientos, conmemoraciones, monumentos",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "04/08/2021",
+    "fecha_expedicion": "04/08/2021",
+    "fecha_vigencia": "04/08/2021"
+  },
+  "articles": [
+    {
+      "art_id": "30250094",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Honores",
+      "text": "Artículo 1°.Honores. La República de Colombia exalta la memoria ·de Esthercita Forero - “La Novia Eterna de Barranquilla” cantante, compositora, publicista, pionera de la radio colombiana, exponente y embajadora de la tradición cultural del Caribe colombiano.",
+      "canonical_id": "co:ley:2131:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250095",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Honores",
+      "text": "Artículo 1°.Honores. La República de Colombia exalta la memoria ·de Esthercita Forero - “La Novia Eterna de Barranquilla” cantante, compositora, publicista, pionera de la radio colombiana, exponente y embajadora de la tradición cultural del Caribe colombiano.",
+      "canonical_id": "co:ley:2131:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250096",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Honores",
+      "text": "Artículo 1°.Honores. La República de Colombia exalta la memoria ·de Esthercita Forero - “La Novia Eterna de Barranquilla” cantante, compositora, publicista, pionera de la radio colombiana, exponente y embajadora de la tradición cultural del Caribe colombiano.",
+      "canonical_id": "co:ley:2131:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250097",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": "Legado de Esthercita Forero",
+      "text": "Artículo 2°.Legado de Esthercita Forero. Autorícese al Gobierno nacional para que, a través del Ministerio de Cultura, rinda honores a la vida, obra y memoria de Esthercita Forero “La Novia Eterna de Barranquilla” y se establezca un programa de conservación, mejora y mantenimiento de bienes de interés cultural con valor simbólico del legado de Esthercita Forero.\n\nParágrafo.Los objetos que hicieron parte de la vida artística de Esther Forero serán exhibidos en el Museo del Caribe. A su vez, su obra inmaterial deberá ser protegida como patrimonio cultural de la nación, bajo los parámetros establecidos en la Ley 1185 de 2008 y el Decreto 763 de 2009.",
+      "canonical_id": "co:ley:2131:2021:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250098",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "Día Nacional Esthercita Forero",
+      "text": "Artículo 3°.Día Nacional Esthercita Forero. Establézcase en Colombia el 10 de diciembre de cada año como el día Nacional de Esthercita Forero “La Novia Eterna de Barranquilla”.",
+      "canonical_id": "co:ley:2131:2021:art:3",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250099",
+      "number": "Artículo 4°.",
+      "number_normalized": "4",
+      "title": "Becas Esthercita Forero",
+      "text": "Artículo 4°.Becas Esthercita Forero. Autorícese al Gobierno nacional para crear diez becas de educación artística superior en honor a la exaltada, las cuales estarán reguladas por el Instituto Colombiano de Crédito Educativo y Estudios Técnicos en el Exterior (Icetex) y se otorgarán por mérito artístico y académico a mujeres bachilleres distribuidas de la siguiente manera: cuatro cupos para bachilleres del Departamento del Atlántico, tres para bachilleres del Distrito de Barranquilla y tres distribuidos para bachilleres destacados de los demás departamentos que conforman la Región Caribe.",
+      "canonical_id": "co:ley:2131:2021:art:4",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250100",
+      "number": "Artículo 5°.",
+      "number_normalized": "5",
+      "title": "Vigencia",
+      "text": "Artículo 5°.Vigencia. La presente ley rige a partir de la fecha de su publicación.\n\nEl Presidente del Honorable Senado de la República,\n\nARTURO CHAR CHALJUB.\n\nEl Secretario General del Honorable Senado de la República,\n\nGREGORIO ELJACH PACHECO.\n\nEl Presidente de la Honorable Cámara de Representantes,\n\nGERMÁN ALCIDES BLANCO ÁLVAREZ.\n\nEl Secretario General de la Honorable Cámara de Representantes,\n\nJORGE HUMBERTO MANTILLA SERRANO.\n\nREPÚBLICA DE COLOMBIA - GOBIERNO NACIONAL",
+      "canonical_id": "co:ley:2131:2021:art:5",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30250096"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30250097"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30250098"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30250099"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "30250100"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-122-20",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2020/C-122-20.htm",
+  "content_hash_sha256": "edb9829b80c4ea3cee4a22362a6009df30ded0c4e22c1a8a7acf4dcda48359ce",
+  "capture_timestamp": "2026-06-12T04:47:19.884451+00:00",
+  "http_status": 200,
+  "content_length": 261487,
+  "raw_filename": "C-122-20_edb9829b_20260612T044719Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-122",
+    "anio": "2020",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-032-18",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2018/C-032-18.htm",
+  "content_hash_sha256": "8fef46cdec9eb69c4fcd3f4bb42e7761a4a3d3e9ad5019696ccce36d229273b4",
+  "capture_timestamp": "2026-06-12T04:47:20.726099+00:00",
+  "http_status": 200,
+  "content_length": 153192,
+  "raw_filename": "C-032-18_8fef46cd_20260612T044720Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-032",
+    "anio": "2018",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

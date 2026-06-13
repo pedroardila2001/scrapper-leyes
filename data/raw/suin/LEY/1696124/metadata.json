@@ -1,0 +1,16 @@
+{
+  "suin_id": "1696124",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1696124",
+  "content_hash_sha256": "d60c41b4d950de2002c8fdff37b36c8fdab9ef1892b15382e3cead4f8cceea31",
+  "capture_timestamp": "2026-06-12T17:27:55.205324+00:00",
+  "http_status": 200,
+  "content_length": 69532,
+  "raw_filename": "1696124_d60c41b4_20260612T172755Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1160",
+    "anio": "2007"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "suin_id": "1672251",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1672251",
+  "content_hash_sha256": "4f838346b030cb3b8c3551d4e5a4c48df5d4967d3798be5b88587ebf77c3b7f9",
+  "capture_timestamp": "2026-06-12T17:28:02.056642+00:00",
+  "http_status": 200,
+  "content_length": 40631,
+  "raw_filename": "1672251_4f838346_20260612T172802Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "983",
+    "anio": "2005"
+  }
+}

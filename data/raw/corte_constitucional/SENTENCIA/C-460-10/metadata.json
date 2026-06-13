@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-460-10",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2010/C-460-10.htm",
+  "content_hash_sha256": "71ec86b543bde603d5673d8dec8c69404bdd77a7720b4b9f26fc01a18966c3cd",
+  "capture_timestamp": "2026-06-12T04:47:25.862668+00:00",
+  "http_status": 200,
+  "content_length": 383495,
+  "raw_filename": "C-460-10_71ec86b5_20260612T044725Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-460",
+    "anio": "2010",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

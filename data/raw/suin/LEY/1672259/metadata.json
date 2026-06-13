@@ -1,0 +1,16 @@
+{
+  "suin_id": "1672259",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1672259",
+  "content_hash_sha256": "2a36ba8cd8dc73f575bc5d546725d1b221fb82725984a60b5dfbbe9d2fb161fa",
+  "capture_timestamp": "2026-06-12T17:28:02.953427+00:00",
+  "http_status": 200,
+  "content_length": 91818,
+  "raw_filename": "1672259_2a36ba8c_20260612T172802Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "984",
+    "anio": "2005"
+  }
+}

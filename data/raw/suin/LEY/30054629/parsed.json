@@ -1,0 +1,90 @@
+{
+  "suin_id": "30054629",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "2448",
+    "anio": "2025",
+    "fecha": "202502\r\nscript\r\nvar date = new Date(28/02/2025); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "Diario Oficial Año CLX No.53044.  Edición de 62 páginas. Bogotá, D. C., viernes, 28 de febrero de 2025 PAG.1",
+    "epigrafe": "por medio de la cual se modifica la Ley 2226 del 30 de junio de 2022.",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "marco_regulatorio": "false",
+    "en_estudio_depuracion": "false",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "28/02/2025",
+    "fecha_expedicion": "28/02/2025",
+    "fecha_vigencia": "28/02/2025",
+    "numero_diario_oficial": "53044",
+    "pagina_diario_oficial": "1",
+    "pagina_diario_oficial_pdf": "1"
+  },
+  "articles": [
+    {
+      "art_id": "30350545",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "“Artículo 1°.La presente ley tiene por objeto autorizar a las Asambleas Departamentales de todo el país para que emitan la Estampilla Pro Institución Universitaria Digital de Antioquia - IU Digital, con el fin de asegurar su financiamiento, atendiendo la necesidad de fortalecer el proceso de implementación y desarrollo de nuevas tecnologías de la información y la comunicación en la educación superior pública en beneficio de las poblaciones más apartadas de la geografía nacional”",
+      "text": "Artículo 1º. Modifíquese el artículo 1º de la Ley 2226 de 2022, el cual quedará así:\n\n“Artículo 1°.La presente ley tiene por objeto autorizar a las Asambleas Departamentales de todo el país para que emitan la Estampilla Pro Institución Universitaria Digital de Antioquia - IU Digital, con el fin de asegurar su financiamiento, atendiendo la necesidad de fortalecer el proceso de implementación y desarrollo de nuevas tecnologías de la información y la comunicación en la educación superior pública en beneficio de las poblaciones más apartadas de la geografía nacional”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:2448:2025:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30350546",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "“Artículo 1°.La presente ley tiene por objeto autorizar a las Asambleas Departamentales de todo el país para que emitan la Estampilla Pro Institución Universitaria Digital de Antioquia - IU Digital, con el fin de asegurar su financiamiento, atendiendo la necesidad de fortalecer el proceso de implementación y desarrollo de nuevas tecnologías de la información y la comunicación en la educación superior pública en beneficio de las poblaciones más apartadas de la geografía nacional”",
+      "text": "Artículo 1º. Modifíquese el artículo 1º de la Ley 2226 de 2022, el cual quedará así:\n\n“Artículo 1°.La presente ley tiene por objeto autorizar a las Asambleas Departamentales de todo el país para que emitan la Estampilla Pro Institución Universitaria Digital de Antioquia - IU Digital, con el fin de asegurar su financiamiento, atendiendo la necesidad de fortalecer el proceso de implementación y desarrollo de nuevas tecnologías de la información y la comunicación en la educación superior pública en beneficio de las poblaciones más apartadas de la geografía nacional”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:2448:2025:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30350547",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": "“Artículo 2°.La emisión de la estampilla cuya creación se autoriza será por la suma de hasta trescientos mil millones de pesos ($300.000.000.000) moneda legal, a precios constantes del año de la entrada en vigor de la presente ley”",
+      "text": "Artículo 2º. Modifíquese el artículo 2º de la Ley 2226 de 2022, el cual quedará así:\n\n“Artículo 2°.La emisión de la estampilla cuya creación se autoriza será por la suma de hasta trescientos mil millones de pesos ($300.000.000.000) moneda legal, a precios constantes del año de la entrada en vigor de la presente ley”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:2448:2025:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30350548",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "“Artículo 3°.Autorízase a las Asambleas Departamentales de todo el país para que determinen las características, tarifas, hechos generadores, económicos y todos los aspectos que consideren necesarios para la creación y aplicación de la estampilla de que trata la presente ley",
+      "text": "Artículo 3º. Modifíquese el artículo 3° de la Ley 2226 de 2022, el cual quedará así:\n\n“Artículo 3°.Autorízase a las Asambleas Departamentales de todo el país para que determinen las características, tarifas, hechos generadores, económicos y todos los aspectos que consideren necesarios para la creación y aplicación de la estampilla de que trata la presente ley.\n\nParágrafo Primero. La tarifa contemplada en esta Ley no podrá exceder el 2% del valor del hecho sujeto al gravamen.\n\nParágrafo Segundo. Se excluyen de este pago los contratos de prestación de servicios suscritos con personas naturales, cuyo valor no supere las 300 Unidades de Valor Tributario (UVT) por concepto de honorarios mensuales”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:2448:2025:art:3",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30350546"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30350547"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30350548"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30350549"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "suin_id": "1672251",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "983",
+    "anio": "2005",
+    "fecha": "200508\r\nscript\r\nvar date = new Date(12/08/2005); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLI. N.46002. 16, AGOSTO, 2005. PÁG. 1.",
+    "entidad_emisora": "CONGRESO DE COLOMBIA",
+    "epigrafe": "por medio de la cual se declara Patrimonio Cultural de la Nación el Festival Nacional del Pasillo Colombiano.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Hacienda y Crédito Público",
+    "marco_regulatorio": "false",
+    "materia": "Leyes de homenaje, Honores, conmemorativas y monumentos",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "16/08/2005",
+    "fecha_vigencia": "16/08/2005",
+    "numero_diario_oficial": "46002",
+    "pagina_diario_oficial": "1",
+    "pagina_diario_oficial_pdf": "1"
+  },
+  "articles": [],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1672254"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1672255"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1672256"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "1672257"
+    }
+  ]
+}

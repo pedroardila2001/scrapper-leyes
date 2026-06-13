@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-751-13",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2013/C-751-13.htm",
+  "content_hash_sha256": "14857e7da3cef0f5303749f4d466c40201a8c3fa07eedcd2ecbb4e379303dc02",
+  "capture_timestamp": "2026-06-12T04:47:23.884581+00:00",
+  "http_status": 200,
+  "content_length": 426670,
+  "raw_filename": "C-751-13_14857e7d_20260612T044723Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-751",
+    "anio": "2013",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

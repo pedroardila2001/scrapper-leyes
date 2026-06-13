@@ -1,0 +1,16 @@
+{
+  "suin_id": "1299236",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1299236",
+  "content_hash_sha256": "9e6a6fcf12e844aaef737a47b65957d07935d60a29486d54e5246cecce4a857f",
+  "capture_timestamp": "2026-06-12T18:15:38.488968+00:00",
+  "http_status": 200,
+  "content_length": 36547,
+  "raw_filename": "1299236_9e6a6fcf_20260612T181538Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "DECRETO",
+    "numero": "1503",
+    "anio": "1997"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "suin_id": "C-377-10",
+  "source": "corte_constitucional",
+  "source_url": "https://www.corteconstitucional.gov.co/relatoria/2010/C-377-10.htm",
+  "content_hash_sha256": "2541accd3b59ea6494b310d1b60c92f3bbb0b1a7010942415e99d0b5f1abea50",
+  "capture_timestamp": "2026-06-12T04:47:25.156974+00:00",
+  "http_status": 200,
+  "content_length": 331354,
+  "raw_filename": "C-377-10_2541accd_20260612T044725Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "SENTENCIA",
+    "numero": "C-377",
+    "anio": "2010",
+    "corte": "cc",
+    "magistrado_ponente": null
+  }
+}

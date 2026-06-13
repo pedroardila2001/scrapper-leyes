@@ -1,0 +1,16 @@
+{
+  "suin_id": "30036080",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30036080",
+  "content_hash_sha256": "517ccc4e2bbb2b65cb2c3d7653323e7f6f889fbcec861f688a05260bdf067e8e",
+  "capture_timestamp": "2026-06-12T03:35:41.960763+00:00",
+  "http_status": 200,
+  "content_length": 39339,
+  "raw_filename": "30036080_517ccc4e_20260612T033541Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1945",
+    "anio": "2019"
+  }
+}

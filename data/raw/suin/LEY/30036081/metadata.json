@@ -1,0 +1,16 @@
+{
+  "suin_id": "30036081",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30036081",
+  "content_hash_sha256": "e20409364dcc951235db57810832eaed161de734baeebae9e90829cee6df00b4",
+  "capture_timestamp": "2026-06-12T03:35:43.298308+00:00",
+  "http_status": 200,
+  "content_length": 60121,
+  "raw_filename": "30036081_e2040936_20260612T033543Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1946",
+    "anio": "2019"
+  }
+}

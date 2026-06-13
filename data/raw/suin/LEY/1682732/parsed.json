@@ -1,0 +1,89 @@
+{
+  "suin_id": "1682732",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1526",
+    "anio": "2012",
+    "fecha": "201204\r\nscript\r\nvar date = new Date(26/04/2012); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLVII. N. 48413. 26, ABRIL, 2012. PAG. 1.",
+    "entidad_emisora": "CONGRESO DE LA REPUBLICA",
+    "epigrafe": "por la cual se rinde honores al señor General José Antonio Anzoátegui y se le reconoce como figura ejemplar de la patria",
+    "estado_documento": "Vigencia en Estudio",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Hacienda y Crédito Público",
+    "marco_regulatorio": "false",
+    "materia": "Leyes de homenaje, Honores, conmemorativas y monumentos",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "comentarios": "Norma no vigente porque agotó su objeto",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "26/04/2012",
+    "fecha_vigencia": "26/04/2012",
+    "numero_diario_oficial": "48413",
+    "pagina_diario_oficial": "1",
+    "pagina_diario_oficial_pdf": "1"
+  },
+  "articles": [],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1682735"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1682736"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1682737"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "1682738"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "1682739"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [6]",
+      "anchor": "1682740"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [7]",
+      "anchor": "1682741"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [8]",
+      "anchor": "1682742"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [9]",
+      "anchor": "1682743"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [10]",
+      "anchor": "1682744"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [11]",
+      "anchor": "1682745"
+    }
+  ]
+}

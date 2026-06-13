@@ -1,0 +1,16 @@
+{
+  "suin_id": "30042099",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30042099",
+  "content_hash_sha256": "2aaaf2fdec9c87dbb956878b91884714cd28a704ea71ee2990fd2b958aaecc26",
+  "capture_timestamp": "2026-06-12T03:35:36.875002+00:00",
+  "http_status": 200,
+  "content_length": 48872,
+  "raw_filename": "30042099_2aaaf2fd_20260612T033536Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "2123",
+    "anio": "2021"
+  }
+}

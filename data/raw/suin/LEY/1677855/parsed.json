@@ -1,0 +1,100 @@
+{
+  "suin_id": "1677855",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1344",
+    "anio": "2009",
+    "fecha": "200907\r\nscript\r\nvar date = new Date(31/07/2009); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CXLIV. N. 47427. 31, JULIO, 2009. PÁG. 44.",
+    "entidad_emisora": "CONGRESO DE LA REPUBLICA",
+    "epigrafe": "por medio de la cual se aprueba el “Convenio entre la República de Colombia y la Confederación Suiza para Evitar la Doble Imposición en Materia de Impuestos sobre la Renta y Sobre el Patrimonio” y su “Protocolo”, firmados en Berna el 26 de octubre de 2007.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Comercio, Industria y Turismo",
+    "marco_regulatorio": "false",
+    "materia": "Inversión extranjera|Relaciones exteriores|Tratados y otros actos internacionales",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY APROBATORIA DE TRATADO",
+    "comentarios": "Conforme la información consultada en la página de internet www.cancilleria.gov.co, este acto internacional entró en vigor el  01 de enero de 2012 y en diciembre 31 de 2014 se encuentra vigente. Según la página de internet referida, este instrumento se aprobó mediante la Ley 1344 de 31 de julio de 2009 cuya revisión de constitucionalidad se efectúo mediante la sentencia C- 460 de 2010 y se promulgó por medio de Decreto 469 de 06 de marzo de 2012.",
+    "fecha_diario_oficial": "31/07/2009",
+    "fecha_vigencia": "31/07/2009",
+    "numero_diario_oficial": "47427",
+    "pagina_diario_oficial": "44",
+    "pagina_diario_oficial_pdf": "44"
+  },
+  "articles": [
+    {
+      "art_id": "1677857",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébase el “Convenio entre la República de Colombia y la Confederación Suiza para Evitar la Doble Imposición en Materia de Impuestos sobre la Renta y Sobre el Patrimonio” y su “Protocolo”, firmados en Berna el 26 de octubre de 2007.",
+      "canonical_id": "co:ley:1344:2009:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677858",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Apruébase el “Convenio entre la República de Colombia y la Confederación Suiza para Evitar la Doble Imposición en Materia de Impuestos sobre la Renta y Sobre el Patrimonio” y su “Protocolo”, firmados en Berna el 26 de octubre de 2007.",
+      "canonical_id": "co:ley:1344:2009:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677859",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": null,
+      "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, el “Convenio entre la República de Colombia y la Confederación Suiza para Evitar la Doble Imposición en Materia de Impuestos sobre la Renta y Sobre el Patrimonio” y su “Protocolo”, firmados en Berna el 26 de octubre de 2007, que por el artículo 1° de esta ley se aprueban, obligarán al país a partir de la fecha en que se perfeccione el vínculo internacional respecto de los mismos.",
+      "canonical_id": "co:ley:1344:2009:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "1677860",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": null,
+      "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
+      "canonical_id": "co:ley:1344:2009:art:3",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [
+    {
+      "article_affected": "Documento completo",
+      "raw_type": "Declarado exequible",
+      "normalized_type": "EXEQUIBLE",
+      "mapped": true,
+      "source_text": "Sentencia de la Corte Constitucional  C-460 de 2010",
+      "source_suin_id": "20027591",
+      "source_anchor": "ver_20027597",
+      "context": null
+    }
+  ],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "1677858"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "1677859"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "1677860"
+    }
+  ]
+}

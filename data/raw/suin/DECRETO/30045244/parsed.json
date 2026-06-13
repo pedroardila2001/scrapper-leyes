@@ -1,0 +1,82 @@
+{
+  "suin_id": "30045244",
+  "metadata": {
+    "tipo": "DECRETO",
+    "numero": "236",
+    "anio": "2023",
+    "fecha": "202302\r\nscript\r\nvar date = new Date(16/02/2023); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "Diario Oficial  Año CLVIII No. 52.310 16 de febrero de 2023  Pag 8",
+    "entidad_emisora": "MINISTERIO DEL INTERIOR",
+    "epigrafe": "por el cual se modifica el Decreto 0160 del 6 de febrero de 2023 “Por el cual se convoca al Congreso de la República a sesiones extraordinarias”, modificado por el Decreto 0224 del 15 de febrero de 2023.",
+    "estado_excepcion": "false",
+    "es_codigo": "false",
+    "sector": "Interior",
+    "marco_regulatorio": "false",
+    "en_estudio_depuracion": "false",
+    "subtipo": "DECRETO EJECUTIVO",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "17/02/2023",
+    "fecha_expedicion": "17/02/2023",
+    "fecha_vigencia": "17/02/2023",
+    "numero_diario_oficial": "52310",
+    "pagina_diario_oficial": "8"
+  },
+  "articles": [
+    {
+      "art_id": "30296865",
+      "number": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "number_normalized": "1",
+      "title": ". Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "text": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,modificado por el Decreto 0224 del 15 de febrero de 2023, el siguiente Proyecto de ley:\n\n14.Trámite legislativo del Proyecto de ley número 342 de 2023 Cámara,“Por la cual se adiciona y efectúan unas modificaciones al Presupuesto General de la Nación de la vigencia fiscal de 2023”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:decreto:236:2023:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30296866",
+      "number": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "number_normalized": "1",
+      "title": ". Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "text": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,modificado por el Decreto 0224 del 15 de febrero de 2023, el siguiente Proyecto de ley:\n\n14.Trámite legislativo del Proyecto de ley número 342 de 2023 Cámara,“Por la cual se adiciona y efectúan unas modificaciones al Presupuesto General de la Nación de la vigencia fiscal de 2023”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:decreto:236:2023:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30296867",
+      "number": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "number_normalized": "1",
+      "title": ". Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,",
+      "text": "Artículo 1°. Adicionar al artículo 3° del Decreto 0160 del 6 de febrero de 2023,modificado por el Decreto 0224 del 15 de febrero de 2023, el siguiente Proyecto de ley:\n\n14.Trámite legislativo del Proyecto de ley número 342 de 2023 Cámara,“Por la cual se adiciona y efectúan unas modificaciones al Presupuesto General de la Nación de la vigencia fiscal de 2023”.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:decreto:236:2023:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30296868",
+      "number": "Artículo 2°.Vigencia",
+      "number_normalized": "2v",
+      "title": "Vigencia",
+      "text": "Artículo 2°.Vigencia. El presente decreto rige a partir de la fecha de su publicación y modifica el artículo 3° del Decreto 0160 del 6 de febrero de 2023, modificado por el Decreto 0224 de 15 de febrero de 2023.",
+      "canonical_id": "co:decreto:236:2023:art:2v",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30296867"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30296868"
+    }
+  ]
+}

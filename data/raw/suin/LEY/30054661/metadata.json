@@ -1,0 +1,16 @@
+{
+  "suin_id": "30054661",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30054661",
+  "content_hash_sha256": "8d0f68ee6d9573b72c8bcbd1e126ee29bf08934487fdbaa5cd50ff680034f00e",
+  "capture_timestamp": "2026-06-12T03:35:35.766833+00:00",
+  "http_status": 200,
+  "content_length": 150841,
+  "raw_filename": "30054661_8d0f68ee_20260612T033535Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "2450",
+    "anio": "2025"
+  }
+}

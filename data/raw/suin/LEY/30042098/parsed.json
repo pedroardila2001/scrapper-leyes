@@ -1,0 +1,158 @@
+{
+  "suin_id": "30042098",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "2124",
+    "anio": "2021",
+    "fecha": "202108\r\nscript\r\nvar date = new Date(04/08/2021); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CLVII NO. 51.756, AGOSTO DE 2021, PAG.3, 4 DE AGOSTO 2021",
+    "entidad_emisora": "PRESIDENCIA DE LA REPUBLICA",
+    "epigrafe": "Por medio de la cual se crea la Estampilla Pro Universidad Nacional - Sede Caribe – Archipiélago y se dictan otras disposiciones.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Estampillas",
+    "es_codigo": "false",
+    "sector": "Presidencia de la República",
+    "marco_regulatorio": "false",
+    "materia": "Desarrollo territorial",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "04/08/2021",
+    "fecha_expedicion": "04/08/2021",
+    "fecha_vigencia": "04/08/2021"
+  },
+  "articles": [
+    {
+      "art_id": "30250133",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. La presente ley tiene por objeto autorizar a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina, para que faculte la emisión de la Estampilla Pro Universidad Nacional - Sede Caribe; con el fin de garantizar la financiación de esta institución educativa.",
+      "canonical_id": "co:ley:2124:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250134",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. La presente ley tiene por objeto autorizar a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina, para que faculte la emisión de la Estampilla Pro Universidad Nacional - Sede Caribe; con el fin de garantizar la financiación de esta institución educativa.",
+      "canonical_id": "co:ley:2124:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250135",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. La presente ley tiene por objeto autorizar a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina, para que faculte la emisión de la Estampilla Pro Universidad Nacional - Sede Caribe; con el fin de garantizar la financiación de esta institución educativa.",
+      "canonical_id": "co:ley:2124:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250136",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": "Autorícese a la Asamblea Departamental Archipiélago de san Andrés, Providencia y Santa Catalina, para que ordene la emisión de la Estampilla “Pro Universidad Nacional - Sede Caribe”, hasta por la suma de trescientos mil millones de pesos ($300",
+      "text": "Artículo 2°.Autorícese a la Asamblea Departamental Archipiélago de san Andrés, Providencia y Santa Catalina, para que ordene la emisión de la Estampilla “Pro Universidad Nacional - Sede Caribe”, hasta por la suma de trescientos mil millones de pesos ($300.000.000.000.oo).\n\nParágrafo 1°.Se autoriza la emisión de la estampilla, para su recaudo, por ·un término de treinta (30) años, a partir de la entrada en vigencia de la aplicación de la presente ley. Se entenderá cumplido el espíritu de la Ley, cuando se cumplan alguna de las dos (2) condiciones.\n\nParágrafo 2°.El recaudo obtenido por el uso de la estampilla se destinará a los gastos e inversiones que el Consejo Superior de la Universidad determine, órgano al cual compete la administración de los valores recaudados.\n\nParágrafo 3°.Destinaciones especiales: Con el fin de incentivar el proceso de formación y nivelación de jóvenes en etapa temprana de sus estudios en educación superior, se deberá destinar no menos del 30% del recaudo de la estampilla para el fortalecimiento del programa PEAMA. Del mismo modo, se deberá destinar no menos del 10% del recaudo de la estampilla para el desarrollo científico de las líneas de investigación institucional de la universidad; especialmente enfocadas en áreas de biología y estudios del Caribe.",
+      "canonical_id": "co:ley:2124:2021:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250137",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "Autorícese a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina, para que determine las características, tarifas y todos los demás asuntos referentes al uso obligatorio de la estampilla, en las actividades y operaciones que se deban realizar en el departamento y en el municipio de Providencia y Santa Catalina del mismo",
+      "text": "Artículo 3°.Autorícese a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina, para que determine las características, tarifas y todos los demás asuntos referentes al uso obligatorio de la estampilla, en las actividades y operaciones que se deban realizar en el departamento y en el municipio de Providencia y Santa Catalina del mismo. Los actos que expida la Asamblea del Departamento, en desarrollo de lo expuesto en la presente ley, serán llevados a conocimiento del Gobierno nacional a través del Ministerio de Hacienda y Crédito Público.\n\nParágrafo 1°.Se excluyen de este pago los contratos de prestación de servicios suscritos con persona natural, cuyo valor no supere las 96 Unidades de Valor Tributario (UVT) por concepto de honorarios mensuales. Y las demás excepciones que la asamblea considere pertinentes.",
+      "canonical_id": "co:ley:2124:2021:art:3",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250138",
+      "number": "Artículo 4°.",
+      "number_normalized": "4",
+      "title": "El recaudo de la estampilla se destinará a lo establecido en el artículo 1º de la presente Ley",
+      "text": "Artículo 4°.El recaudo de la estampilla se destinará a lo establecido en el artículo 1º de la presente Ley.\n\nParágrafo 1°.La tarifa contemplada en esta ley no podrá exceder el 2% del valor del hecho sujeto a gravamen.",
+      "canonical_id": "co:ley:2124:2021:art:4",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250139",
+      "number": "Artículo 5°.",
+      "number_normalized": "5",
+      "title": "El control del recaudo y del traslado de los recursos de la Universidades, estará a cargo de la Contraloría General del Departamento de Archipiélago de san Andrés, Providencia y Santa Catalina, u oficinas delegadas con jurisdicción y competencia sobre control fiscal",
+      "text": "Artículo 5°.El control del recaudo y del traslado de los recursos de la Universidades, estará a cargo de la Contraloría General del Departamento de Archipiélago de san Andrés, Providencia y Santa Catalina, u oficinas delegadas con jurisdicción y competencia sobre control fiscal.",
+      "canonical_id": "co:ley:2124:2021:art:5",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250140",
+      "number": "Artículo 6°.",
+      "number_normalized": "6",
+      "title": "El rector de la Universidad Nacional deberá rendir un informe en marzo de cada año, a las Comisiones Terceras de Senado y Cámara sobre los montos y ejecución de los recursos obtenidos por esta estampilla",
+      "text": "Artículo 6°.El rector de la Universidad Nacional deberá rendir un informe en marzo de cada año, a las Comisiones Terceras de Senado y Cámara sobre los montos y ejecución de los recursos obtenidos por esta estampilla. De igual manera, se debe enviar copia del informe a la Asamblea Departamental Archipiélago de San Andrés, Providencia y Santa Catalina.",
+      "canonical_id": "co:ley:2124:2021:art:6",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250141",
+      "number": "Artículo 7°.",
+      "number_normalized": "7",
+      "title": "Esta ley rige a partir de su promulgación",
+      "text": "Artículo 7°.Esta ley rige a partir de su promulgación.\n\nEl Presidente del Honorable Senado de la República,\n\nARTURO CHAR CHALJUB.\n\nEl Secretario General del Honorable Senado de la República,\n\nGREGORIO ELJACH PACHECO.\n\nEl Presidente de la Honorable Cámara de Representantes\n\nGERMÁN ALCIDES BLANCO ÁLVAREZ.\n\nEl Secretario General de la Honorable Cámara de Representantes,\n\nJORGE HUMBERTO MANTILLA SERRANO.\n\nREPÚBLICA DE COLOMBIA - GOBIERNO NACIONAL",
+      "canonical_id": "co:ley:2124:2021:art:7",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30250135"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30250136"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30250137"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30250138"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "30250139"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [6]",
+      "anchor": "30250140"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [7]",
+      "anchor": "30250141"
+    }
+  ]
+}

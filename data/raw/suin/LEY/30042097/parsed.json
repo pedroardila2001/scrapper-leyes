@@ -1,0 +1,490 @@
+{
+  "suin_id": "30042097",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "2125",
+    "anio": "2021",
+    "fecha": "202108\r\nscript\r\nvar date = new Date(04/08/2021); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CLVII NO. 51.756, AGOSTO DE 2021, PAG.5 4 DE AGOSTO 2021",
+    "entidad_emisora": "PRESIDENCIA DE LA REPUBLICA",
+    "epigrafe": "Por medio de la cual se establecen incentivos para la creación, formalización y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres y se dictan otras disposiciones - Ley creo en ti.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Microempresas|Microempresas - Financiación",
+    "es_codigo": "false",
+    "sector": "Presidencia de la República",
+    "marco_regulatorio": "false",
+    "materia": "Desarrollo nacional",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "04/08/2021",
+    "fecha_expedicion": "04/08/2021",
+    "fecha_vigencia": "04/08/2021"
+  },
+  "articles": [
+    {
+      "art_id": "30250103",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. El objeto de la presente ley es establecer incentivos para la creación, formalización y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres, y la creación de una Política Pública para el emprendimiento femenino, a fin de incrementar su capacidad productiva, participación en el mercado, y exaltar su contribución en el desarrollo económico y social del país.",
+      "canonical_id": "co:ley:2125:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250104",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. El objeto de la presente ley es establecer incentivos para la creación, formalización y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres, y la creación de una Política Pública para el emprendimiento femenino, a fin de incrementar su capacidad productiva, participación en el mercado, y exaltar su contribución en el desarrollo económico y social del país.",
+      "canonical_id": "co:ley:2125:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250105",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": "Objeto",
+      "text": "Artículo 1°.Objeto. El objeto de la presente ley es establecer incentivos para la creación, formalización y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres, y la creación de una Política Pública para el emprendimiento femenino, a fin de incrementar su capacidad productiva, participación en el mercado, y exaltar su contribución en el desarrollo económico y social del país.",
+      "canonical_id": "co:ley:2125:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250106",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": "Definición",
+      "text": "Artículo 2°.Definición. La definición de emprendimientos y empresas de mujeres se reglamentará por el Gobierno nacional.",
+      "canonical_id": "co:ley:2125:2021:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250107",
+      "number": "Artículo 2°.",
+      "number_normalized": "2",
+      "title": "Definición",
+      "text": "Artículo 2°.Definición. La definición de emprendimientos y empresas de mujeres se reglamentará por el Gobierno nacional.",
+      "canonical_id": "co:ley:2125:2021:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250108",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "Principios",
+      "text": "Artículo 3°.Principios. Sin perjuicio de lo establecido en la legislación, y lo dispuesto en el artículo 3° de la Ley 1014 de 2006, serán principios orientadores de los planes, programas, proyectos y las políticas públicas nacionales y territoriales que fomenten el emprendimiento femenino en el país:\n\n1. La defensa de los derechos individuales y colectivos de la mujer consagrados en la Constitución y la Ley,\n\n2. El componente de integración para la participación de la mujer emprendedora en la economía de su territorio, ofreciendo opor¬tunidades de igualdad y equidad.\n\n3. La concertación con las comunidades, organizaciones y grupos sociales en general que desarrollen actividades a favor de la mu¬jer en el país.\n\n4. La armonización de elementos económicos, sociales y cultura¬les del contexto de las mujeres beneficiarias de las estrategias, acciones, programas y lineamientos de las políticas públicas.\n\n5. La generación de información veraz y oportuna sobre los bene¬ficios qué se establezcan para la mujer emprendedora, empresa¬ria y los planes de negocio.",
+      "canonical_id": "co:ley:2125:2021:art:3",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250109",
+      "number": "Artículo 4°.",
+      "number_normalized": "4",
+      "title": "Política Pública",
+      "text": "Artículo 4°.Política Pública. El Gobierno nacional formulará, implementará y evaluará una política pública Integral de fomento al emprendimiento liderado por mujeres, con miras a desarrollar la presente ley y ejecutar en debida forma sus principios.\n\nEl Gobierno nacional reglamentará en un plazo no mayor a un (1) año de entrada en vigencia la presente Ley el aspecto procedimental de cada una de las etapas de esta política pública, y buscará la participación de actores públicos, privados, comunidades, organizaciones y grupos sociales en general que desarrollen actividades a favor de la mujer en el país.\n\nLa política pública del fomento al emprendimiento liderado por mujeres, a través del Ministerio de Comercio, Industria y Turismo, diseñará los instrumentos técnicos, administrativos, jurídicos y financieros que se consideren necesarios para la asesoría e implementación de programas y proyectos que contemplen de manera integral la formalización, el fomento, la financiación y la formación de las mujeres emprendedoras. Dicha política deberá ir en consonancia con los objetivos y consideraciones establecidas en la Ley 2069 de 2020 a través de la cual se impulsa el Emprendimiento en Colombia.\n\nLos sectores de la administración pública del orden nacional y territorial, la Red Nacional para el Emprendimiento y el Sistema Nacional de Competitividad e Innovación, realizarán acciones de seguimiento y evaluación de las diferentes políticas públicas en los ámbitos nacional y territorial de equidad de género, asegurando instrumentos que fomenten la creación, formalización y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres en Colombia, como herramienta para el cierre de las desigualdades.\n\nParágrafo 1°.El Ministerio de Comercio, Industria y Turismo, en cabeza de iNNpulsa Colombia; el Ministerio de Trabajo; el Ministerio de Cultura; el Departamento Administrativo de la Presidencia de la República a través de la Vicepresidencia de la República y la Consejería Presidencial para la Equidad de la Mujer; el Ministerio de Agricultura y Desarrollo Rural a través de la Dirección de Mujer Rural, el Director General del SENA o su delegado, el Departamento Administrativo Nacional de Estadística (DANE) y el Departamento Nacional de Planeación (DNP) o quien haga sus veces, deberán ser citadas y/o invitadas a toda diligencia que lleve a cabo la Comisión Legal para la Equidad de la Mujer del Congreso de la República, donde se presenten, discutan y socialicen los avances en materia de equidad de género, y la participación de las mujeres emprendedoras en los diferentes sectores de la economía del país.\n\nParágrafo 2°.Los Ministerios, Viceministerios, Sistemas, Entidades estatales, sus direcciones, Subdirecciones, y demás, relacionados con los derechos y atención a la mujer junto con las cámaras de comercio en los departamentos deberán promover la creación de la red de mujeres emprendedoras que les permita participar como sujetos activos en la construcción e implementación de los beneficios incluidos en la presente ley.\n\nParágrafo 3°.En el marco de la· política pública a formular, el Gobierno nacional, en cabeza del Ministerio de Comercio, Industria y Turismo, elaborará una ruta de atención integral de servicios para las micro, pequeñas y medianas empresas lideradas por mujeres, en cumplimiento de los objetivos establecidos en dicha política.",
+      "canonical_id": "co:ley:2125:2021:art:4",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250110",
+      "number": "Artículo 5°.",
+      "number_normalized": "5",
+      "title": "Estrategias para el desarrollo emprendedor de estudiantes y aprendices",
+      "text": "Artículo 5°.Estrategias para el desarrollo emprendedor de estudiantes y aprendices. El Gobierno nacional a través del Ministerio de Educación y del SENA, podrá adelantar estrategias que incentiven el desarrollo emprendedor de estudiantes de Instituciones de Educación Superior y de aprendices del SENA, así como brindar apoyo técnico para la consolidación de emprendimientos en edad temprana. Se dará prioridad a los proyectos liderados por mujeres, con el objetivo de promover el cierre de brechas de género que se presentan en el sector empresarial, para lo cual se articulará con las IES del territorio nacional.\n\nParágrafo.Con el fin de promover la consolidación de los emprendimientos nacientes de aprendices del SENA, el Gobierno nacional a través del Ministerio de Industria y Comercio e iNNpulsa Colombia, podrán priorizar la vinculación de estos emprendimientos dentro de la estrategia de Empresarios solidarios con Emprendimientos Nacientes contenidas en el artículo 61 de la Ley 2069 de 2020.",
+      "canonical_id": "co:ley:2125:2021:art:5",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250111",
+      "number": "Artículo 6°.",
+      "number_normalized": "6",
+      "title": "Patrimonio autónomo",
+      "text": "Artículo 6°.Patrimonio autónomo. La financiación, inversión y asistencia técnica destinada a promover, financiar y apoyar el emprendimiento, la formalización y el fortalecimiento empresarial de las mujeres en Colombia podrá contar con los recursos del patrimonio autónomo creado mediante el Decreto Legislativo número 810 del 4 de junio de 2020 o la norma que lo modifique.",
+      "canonical_id": "co:ley:2125:2021:art:6",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250112",
+      "number": "Artículo 7°.",
+      "number_normalized": "7",
+      "title": "Financiamiento",
+      "text": "Artículo 7°.Financiamiento. Las entidades estatales, que tengan dentro de sus funciones misionales el fomento al emprendimiento, y de acuerdo con su marco legal, podrán destinar recursos de su presupuesto de inversión para la creación y fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres, sin que estos excedan los objetivos establecidos en la regla fiscal y el Marco Fiscal de Mediano Plazo.",
+      "canonical_id": "co:ley:2125:2021:art:7",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250113",
+      "number": "Artículo 8°.",
+      "number_normalized": "8",
+      "title": "Metodologías de Evaluación de Riesgo Crediticio",
+      "text": "Artículo 8°.Metodologías de Evaluación de Riesgo Crediticio. Bancoldex, Fondo para el Financiamiento del Sector Agropecuario (Finagro), el Fondo Nacional del Ahorro, (FNA), el Banco Agrario de Colombia y demás entidades estatales de servicios financieros, en un plazo no mayor de un (1) año desde la promulgación· de la presente Ley, podrán diseñar o ajustar sus políticas y metodologías de evaluación de riesgo crediticio, para incluir a las micro, pequeñas y medianas empresas lideradas por mujeres. Para esto, podrán desarrollar programas o alianzas con entidades del ecosistema de emprendimiento, dirigidas a la adecuada mitigación de los riesgos.",
+      "canonical_id": "co:ley:2125:2021:art:8",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250114",
+      "number": "Artículo 9°.",
+      "number_normalized": "9",
+      "title": "Alianzas para la promoción del Desarrollo Empresarial Femenino y la inclusión Financiera",
+      "text": "Artículo 9°.Alianzas para la promoción del Desarrollo Empresarial Femenino y la inclusión Financiera. El Ministerio de Comercio, Industria y Turismo podrá concertar y ejecutar programas, planes o proyectos para la profundización de los microcréditos, como instrumento de creación, formalización de las microempresas lideradas por mujeres y de generación de empleo mayoritario a mujeres, directamente con las entidades sin ánimo de lucro y entidades financieras. Para estos efectos, el Ministerio de Comercio, Industria y Turismo junto a entidades sin ánimo de lucro y entidades financieras podrán suscribir convenios marco en donde se establezcan los términos generales de entendimiento a que haya lugar o convenios particulares para la ejecución de tales programas, planes y proyectos.\n\nParágrafo.El Fondo Nacional de Garantías deberá ofrecer garantías de hasta del 90% por el valor de esos microcréditos.",
+      "canonical_id": "co:ley:2125:2021:art:9",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250115",
+      "number": "Artículo 10.",
+      "number_normalized": "10",
+      "title": "Simplificación de trámites",
+      "text": "Artículo 10.Simplificación de trámites. La Dirección de Impuestos y Aduanas Nacionales (DIAN), dispondrá de un (1) año contado a partir de la promulgación de la presente Ley, para elaborar una ruta de atención y simplificación de trámites para las micro, pequeñas y medianas empresas lideradas por mujeres. El Gobierno nacional reglamentará sobre la materia.",
+      "canonical_id": "co:ley:2125:2021:art:10",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250116",
+      "number": "Artículo 11.",
+      "number_normalized": "11",
+      "title": "Programa de Apoyo a la Formalización",
+      "text": "Artículo 11.Programa de Apoyo a la Formalización. El Gobierno nacional con el apoyo de las Cámaras de Comercio, iNNpulsa Colombia y Bancóldex, estructurará e implementará un programa de apoyo a la formalización, estímulo y acceso al crédito que integre garantías mobiliarias, para las micro y pequeñas empresas nuevas en las cuales participen mujeres en su capital mayoritariamente. El Gobierno nacional fijará un descuento en la tarifa de inscripción del registro mercantil y respecto de las operaciones de crédito podrá establecer una tasa especial, para el estímulo de las nuevas micro y pequeñas empresas de las que trata la presente ley, que adicionalmente sean beneficiarias del signo distintivo de que trata esta ley.",
+      "canonical_id": "co:ley:2125:2021:art:11",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250117",
+      "number": "Artículo 12.",
+      "number_normalized": "12",
+      "title": "Semana del Emprendimiento Femenino",
+      "text": "Artículo 12.Semana del Emprendimiento Femenino. Reconózcase anualmente la primera semana del mes de marzo, como la Semana Nacional del Emprendimiento Femenino. En ella se celebrarán eventos del orden nacional y territorial que resalten y fomenten las micro, pequeñas y medianas empresas lideradas por mujeres, y la promoción del· signo distintivo. Las universidades, entidades sin ánimo de lucro, alcaldías, gobernaciones, Cámaras de Comercio a nivel nacional los consulados en su jurisdicción, y demás agentes del ecosistema del· emprendimiento, coordinarán las actividades que se realicen para su conmemoración.",
+      "canonical_id": "co:ley:2125:2021:art:12",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250118",
+      "number": "Artículo 13.",
+      "number_normalized": "13",
+      "title": "Premio Nacional",
+      "text": "Artículo 13.Premio Nacional. Créese un Premio Nacional, para reconocer las políticas, planes, programas, estrategias y participación que provenga de Entidades públicas o empresas privadas, que genere incentivos para la creación y fortalecimiento de las micro pequeñas y medianas empresas lideradas por mujeres. El Premio será entregado en el marco de la semana nacional del emprendimiento femenino. El Ministerio de Comercio, Industria y Turismo establecerá las bases del concurso y las categorías a reconocer.\n\nParágrafo.Para tales efectos se deberán tener en cuenta las (ESAL) Entidades sin ánimo, de Lucro que promuevan programas de emprendimiento femenino.",
+      "canonical_id": "co:ley:2125:2021:art:13",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250119",
+      "number": "Artículo 14.",
+      "number_normalized": "14",
+      "title": "Informe anual sobre Emprendimiento liderado por mujeres",
+      "text": "Artículo 14.Informe anual sobre Emprendimiento liderado por mujeres. El Gobierno nacional en cabeza de las Entidades que les competa, deberán incluir en la rendición de cuentas que realiza anualmente al Congreso de la República, un capítulo especial sobre los avances en la implementación de la presente Ley, la identificación de emprendimientos femeninos en estado de Informalidad a nivel nacional y territorial y del comportamiento económico de las micro, pequeñas y medianas empresas lideradas por mujeres.\n\nLos resultados serán incluidos en el sistema de cuentas nacionales con el objeto de medir la contribución del emprendimiento de la mujer al desarrollo económico y social del país y como herramienta fundamental para la definición e implementación de políticas públicas.\n\nParágrafo.El Departamento Nacional de Planeación, a través de sus facultades creará indicadores de medición de impactos para esta Ley, a fin de verificar y establecer los resultados de la misma.\n\nParágrafo transitorio. INNpulsa Colombia diseñará los indicadores que se tendrán en cuenta para la evaluación de la política pública.",
+      "canonical_id": "co:ley:2125:2021:art:14",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250120",
+      "number": "Artículo 15.",
+      "number_normalized": "15",
+      "title": "Datos estadísticos",
+      "text": "Artículo 15.Datos estadísticos. El Departamento Administrativo Nacional de Estadística (DANE), la Alta Consejería Presidencial para la Equidad de la Mujer en coordinación con las Cámaras de Comercio, elaborará, y publicará boletines estadísticos trimestrales sobre la participación de la mujer en la creación de empresas (micro, pequeñas, medianas, grandes empresas), detallando los principales sectores.",
+      "canonical_id": "co:ley:2125:2021:art:15",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250121",
+      "number": "Artículo 16.",
+      "number_normalized": "16",
+      "title": "Creación de la marca",
+      "text": "Artículo 16.Creación de la marca. Créese un signo distintivo, como marca de certificación que identifique y genere incentivos para la formalización y el fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres en situación de vulnerabilidad.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "canonical_id": "co:ley:2125:2021:art:16",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250122",
+      "number": "Artículo 16.",
+      "number_normalized": "16",
+      "title": "Creación de la marca",
+      "text": "Artículo 16.Creación de la marca. Créese un signo distintivo, como marca de certificación que identifique y genere incentivos para la formalización y el fortalecimiento de las micro, pequeñas y medianas empresas lideradas por mujeres en situación de vulnerabilidad.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "canonical_id": "co:ley:2125:2021:art:16",
+      "notes": [
+        "ReglamentadoDECRETO 761 de 2022"
+      ],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250123",
+      "number": "Artículo 17.",
+      "number_normalized": "17",
+      "title": "Autorización de uso",
+      "text": "Artículo 17.Autorización de uso. El Ministerio de Comercio, Industria y Turismo será el titular de la marca de certificación. El registro de este signo distintivo deberá ser solicitado ante la Superintendencia de Industria y Comercio, sometiéndose el trámite a lo establecido en la Decisión 486 de la Comisión de la Comunidad Andina y la Circular Única de la Superintendencia de Industria y Comercio. Una vez registrada la marca, la autorización de uso será otorgada por el Ministerio de Comercio, Industria y Turismo, a favor de las micro, pequeñas y medianas empresas que cumplan con los requisitos establecidos en la presente Ley, las demás disposiciones emitidas por el Gobierno nacional para sus efectos y en el reglamento de uso de la marca.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "canonical_id": "co:ley:2125:2021:art:17",
+      "notes": [
+        "ReglamentadoDECRETO 761 de 2022"
+      ],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250124",
+      "number": "Artículo 18.",
+      "number_normalized": "18",
+      "title": "Población beneficiaria",
+      "text": "Artículo 18.Población beneficiaria. Serán beneficiarias de la autorización de· uso del signo distintivo y demás beneficios que otorga la presente ley, las mujeres que acrediten encontrarse en una de las siguientes categorías:\n\n1. Mujeres reconocidas por la Unidad para la Atención y la Re¬paración Integral a las Víctimas como víctimas de conflicto armado.\n\n2. Mujeres en situación de discapacidad.\n\n3. Mujeres mapires cuidadoras de personas discapacitadas con de¬pendencia de cuidado.\n\n4. Madres comunitarias acreditadas ante el Instituto Colombiano, de Bienestar Familiar (ICBF).\n\n5. Mujeres sobrevivientes de ataques con agentes químicos, ácido y/o sustancias similares con daño permanente en su cuerpo o en su salud.\n\n6. Mujeres rurales y campesinas.\n\n7. Mujeres que hagan parte de los procesos que implementa la Agencia para la Reincorporación y la Normalización (ARN) o la entidad que haga sus veces.\n\n8. Mujeres con emprendimientos en marcha que resultaron afecta¬das por la crisis económica derivada de la pandemia del corona¬virus Covid-19. El Gobierno nacional reglamentará el procedi-miento para su identificación.\n\n9. Mujeres registradas en el programa Familias en Acción.\n\n10. Madres, hijas y esposas o compañeras permanentes de integran¬tes de las Fuerzas Militares o Policía Nacional fallecidos por hechos ocurridos por causa y razón del servicio.\n\n11. Mujeres privadas de la libertad y mujeres excarceladas.\n\n12. Mujeres habitantes de municipios PDET y de sexta categoría.\n\n13. Mujeres adscritas a programas de sustitución de cultivos ilí¬citos.\n\n14. Mujeres pertenecientes a comunidades indígenas, negras, afro¬colombianas, palenqueras y raizales.\n\n15. Mujeres vendedoras informales que hayan ejercido esta labor durante los cinco (5) años anteriores a la entrada en vigencia, de la presente ley. El Gobierno nacional reglamentará el procedi¬miento para su identificación.\n\n16. Los demás colectivos de mujeres y empresas lideradas por mu¬jeres que identifique, reglamente y defina el Gobierno nacional en el marco de la política pública que trata el artículo 4° de la presente ley.\n\nParágrafo 1°.El Ministerio de Comercio, Industria y Turismo, reglamentará el procedimiento y los requisitos para acreditar la pertenencia a uno o varios de los grupos poblacionales enunciados en el presente artículo. Las personas naturales y/o jurídicas que suministren información falsa con el propósito de obtener los beneficios previstos en la presente Ley, serán sancionadas con multa por el valor que establezca el Gobierno nacional, sin perjuicio de las sanciones penales a que haya lugar.\n\nParágrafo 2°.Las mujeres que integren las micro, pequeñas y medianas empresas identificadas con el signo distintivo, deberán mantener los requisitos definidos en el presente artículo para conservar los beneficios previstos en la Ley. Así mismo, la micro, pequeña y mediana empresa que sea enajenada o adquirida por personas naturales que no cumplan con los requisitos para obtener autorización de uso del signo distintivo, no podrán conservar los beneficios contemplados.\n\nParágrafo: 3°. INNpulsa Colombia realizará la identificación geográfica, demográfica, económica y social de las mujeres beneficiadas con el signo distintivo.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "canonical_id": "co:ley:2125:2021:art:18",
+      "notes": [
+        "ReglamentadoDECRETO 761 de 2022"
+      ],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250125",
+      "number": "Artículo 19.",
+      "number_normalized": "19",
+      "title": "Formalización",
+      "text": "Artículo 19.Formalización. Las micro, pequeñas y medianas empresas lideradas por mujeres que se encuentren en la informalidad, deben formalizar su registro mercantil antes de suscribir la autorización de uso. Para esto, las cámaras de comercio, del país adelantarán jornadas de formalización de emprendimientos liderados por mujeres, para incentivar la legalidad el acceso al signo distintivo. La Agencia Nacional de Tierras simplificará los trámites para la formalización de predios para las mujeres rurales beneficiarias con el signo distintivo, sin que esto genere un acto de discriminación con las demás mujeres rurales no identificadas con el signo distintivo.",
+      "canonical_id": "co:ley:2125:2021:art:19",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250126",
+      "number": "Artículo 20.",
+      "number_normalized": "20",
+      "title": "Reconciliación",
+      "text": "Artículo 20.Reconciliación. La Consejería Presidencial para la Equidad de la Mujer, iNNpulsa Colombia, la Agencia para la Reincorporación y la Normalización y la Unidad para la Atención y Reparación Integral a las Víctimas trabajarán de manera coordinada para promover y acompañar los proyectos de emprendimiento, identificados con el signo distintivo que integren a mujeres víctimas del conflicto a mujeres ex combatientes y a madres, hijas, esposas y compañeras permanentes de militares y policías fallecidos en el servicio por causa y razón del mismo, o como consecuencia del combate o en accidente relacionado con el mismo, o en desarrollo de operaciones militares, en tareas de mantenimiento o restablecimiento del orden público o en conflicto internacional, haciendo del emprendimiento un instrumento de reconciliación y cierre de las desigualdades que originaron el conflicto armado en el país.",
+      "canonical_id": "co:ley:2125:2021:art:20",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250127",
+      "number": "Artículo 21.",
+      "number_normalized": "21",
+      "title": "Certificado para Grandes Contribuyentes",
+      "text": "Artículo 21.Certificado para Grandes Contribuyentes. Créese un Certificado como reconocimiento por el compromiso en fortalecer la equidad de género y la participación de las mujeres emprendedoras en la economía del país. Su entrega se llevará a cabo en la ceremonia del Premio Nacional y tendrá vigencia de un año. El certificado no causará beneficios tributarios. Serán beneficiados con el certificado, los siguientes agentes:\n\n1. Personas jurídicas legalmente constituidas que mediante resolu¬ción expedida por la Dirección de Impuestos y Aduanas Nacio¬nales (DIAN) o quien haga sus veces, hayan sido reconocidas como Grandes Contribuyentes y que, demuestren un volumen de compra igual o superior al dos por ciento (2%) de su factura¬ción con bienes, y/o servicios producidos por las micro, peque¬ñas y medianas empresas identificadas con el signo distintivo.\n\n2. Las entidades estatales que demuestren un volumen de compra igual, o superior al dos por ciento (2%) del monto total de apro¬piaciones de funcionamiento con bienes y/o servicios produci-dos por las micro, pequeñas y medianas empresas identificadas, con el signo distintivo.\n\n3. Personas naturales y/o jurídicas, nacional o extranjera, que rea¬licen donaciones para financiar de manera directa a las micro, pequeñas y medianas empresas identificadas con el signo distin¬tivo por valor mínimo de diez mil (10.000) UVT.\n\n4. Las organizaciones sin ánimo de lucro, nacional o extranjera, que realicen donaciones para financiar de manera directa a las micro, pequeñas y medianas empresas identificadas con el signo distintivo por valor, mínimo de diez mil (10.000) UVT.\n\n5. Aceleradoras, incubadoras, inversionistas y demás agentes de ecosistema emprendedor, nacional o extranjero, que participen en la financiación de las micro, pequeñas y medianas empresas identificadas con el signo distintivo por valor mínimo de diez mil (l0.000) UVT.\n\n6. Universidades oficiales o privadas, que se destaquen en promo¬ver la formación técnica y profesional de las mujeres que in¬tegren las micro, pequeñas y medianas empresas identificadas con el signo distintivo. El Ministerio de Comercio, Industria y Comercio reglamentará el procedimiento de selección.\n\n7. Las cámaras de comercio del país que promuevan la formaliza¬ción de las micro, pequeñas y medianas empresas lideradas por mujeres para fomentar el acceso al signo distintivo. El Ministe¬rio de Comercio, Industria y Turismo reglamentará el procedi¬miento de selección.\n\n8. Los demás agentes que identifique, reglamente y defina el Go¬bierno nacional en el marco de la política pública que trata el artículo 4° de la presente ley.\n\nParágrafo 1°.El Ministerio de Comercio, Industria y Turismo autorizará el uso signo distintivo, para que los agentes galardonados con el Certificado puedan hace uso de ella durante la vigencia del Certificado que será de un año a partir de su reconocimiento. La autorización de uso se podrá revocar de manera unilateral o por mutuo acuerdo en cualquier momento.\n\nParágrafo 2°.Periódicamente el Ministerio de Comercio, Industria y Turismo celebrará ruedas de negocios y presentará los diferentes proyectos productivos identificados con el signo distintivo para incentivar acuerdos comerciales, donaciones y financiaciones con los agentes y la apertura de nuevos mercados.",
+      "canonical_id": "co:ley:2125:2021:art:21",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250128",
+      "number": "Artículo 22.",
+      "number_normalized": "22",
+      "title": "Entes territoriales",
+      "text": "Artículo 22.Entes territoriales. Autorícese a los concejos municipales y asambleas departamentales de los entes territoriales galardonados con el Premio Nacional del que trata el artículo 11 de la presente ley, para reglamentar la realización de actividades de promoción al emprendimiento femenino, haciendo uso institucional del signo distintivo durante un (1) año a partir de la decisión emanada por la respectiva corporación, como incentivo por los esfuerzos realizados para resaltar la participación de la mujer emprendedora en la economía local. El Ministerio de Comercio, Industria y Turismo reglamentará sobre la materia.",
+      "canonical_id": "co:ley:2125:2021:art:22",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250129",
+      "number": "Artículo 23.",
+      "number_normalized": "23",
+      "title": "Cumplimiento de obligaciones",
+      "text": "Artículo 23.Cumplimiento de obligaciones. Los beneficios establecidos en la presente ley no exceptúan el cumplimiento de las obligaciones de las micro, pequeñas y medianas empresas identificadas con el signo distintivo, en materia de presentación de declaraciones tributarias, del cumplimiento de sus obligaciones laborales y de sus obligaciones mercantiles consignadas en el Código de Comercio y las normas vigentes.",
+      "canonical_id": "co:ley:2125:2021:art:23",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250130",
+      "number": "Artículo 24.",
+      "number_normalized": "24",
+      "title": "Vigencia",
+      "text": "Artículo 24.Vigencia. La presente ley rige a partir de su promulgación y deroga las normas que le sean contrarias.\n\nEl Presidente del Honorable Senado de la República,\n\nARTURO CHAR CHALJUB.\n\nEl Secretario General del Honorable Senado de la República,\n\nGREGORIO ELJACH PACHECO.\n\nEl Presidente de la Honorable Cámara de Representantes,\n\nGERMÁN ALCIDES BLANCO ÁLVAREZ.\n\nEl Secretario General de la Honorable Cámara de Representantes,\n\nJORGE HUMBERTO MANTILLA SERRANO.\n\nREPÚBLICA DE COLOMBIA - GOBIERNO NACIONAL",
+      "canonical_id": "co:ley:2125:2021:art:24",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [
+    {
+      "article_affected": "Artículo 16",
+      "raw_type": "Reglamentado",
+      "normalized_type": "REGLAMENTA",
+      "mapped": true,
+      "source_text": "DECRETO 761 de 2022",
+      "source_suin_id": "30044184",
+      "source_anchor": "ver_30277302",
+      "context": null
+    },
+    {
+      "article_affected": "Artículo 17",
+      "raw_type": "Reglamentado",
+      "normalized_type": "REGLAMENTA",
+      "mapped": true,
+      "source_text": "DECRETO 761 de 2022",
+      "source_suin_id": "30044184",
+      "source_anchor": "ver_30277302",
+      "context": null
+    },
+    {
+      "article_affected": "Artículo 18",
+      "raw_type": "Reglamentado",
+      "normalized_type": "REGLAMENTA",
+      "mapped": true,
+      "source_text": "DECRETO 761 de 2022",
+      "source_suin_id": "30044184",
+      "source_anchor": "ver_30277302",
+      "context": null
+    }
+  ],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30250105"
+    },
+    {
+      "level": "division",
+      "text": "CAPÍTULO I",
+      "anchor": "30250106"
+    },
+    {
+      "level": "division",
+      "text": "Política Pública",
+      "anchor": "30250106"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30250107"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30250108"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30250109"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "30250110"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [6]",
+      "anchor": "30250111"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [7]",
+      "anchor": "30250112"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [8]",
+      "anchor": "30250113"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [9]",
+      "anchor": "30250114"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [10]",
+      "anchor": "30250115"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [11]",
+      "anchor": "30250116"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [12]",
+      "anchor": "30250117"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [13]",
+      "anchor": "30250118"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [14]",
+      "anchor": "30250119"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [15]",
+      "anchor": "30250120"
+    },
+    {
+      "level": "division",
+      "text": "CAPÍTULO II",
+      "anchor": "30250121"
+    },
+    {
+      "level": "division",
+      "text": "Signo Distintivo",
+      "anchor": "30250121"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [16]",
+      "anchor": "30250122"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [17]",
+      "anchor": "30250123"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [18]",
+      "anchor": "30250124"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [19]",
+      "anchor": "30250125"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [20]",
+      "anchor": "30250126"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [21]",
+      "anchor": "30250127"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [22]",
+      "anchor": "30250128"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [23]",
+      "anchor": "30250129"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [24]",
+      "anchor": "30250130"
+    }
+  ]
+}

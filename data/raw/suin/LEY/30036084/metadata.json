@@ -1,0 +1,16 @@
+{
+  "suin_id": "30036084",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=30036084",
+  "content_hash_sha256": "6fc943a23d46c288e0240a1134d81e0507ee0190373d0ee52c5b6a948079e3ae",
+  "capture_timestamp": "2026-06-12T03:35:55.038998+00:00",
+  "http_status": 200,
+  "content_length": 89324,
+  "raw_filename": "30036084_6fc943a2_20260612T033555Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1949",
+    "anio": "2019"
+  }
+}

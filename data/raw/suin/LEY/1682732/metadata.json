@@ -1,0 +1,16 @@
+{
+  "suin_id": "1682732",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1682732",
+  "content_hash_sha256": "f1dbe5333a80eda17d997ec78299584e3b350e51ec7e1efe205da44cbe4d580b",
+  "capture_timestamp": "2026-06-12T03:35:59.168701+00:00",
+  "http_status": 200,
+  "content_length": 45663,
+  "raw_filename": "1682732_f1dbe533_20260612T033559Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1526",
+    "anio": "2012"
+  }
+}

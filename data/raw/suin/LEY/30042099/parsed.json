@@ -1,0 +1,217 @@
+{
+  "suin_id": "30042099",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "2123",
+    "anio": "2021",
+    "fecha": "202108\r\nscript\r\nvar date = new Date(04/08/2021); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL. AÑO CLVII NO. 51.756, AGOSTO DE 2021, PAG.1 4 DE AGOSTO 2021",
+    "entidad_emisora": "PRESIDENCIA DE LA REPUBLICA",
+    "epigrafe": "Por la cual se autoriza a la asamblea del departamento de Casanare para que ordene la emisión de la Estampilla en Pro del Fortalecimiento de la Universidad que trata la Ley 1937 de 2018 y se dictan otras disposiciones.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Estampillas",
+    "es_codigo": "false",
+    "sector": "Presidencia de la República",
+    "marco_regulatorio": "false",
+    "materia": "Desarrollo territorial",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "04/08/2021",
+    "fecha_expedicion": "04/08/2021"
+  },
+  "articles": [
+    {
+      "art_id": "30250144",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Objeto. Autorícese a la Asamblea del Departamento de Casanare para que ordene la emisión de la Estampilla “Pro Unitrópico” con destino al fortalecimiento de la Universidad que trata la Ley 1937 de 2018.\n\nParágrafo.La Emisión de la Estampilla que trata la presente ley se expedirá por parte de la Asamblea del Departamento de Casanare, una vez sea expedida la ordenanza que oficialice la institución que trata la Ley 1937 de 2018.",
+      "canonical_id": "co:ley:2123:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250145",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Objeto. Autorícese a la Asamblea del Departamento de Casanare para que ordene la emisión de la Estampilla “Pro Unitrópico” con destino al fortalecimiento de la Universidad que trata la Ley 1937 de 2018.\n\nParágrafo.La Emisión de la Estampilla que trata la presente ley se expedirá por parte de la Asamblea del Departamento de Casanare, una vez sea expedida la ordenanza que oficialice la institución que trata la Ley 1937 de 2018.",
+      "canonical_id": "co:ley:2123:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250146",
+      "number": "Artículo 1°.",
+      "number_normalized": "1",
+      "title": null,
+      "text": "Artículo 1°.Objeto. Autorícese a la Asamblea del Departamento de Casanare para que ordene la emisión de la Estampilla “Pro Unitrópico” con destino al fortalecimiento de la Universidad que trata la Ley 1937 de 2018.\n\nParágrafo.La Emisión de la Estampilla que trata la presente ley se expedirá por parte de la Asamblea del Departamento de Casanare, una vez sea expedida la ordenanza que oficialice la institución que trata la Ley 1937 de 2018.",
+      "canonical_id": "co:ley:2123:2021:art:1",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250147",
+      "number": "Artículo 2º. Monto",
+      "number_normalized": "2",
+      "title": ". La emisión de la Estampilla “Pro Unitrópico” será hasta por la suma de trescientos mil millones de pesos ($300.000.000.000.00) moneda legal colombiana. Este valor será en pesos colombianos constantes a la fecha de expedición de la presente ley",
+      "text": "Artículo 2º. Monto. La emisión de la Estampilla “Pro Unitrópico” será hasta por la suma de trescientos mil millones de pesos ($300.000.000.000.00) moneda legal colombiana. Este valor será en pesos colombianos constantes a la fecha de expedición de la presente ley.\n\nParágrafo.Se suspenderá el recaudo de la estampilla una vez cumplido el tope mencionado en el inciso anterior o una vez cumplido el término de 15 años de la emisión de la estampilla.",
+      "canonical_id": "co:ley:2123:2021:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250148",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "Destinación",
+      "text": "Artículo 3°.Destinación. El producido de los recursos provenientes de la Estampilla “Pro Unitrópico”, se podrá destinar a los siguientes rubros:\n\n- Desarrollo científico en las líneas de investigación institucio¬nales de la Universidad, adoptadas mediante el Acuerdo Aca¬démico y/o a la apertura de programas académicos.\n\n- Desarrollo de la Infraestructura Educativa.\n\n- Desarrollo de la Docencia, extensión de la Institución, a la apertura y desarrollo de programas académicos que la Uni¬versidad considere pertinentes para la región, de acuerdo con estudios de contexto, desarrollo y mejoramiento de la infraes¬tructura física, tecnológica y bibliográfica, el desarrollo de la Ciencia, la Tecnología· y la innovación, así como el forta¬lecimiento de la internacionalización y el Bilingüismo de la Universidad.\n\nParágrafo 1°.Al menos el 10% de los recursos se destinarán para proyectos de investigación que incentiven la transición energética y el fortalecimiento del sector industrial en el departamento del Casanare.\n\nParágrafo 2°.Las nuevas construcciones que se financien con esta estampilla deberán garantizar que una parte de su suministro eléctrico provenga de energías renovables, especialmente de energía solar.",
+      "canonical_id": "co:ley:2123:2021:art:3",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250149",
+      "number": "Artículo 4°.",
+      "number_normalized": "4",
+      "title": "Hecho Generador",
+      "text": "Artículo 4°.Hecho Generador. Es la suscripción de contratos y convenios que realice la Administración Central del Departamento y las Empresas Industriales y Comerciales del Departamento. Dentro de los hechos y actividades económicas sobre los cuales se obliga el uso de la estampilla la Asamblea podrá incluir contratos de obra pública exceptuando los contratos que deban financiarse con recursos que por ley correspondan al sector salud.\n\nParágrafo 1°.No serán hechos generadores de esta estampilla los contratos de prestación de servicios profesionales suscritos con personas naturales cuyo valor no supere los 6 salarios mínimos legales mensuales vigentes por concepto de honorarios mensuales.\n\nParágrafo 2°.Quedan incluidos los contratos de obra suscritos por las empresas industriales y comerciales del Estado, empresas de economía mixta y asociaciones de participación mixta y entes de Control del orden Departamental en Casanare. Igualmente quedan incluidos los contratos de obra suscritos por las entidades por todas las entidades Administrativas departamentales con personería jurídica que cree, organice o autorice la Ley, las ordenanzas y que formen parte de la Rama Ejecutiva del orden Departamental.",
+      "canonical_id": "co:ley:2123:2021:art:4",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250150",
+      "number": "Artículo 5°.",
+      "number_normalized": "5",
+      "title": "Sujeto activo",
+      "text": "Artículo 5°.Sujeto activo. El sujeto activo de la Estampilla “Pro Unitrópico” es el departamento de Casanare, previa aprobación por parte de la asamblea departamental.",
+      "canonical_id": "co:ley:2123:2021:art:5",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250151",
+      "number": "Artículo 6°.",
+      "number_normalized": "6",
+      "title": "Sujeto pasivo",
+      "text": "Artículo 6°.Sujeto pasivo. Es toda persona natural o jurídica que suscriba contratos, convenios o negocie en forma ocasional, temporal o permanente los suministros, obras, asesorías, consultorías, provisiones e intermediaciones y demás formas contractuales que se celebren con la administración departamental, sus establecimientos públicos y Empresas industriales y Comerciales.",
+      "canonical_id": "co:ley:2123:2021:art:6",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250152",
+      "number": "Artículo 7°.",
+      "number_normalized": "7",
+      "title": "Tarifa",
+      "text": "Artículo 7°.Tarifa. La tarifa para la presente estampilla será así:\n\nValor del contrato\tTarifa\n\n>0 UVT <100 UVT \t>0,15% <0,3%\n\n>100 UVT<200 UVT \t>0,3%<0,65%\n\n>200 UVT<700 UVT \t>0,65% <1,25%\n\n>700 UVT \t1,5%\n\nPor medio de ordenanza, la asamblea departamental decidirá qué tarifa tomar según los rangos estipulados. En ningún caso, la tarifa podrá ser superior ni inferior a los rangos mencionados.",
+      "canonical_id": "co:ley:2123:2021:art:7",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250153",
+      "number": "Artículo 8°.",
+      "number_normalized": "8",
+      "title": "Cuenta maestra especial y transferencia",
+      "text": "Artículo 8°.Cuenta maestra especial y transferencia. El sujeto activo de la Estampilla “Pro Unitrópico” creará una cuenta maestra especial denominada: Estampilla Pro Unitrópico, para el depósito y transferencia de los recursos.",
+      "canonical_id": "co:ley:2123:2021:art:8",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250154",
+      "number": "Artículo 9°.",
+      "number_normalized": "9",
+      "title": null,
+      "text": "Artículo 9°.La vigilancia y la correcta aplicación de los recursos recaudados por la Estampilla que trata la presente ley en materia fiscal corresponderán a la Contraloría Departamental de Casanare y administrativa por parte de la Procuraduría General de la Nación.",
+      "canonical_id": "co:ley:2123:2021:art:9",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250155",
+      "number": "Artículo 10.",
+      "number_normalized": "10",
+      "title": null,
+      "text": "Artículo 10.El control y la fiscalización interna de la estampilla recaerán sobre la administración Departamental, la cual implementará mecanismos de fiscalización para el cálculo y pago correcto de la contribución, sin perjuicio de las sanciones disciplinarias, fiscales y penales que la legislación colombiana contemple.",
+      "canonical_id": "co:ley:2123:2021:art:10",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30250156",
+      "number": "Artículo 11.",
+      "number_normalized": "11",
+      "title": null,
+      "text": "Artículo 11.La presente Ley regirá en la vigencia siguiente a la expedición de la ordenanza que oficialice la institución que trata la Ley 1937 de 2018.\n\nEl Presidente del Honorable Senado de la República,\n\nARTURO CHAR CHALJUB.\n\nEl Secretario General del Honorable Senado de la República,\n\nGREGORIO ELJACH PACHECO.\n\nEl Presidente de la Honorable Cámara de Representantes\n\nGERMÁN ALCIDES BLANCO ÁLVAREZ.\n\nEl Secretario General de la Honorable Cámara de Representantes,\n\nJORGE HUMBERTO MANTILLA SERRANO.\n\nREPÚBLICA DE COLOMBIA - GOBIERNO NACIONAL",
+      "canonical_id": "co:ley:2123:2021:art:11",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30250146"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30250147"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30250148"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30250149"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "30250150"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [6]",
+      "anchor": "30250151"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [7]",
+      "anchor": "30250152"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [8]",
+      "anchor": "30250153"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [9]",
+      "anchor": "30250154"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [10]",
+      "anchor": "30250155"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [11]",
+      "anchor": "30250156"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "suin_id": "1677840",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1677840",
+  "content_hash_sha256": "f86c00b032f512490b63f24edab151f6ce6bfb6b370b4d01f834358b8ad2eb1b",
+  "capture_timestamp": "2026-06-12T03:36:00.908693+00:00",
+  "http_status": 200,
+  "content_length": 291066,
+  "raw_filename": "1677840_f86c00b0_20260612T033600Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1342",
+    "anio": "2009"
+  }
+}

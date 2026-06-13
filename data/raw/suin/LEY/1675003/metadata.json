@@ -1,0 +1,16 @@
+{
+  "suin_id": "1675003",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1675003",
+  "content_hash_sha256": "857cbc1dec52f8e97b7db10008fd9edba18596cb3d9ac3863fb607879d91f56e",
+  "capture_timestamp": "2026-06-12T17:27:58.242490+00:00",
+  "http_status": 200,
+  "content_length": 167097,
+  "raw_filename": "1675003_857cbc1d_20260612T172758Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "1164",
+    "anio": "2007"
+  }
+}

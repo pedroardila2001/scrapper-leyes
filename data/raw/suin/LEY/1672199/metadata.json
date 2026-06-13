@@ -1,0 +1,16 @@
+{
+  "suin_id": "1672199",
+  "source": "suin",
+  "source_url": "https://www.suin-juriscol.gov.co/viewDocument.asp?id=1672199",
+  "content_hash_sha256": "7c0bf9d1b6a711abc2fc870aea41951588d4bfdcf766e7714eb04b418fe4b494",
+  "capture_timestamp": "2026-06-12T17:28:00.951637+00:00",
+  "http_status": 200,
+  "content_length": 105622,
+  "raw_filename": "1672199_7c0bf9d1_20260612T172800Z.html",
+  "scraper_version": "1.0.0",
+  "catalog_match": {
+    "tipo": "LEY",
+    "numero": "982",
+    "anio": "2005"
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "suin_id": "30036084",
+  "metadata": {
+    "tipo": "LEY",
+    "numero": "1949",
+    "anio": "2019",
+    "fecha": "201901\r\nscript\r\nvar date = new Date(08/01/2019); document.write(date.getDate());\r\nscript",
+    "division_documento": "false",
+    "es_reglamento": "false",
+    "documento_fuente": "DIARIO OFICIAL.  Año CLIV  No. 50.830, Enero, 08 de 2019. PAG.4.",
+    "epigrafe": "por la cual se adicionan y modifican algunos artículos de las leyes 1122 de 2007 y 1438 de 2011, y se dictan otras disposiciones.",
+    "estado_documento": "Vigente",
+    "estado_excepcion": "false",
+    "tema": "Ministerio de Salud|Superintendencia Nacional de Salud (Supersalud)",
+    "es_codigo": "false",
+    "marco_regulatorio": "false",
+    "materia": "Salud",
+    "en_estudio_depuracion": "false",
+    "subtipo": "LEY ORDINARIA",
+    "es_estatuto": "false",
+    "fecha_diario_oficial": "08/01/2019",
+    "fecha_expedicion": "08/01/2019",
+    "fecha_vigencia": "08/01/2019"
+  },
+  "articles": [
+    {
+      "art_id": "30181041",
+      "number": "Artículo 1°.Del objeto y alcance.",
+      "number_normalized": "1d",
+      "title": "Del objeto y alcance",
+      "text": "Artículo 1°.Del objeto y alcance.La presente ley tiene por finalidad el fortalecimiento de la capacidad institucional de la Superintendencia Nacional de Salud en materia sancionatoria.\n\nAdicionalmente se redefinen las competencias de la Superintendencia, en materia de reintegro de recursos apropiados o reconocidos sin justa causa y en lo que respecta a la función jurisdiccional y de conciliación, modificando también en esta última, los términos procesales para decidir los asuntos de su conocimiento.\n\nFinalmente, se adoptan medidas encaminadas a mitigar los efectos negativos de los procesos de reorganización en el flujo de recursos y pago de acreencias de las entidades que intervienen en estos, definiendo nuevas competencias en materia contable.",
+      "canonical_id": "co:ley:1949:2019:art:1d",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181042",
+      "number": "Artículo 1°.Del objeto y alcance.",
+      "number_normalized": "1d",
+      "title": "Del objeto y alcance",
+      "text": "Artículo 1°.Del objeto y alcance.La presente ley tiene por finalidad el fortalecimiento de la capacidad institucional de la Superintendencia Nacional de Salud en materia sancionatoria.\n\nAdicionalmente se redefinen las competencias de la Superintendencia, en materia de reintegro de recursos apropiados o reconocidos sin justa causa y en lo que respecta a la función jurisdiccional y de conciliación, modificando también en esta última, los términos procesales para decidir los asuntos de su conocimiento.\n\nFinalmente, se adoptan medidas encaminadas a mitigar los efectos negativos de los procesos de reorganización en el flujo de recursos y pago de acreencias de las entidades que intervienen en estos, definiendo nuevas competencias en materia contable.",
+      "canonical_id": "co:ley:1949:2019:art:1d",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181043",
+      "number": "Artículo 2°",
+      "number_normalized": "2",
+      "title": "Tipos de sanciones administrativas",
+      "text": "Artículo 2°. Modifíquese el artículo 131 de la Ley 1438 de 2011, el cual quedará así:\n\nArtículo 131.Tipos de sanciones administrativas. En ejercicio de la función de control sancionatorio y en desarrollo del procedimiento que para el efecto se haya previsto, la Superintendencia Nacional de Salud podrá imponer las siguientes sanciones:\n\n1. Amonestación escrita.\n\n2. Multas entre doscientos (200) y hasta ocho mil (8.000) salarios mínimos legales mensuales vigentes para personas jurídicas, y entre (50) y hasta (2.000) salarios mínimos legales mensuales vigentes para las personas naturales.\n\n3. Multas sucesivas, para las personas jurídicas de hasta tres mil (3.000) salarios mínimos mensuales legales vigentes, y para el caso de las personas naturales de hasta trescientos (300) salarios mínimos mensuales legales vigentes, cuando en un acto administrativo de la Superintendencia Nacional de Salud se imponga una obligación no dineraria y no se cumpla en el término concedido.\n\n4. Revocatoria total o parcial de la autorización de funcionamiento, suspensión del certificado de autorización y/o el cierre temporal o definitivo de uno o varios servicios, en los eventos en que resulte procedente.\n\n5. Remoción de representantes legales y/o revisores fiscales en los eventos en que se compruebe que autorizó, ejecutó o toleró con dolo o culpa grave conductas violatorias de las normas del Sistema de Seguridad Social en Salud.\n\nParágrafo 1°.El monto de las multas se liquidará teniendo en cuenta el valor del salario mínimo legal mensual vigente a la fecha de expedición de la resolución sancionatoria, y el pago de aquellas que se impongan a título personal debe hacerse con recursos diferentes a los de la entidad. En el caso de que las sanciones se impongan a personas jurídicas, deberán ser asumidas con su patrimonio y en ningún caso para su pago se podrá acudir a los recursos del Sistema General de Seguridad Social en Salud. Las multas se aplicarán sin perjuicio de la facultad de revocatoria de la autorización de funcionamiento y la remoción de los representantes legales y/o revisores fiscales cuando a ello hubiere lugar.\n\nCuando en el proceso administrativo sancionatorio se encuentren posibles infracciones relacionadas con el mal manejo de los recursos a cargo de personas naturales que sean sujetos vigilados de la Superintendencia Nacional de Salud, se iniciará proceso administrativo sancionatorio en su contra.\n\nParágrafo 2°. Los actos administrativos expedidos en el marco del procedimiento administrativo sancionatorio de la Superintendencia Nacional de Salud podrán contener órdenes o instrucciones dirigidas al propio infractor y/o a otros sujetos de inspección, vigilancia y control que tengan relación directa o indirecta con la garantía del servicio público esencial de salud en el caso, con el propósito de superar la situación crítica o irregular de que dio lugar a la investigación administrativa y evitar que la conducta sancionada se repita. El incumplimiento de dichas órdenes o instrucciones dará lugar a la imposición de las multas sucesivas a las que se refiere el artículo tercero numeral 3° de la presente ley.\n\nParágrafo 3°.Quienes hayan sido sancionados administrativamente de conformidad con lo dispuesto en el numeral 5° de este artículo, quedarán inhabilitados hasta por un término de quince (15) años para el ejercicio de cargos que contemplen la administración de los recursos públicos del Sistema General de Seguridad Social en Salud. Esta inhabilidad se aplicará siempre de forma gradual y proporcional a la gravedad de la conducta.\n\nLa Superintendencia Nacional de Salud adoptará los criterios técnicos y jurídicos necesarios para la adecuadadosificación de la inhabilidad.\n\nParágrafo4°. Cuando proceda la sanción determinada en el numeral 5 del presente artículo, el reemplazo o designación del nuevo representante legal y/o revisor fiscal removido, estará a cargo de la misma entidad a quien le competa realizar el nombramiento, conforme a la normatividad que regule la materia.\n\nParágrafo 5°. Las sanciones administrativas impuestas no eximen de la responsabilidad civil, fiscal, penal o disciplinaria a que haya lugar.\n\nParágrafo 6°.Para efectos de la imposición de las sanciones acá previstas, la Superintendencia Nacional de Salud aplicará el proceso administrativo sancionatorio establecido en el artículo 128 de la Ley 1438 de 2011, a excepción de las sanciones derivadas de la conducta descrita en el numeral 10 del artículo 3° de esta ley, la cual solo será excusada por evento de fuerza mayor, que deberá ser acreditada por el infractor dentro de los 5 días hábiles siguientes a su ocurrencia. La Superintendencia Nacional de Salud diseñará un procedimiento y una metodología sancionatoria para la imposición de sanciones por el incumplimiento en el reporte de información.\n\nJURISPRUDENCIA[Mostrar]\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:2",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181044",
+      "number": "Artículo 3°.",
+      "number_normalized": "3",
+      "title": "Infracciones administrativas",
+      "text": "Artículo 3°.Modifíquese el artículo 130 de la Ley 1438 de 2011, el cual quedará así:\n\nArtículo 130.Infracciones administrativas. La Superintendencia Nacional de Salud impondrá sanciones de acuerdo con la conducta o infracción investigada, sin perjuicio de lo dispuesto en otras disposiciones del Sistema General de Seguridad Social en Salud, así:\n\n1. Infringir la Ley 1098 de 2006 en lo relativo a la prestación de servicios de salud.\n\n2. No dar aplicación a los mandatos de la Ley 1751 de 2015, en lo correspondiente a la prestación de los servicios de salud.\n\n3. Aplicar preexistencias a los afiliados por parte de la Entidad Promotora de Salud.\n\n4. Impedir u obstaculizar la atención de urgencias.\n\n5. Incumplir las normas de afiliación o dificultar dicho proceso.\n\n6. Incumplir con los beneficios a los cuales tienen derecho todos los afiliados al Sistema General de Seguridad Social en Salud en Colombia, en especial, con la negociación de los medicamentos, procedimientos, tecnologías, terapias y otros que se encuentran incluidos en el Plan Obligatorio de Salud.\n\n7. Impedir o atentar contra la selección de organismos e instituciones del Sistema de Seguridad Social Integral, por parte del empleador y, en general, por cualquier persona natural o jurídica.\n\n8. La violación de la normatividad vigente sobre la prestación del servicio público de salud y el Sistema General de Seguridad Social en Salud.\n\n9. Efectuar por un mismo servicio o prestación un doble cobro o pago al Sistema General de Seguridad Social en Salud.\n\n10. Efectuar cobros al Sistema General de Seguridad Social en Salud con datos inexactos o suministrando información falsa.\n\n11. No reportar información con calidad, cobertura, oportunidad, pertinencia, fluidez y transparencia para el ejercicio de las funciones de inspección, vigilancia y control de la Superintendencia Nacional de Salud y aquella que solicite el Ministerio de Salud y Protección Social en el marco de sus competencias.\n\n12. Obstruir las funciones de inspección, vigilancia y control de la Superintendencia Nacional de Salud por renuencia en el suministro de información, impedir o no autorizar el acceso a sus archivos e instalaciones.\n\n13. El no reconocimiento, el reconocimiento inoportuno, el pago inoportuno o el no pago de las prestaciones económicas en el Sistema General de Seguridad Social en Salud.\n\n14. Incumplir los compromisos obligatorios de pago y/o depuración de cartera producto de las mesas de saneamiento de cartera, acuerdos conciliatorios y/o cualquier otro acuerdo suscrito entre las Instituciones Prestadoras de Servicios de Salud y las Entidades Promotoras de Salud del Régimen Subsidiado y del Contributivo o entre estas y cualquier otra entidad de los regímenes especiales o de excepción.\n\n15. No brindar un diagnóstico oportuno, entendido como el deber que tienen las entidades responsables de prestar servicios de salud en aras de determinar el estado de salud de sus usuarios, de manera que se impida o entorpezca el tratamiento oportuno.\n\n16. Aplicar descuentos directos, sobre los pagos a realizar a los prestadores de servicios de salud sin previa conciliación con estos, en los eventos en que las entidades responsables de pago efectúen reintegros de recursos a la Administradora de Recursos del Sistema General de Seguridad Social en Salud (ADRES). En todo caso, se respetarán los acuerdos de voluntades suscritos entre las entidades, en relación con los pagos y sus descuentos.\n\n17. Incumplir las instrucciones y órdenes impartidas por la Superintendencia Nacional de Salud.\n\n18. Incumplir los planes de mejoramiento suscritos en ejercicio de las funciones de inspección y vigilancia de la Superintendencia Nacional de Salud.\n\n19. Incumplir con las normas que regulan el flujo de recursos y el financiamiento del Sistema General de Seguridad Social en Salud.\n\n20. Incumplir los términos y condiciones del trámite de glosas a las facturas por servicios de salud, impedir la radicación de las facturas e imponer causales de glosas y devoluciones injustificadas o inexistentes.\n\n21. Incurrir en las conductas establecidas en el artículo 133 de la Ley 1438 de 2011.\n\nParágrafo 1°.En los casos en los que, como resultado de las investigaciones adelantadas por la Superintendencia Nacional de Salud, se compruebe que cualquier sujeto vigilado ha cometido una o más infracciones previstas en el presente artículo, por una razón atribuible a cualquier otra entidad sujeta a la vigilancia y control de la Superintendencia Nacional de Salud, este iniciará y/o vinculará a dicho sujeto al proceso administrativo sancionatorio.\n\nParágrafo 2°.En el proceso sancionatorio de la Superintendencia Nacional de Salud se atenderán los criterios eximentes de responsabilidad regulados por la ley respecto de cada una de las conductas señaladas en el presente artículo cuando haya lugar a ello.\n\nParágrafo 3°.La Superintendencia Nacional de Salud no es competente para adelantar investigaciones administrativas respecto de la praxis en los servicios de salud.\n\nJURISPRUDENCIA[Mostrar]\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:3",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181046",
+      "number": "Artículo 4°.",
+      "number_normalized": "4",
+      "title": "Sujetos de sanciones administrativas",
+      "text": "Artículo 4°.Adiciónese al Título VII de la Ley 1438 de 2011, los artículos 130A, 130B y 130C con sus respectivos parágrafos, los cuales quedarán así:\n\nArtículo 130A.Sujetos de sanciones administrativas. Sin perjuicio de lo establecido en el artículo 121 de la Ley 1438 de 2011, serán sujetos de las sanciones administrativas que imponga la Superintendencia Nacional de Salud entre otros los siguientes: Las personas jurídicas sujetas a la inspección, vigilancia y control de la Superintendencia Nacional de Salud.\n\nLos representantes legales de las entidades públicas y privadas, directores o secretarios de salud o quienes hagan sus veces, jefes de presupuesto, los revisores fiscales, tesoreros y demás funcionarios responsables de la administración y manejo de los recursos del sector salud en las entidades territoriales, funcionarios y empleados del sector público y particulares que cumplan funciones públicas de forma permanente o transitoria.\n\nArtículo 130B.Caducidad de la facultad sancionatoria de la Superintendencia Nacional de Salud.La facultad que tiene la Superintendencia Nacional de Salud para imponer sanciones, caduca a los cinco (5) años de haber sucedido el hecho, la conducta u omisión que pudiere ocasionarlas, término dentro del cual el acto administrativo sancionatorio debe haber sido expedido y notificado. Tratándose de un hecho u omisión continuada, el término empezará a correr desde el día siguiente a aquel en que cesó la infracción. En todo caso, mientras la conducta o infracción que vulnera el Sistema General de Seguridad Social en Salud y el Derecho a la Salud persistan ininterrumpidamente, la sanción podrá imponerse en cualquier tiempo.\n\nEn contra de las decisiones administrativas definitivas en materia sancionatoria emitidas por la Superintendencia Nacional de Salud procederán los recursos establecidos en la forma y términos previstos en el procedimiento administrativo general y común. Para resolverlos, la Superintendencia contará con un término de dos (2) años, contados a partir del día siguiente al de su debida y oportuna interposición. Transcurrido este plazo sin que se hubieran emitido las decisiones correspondientes se configurará el silencio administrativo positivo.\n\nParágrafo 1°. El término de excepción propuesto en este artículo para resolver los recursos de vía gubernativa se aplicará por el término de tres años (3) a partir de la entrada en vigencia de la presente ley. Vencido este tiempo se aplicará el término de un (1) año para resolver recursos conforme a lo estipulado en el artículo 52 de la Ley 1437 de 2011.\n\nArtículo 130C.Competencia preferente.En cualquiera de las etapas del ejercicio de las funciones de inspección, vigilancia y control, la Superintendencia Nacional de Salud podrá asumir la competencia preferente respecto de los asuntos de su competencia que estén a cargo de otros órganos de inspección, vigilancia y control del Sistema General de Seguridad Social en Salud, en cuyo desarrollo se podrá iniciar, proseguir o remitir cualquier actuación, investigación o juzgamiento garantizando el derecho al debido proceso.\n\nParágrafo.Acogida la competencia preferente frente a las Instituciones Prestadoras de Salud sobre el cumplimiento de cualquiera de las condiciones o requisitos previstos para el otorgamiento de la habilitación y permanencia dentro del Sistema General de Seguridad Social en Salud, la Superintendencia Nacional de Salud bajo su propio procedimiento aplicará las medidas sanitarias y preventivas de seguridad previstas en la Ley 9 de 1979, y las sanciones administrativas determinadas en la presente ley.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:4",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181047",
+      "number": "Artículo 5°.",
+      "number_normalized": "5",
+      "title": "Criterios agravantes y atenuantes de la responsabilidad administrativa",
+      "text": "Artículo 5°.Modifíquese el artículo 134 de la Ley 1438 de 2011, el cual quedará así:\n\nArtículo 134.Criterios agravantes y atenuantes de la responsabilidad administrativa.Son circunstancias agravantes de la responsabilidad de los sujetos de sanciones administrativas las siguientes:\n\n1. El grado de culpabilidad.\n\n2. La trascendencia social de la falta, el perjuicio causado o el impacto que la conducta tenga sobre el Sistema General de Seguridad Social en Salud en función de la tecnología en salud requerida.\n\n3. La infracción recaiga sobre personas en debilidad manifiesta o en sujetos de especial protección.\n\n4. Poner en riesgo la vida o la integridad física de la persona, en especial de pacientes con enfermedades crónicas o catastróficas.\n\n5. Obtener beneficio con la infracción para sí o un tercero.\n\n6. La reincidencia en la conducta infractora.\n\n7. Obstruir o dilatar las investigaciones administrativas.\n\n8. La existencia de antecedentes en relación con infracciones al régimen de Seguridad Social en Salud, al régimen de control de precios de medicamentos o dispositivos médicos.\n\n9. Haber sido sancionado o amonestado con anterioridad por infracciones que atentan contra el Sistema General de Seguridad Social en Salud.\n\nSon circunstancias que atenúan la responsabilidad de los sujetos de sanciones administrativas las siguientes:\n\n1. El grado de colaboración del infractor con la investigación.\n\n2. Reconocimiento o aceptación expresa de la infracción antes de emitir el acto administrativo definitivo dentro de la primera oportunidad de defensa mediante la presentación de descargos.\n\n3. Compensar o corregir la infracción administrativa antes de emitir fallo administrativo sancionatorio.\n\n4. La capacidad económica del sujeto de sanciones, probada con los ingresos y obligaciones a cargo o, según el caso, con la categorización del ente territorial para el respectivo año en que se estudia la infracción.\n\nParágrafo 1°.La Superintendencia Nacional de Salud, en el término de seis (6) meses contados a partir de la entrada en vigencia de la presente ley, adoptará los criterios técnicos y jurídicos necesarios para la adecuada dosificación de las sanciones.\n\nParágrafo 2°.Las modificaciones introducidas en la presente ley se aplicarán a los procedimientos administrativos sancionatorios que se inicien después de su entrada en vigencia, para aquellos iniciados bajo el régimen legal anterior se sujetarán al que ya traían.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:5",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181048",
+      "number": "Artículo 6°.",
+      "number_normalized": "6",
+      "title": "Función Jurisdiccional de la Superintendencia Nacional de Salud",
+      "text": "Artículo 6°.Modifíquese el artículo 41 de la Ley 1122 de 2007, el cual quedará así:\n\nArtículo 41.Función Jurisdiccional de la Superintendencia Nacional de Salud.Con el fin de garantizar la efectiva prestación del derecho a la salud de los usuarios del Sistema General de Seguridad Social en Salud y en ejercicio del artículo 116 de la Constitución Política, la Superintendencia Nacional de Salud podrá conocer y fallar en derecho, y con las facultades propias de un juez en los siguientes asuntos:\n\na) Cobertura de los servicios, tecnologías en salud o procedimientos incluidos en el Plan de Beneficios en Salud (Plan Obligatorio de Salud), cuando su negativa por parte de las Entidades Promotoras de Salud o entidades que se les asimilen ponga en riesgo o amenace la salud del usuario, consultando la Constitución Política y las normas que regulen la materia.\n\nb) Reconocimiento económico de los gastos en que haya incurrido el afiliado en los siguientes casos:\n\n1. Por concepto de atención de urgencias en caso de ser atendido en una Institución Prestadora de Servicios de Salud (IPS) que no tenga contrato con la respectiva Entidad Promotora de Salud (EPS) o entidades que se le asimilen.\n\n2. Cuando el usuario haya sido expresamente autorizado por la Entidad Promotora de Salud (EPS) o entidades que se le asimilen para una atención específica.\n\n3. En los eventos de incapacidad, imposibilidad, negativa injustificada o negligencia demostrada de la Entidad Promotora de Salud o entidades que se le asimilen para cubrir las obligaciones para con sus usuarios.\n\nc) Conflictos derivados de la multiafiliación dentro del Sistema General de Seguridad Social en Salud y de este con los regímenes exceptuados.\n\nd) Conflictos relacionados con la libre elección de entidades aseguradoras, con la libre elección de Instituciones Prestadoras de Servicios de Salud dentro de la red conformada por la entidad aseguradora; y conflictos relacionados con la movilidad dentro del Sistema General de Seguridad Social en Salud.\n\ne) Conflictos entre las Entidades Administradoras de Planes de Beneficios y/o entidades que se le asimilen y sus usuarios por la garantía de la prestación de los servicios y tecnologías no incluidas en el Plan de Beneficios, con excepción de aquellos expresamente excluidos de la financiación con recursos públicos asignados a la salud.\n\nf) Conflictos derivados de las devoluciones o glosas a las facturas entre entidades del Sistema General de Seguridad Social en Salud.\n\nLa función jurisdiccional de la Superintendencia Nacional de Salud se desarrollará mediante un procedimiento sumario, con arreglo a los principios de publicidad, prevalencia del derecho sustancial, economía, celeridad y eficacia, garantizando debidamente los derechos al debido proceso, defensa y contradicción.\n\nLa demanda debe ser dirigida a la Superintendencia Nacional de Salud, debe expresar con la mayor claridad las circunstancias de tiempo, modo y lugar; la pretensión, el derecho que se considere violado, así como el nombre y dirección de notificación del demandante y debe adjuntar los documentos que soporten los hechos.\n\nLa demanda podrá ser presentada sin ninguna formalidad o autenticación; por memorial, u otro medio de comunicación escrito. No será necesario actuar por medio de apoderado, esto sin perjuicio de las normas vigentes para la representación y el derecho de postulación. En el trámite del procedimiento jurisdiccional prevalecerá la informalidad.\n\nLa Superintendencia Nacional de Salud emitirá sentencia dentro de los siguientes términos:\n\nDentro de los 20 días siguientes a la radicación de la demanda en los asuntos de competencia contenidos en los literales a), c), d) y e) del presente artículo.\n\nDentro de los 60 días siguientes a la radicación de la demanda en el asunto contenido en el literal b) del presente artículo.\n\nDentro de los 120 días siguientes a la radicación de la demanda en el asunto contenido en el literal f) del presente artículo.\n\nParágrafo 1°. Las providencias emitidas dentro del proceso jurisdiccional se notificarán por el medio más ágil y efectivo. La sentencia podrá ser apelada dentro de los 3 días siguientes a su notificación. En caso de ser concedido el recurso, el expediente deberá ser remitido al Tribunal Superior del Distrito Judicial - Sala Laboral del domicilio del apelante.\n\nParágrafo 2°.La Superintendencia Nacional de Salud solo podrá conocer y fallar estos asuntos a petición de parte. No podrá conocer de ningún asunto que por virtud de las disposiciones legales vigentes deba ser sometido al proceso de carácter ejecutivo o acciones de carácter penal.\n\nParágrafo 3°.La Superintendencia Nacional de Salud en el ejercicio de la función jurisdiccional podrá adoptar las siguientes medidas cautelares:\n\n1. Ordenar dentro del proceso judicial las medidas provisionales para la protección del usuario del Sistema.\n\n2. Definir en forma provisional la entidad a la cual se entiende que continúa afiliado o en la que deberá ser atendido el demandante mientras se resuelve el conflicto que se suscite en materia de multiafiliación, traslado o movilidad dentro del Sistema General de Seguridad Social en Salud.\n\nPara tal efecto, el funcionario competente en ejercicio de las funciones jurisdiccionales consultará, antes de emitir sentencia definitiva o la medida cautelar, la doctrina médica, las guías, los protocolos o las recomendaciones del Comité Técnico-Científico o el médico tratante según el caso.\n\nParágrafo 4°. Los procesos presentados con fundamento en el literal g) del artículo 41 de la Ley 1122 de 2007, pendientes de decisión al momento de entrar en vigencia la presente reforma serán decididos por la Superintendencia Nacional de Salud según las reglas allí previstas.\n\nJURISPRUDENCIA[Mostrar]\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:6",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181050",
+      "number": "Artículo 7°.",
+      "number_normalized": "7",
+      "title": "Reintegro de recursos apropiados o reconocidos sin justa causa",
+      "text": "Artículo 7°.Modifíquese el artículo 3° del Decreto Ley 1281 de 2002, el cual quedará así:\n\nArtículo 3°.Reintegro de recursos apropiados o reconocidos sin justa causa.Cuando la Administradora de los Recursos del Sistema General de Seguridad Social en Salud (ADRES) o quien haga sus veces o cualquier entidad o autoridad pública que en el ejercicio de sus competencias o actividades como participante o actor en el flujo de recursos del Sistema General de Seguridad Social en Salud detecte que se presentó apropiación sin justa causa de los mismos, solicitará la aclaración del hallazgo a la persona involucrada, para lo cual remitirá la información pertinente, analizará la respuesta dada por la misma y, en caso de establecer que se configuró la apropiación o reconocimiento sin justa causa de recursos, ordenará su reintegro, actualizado al Índice de Precios al Consumidor, IPC, dentro de los plazos establecidos por el Ministerio de Salud y Protección Social.\n\nUna vez quede en firme el acto administrativo que ordena el reintegro, de conformidad con el procedimiento definido, la ADRES o quien haga sus veces o cualquier entidad o autoridad pública que, en el ejercicio de sus competencias o actividades como participante o actor en el flujo de recursos del Sistema General de Seguridad Social en Salud, compensará su valor contra los reconocimientos que resulten a favor del deudor por los diferentes procesos que ejecuta ante la entidad. En todo caso, los valores a reintegrar serán actualizados con el Índice de Precios al Consumidor (IPC).\n\nCuando la apropiación o reconocimiento a que alude este artículo sea evidenciada por el actor que recibe los recursos, este deberá reintegrarlos actualizados con el Índice de Precios al Consumidor (IPC), en el momento en que detecte el hecho.\n\nEn los casos en que la ADRES o quien haga sus veces o la autoridad o entidad pública que en el ejercicio de sus competencias o actividades como participante o actor en el flujo de recursos del Sistema General de Seguridad Social en Salud identifique en el proceso de reintegro actos u omisiones presuntamente constitutivas de infracciones de las normas del Sistema, informará de manera inmediata y con las pruebas correspondientes a la Superintendencia Nacional de Salud, para que adelante las investigaciones administrativas a que haya lugar.\n\nParágrafo 1°. Los procesos que hubiesen sido allegados a la Superintendencia Nacional de Salud hasta la entrada en vigencia de la presente ley culminarán su trámite y se les aplicarán las reglas previstas en el régimen jurídico anterior. En todo caso, los recursos del aseguramiento en Salud apropiados o reconocidos sin justa causa involucrados en procedimientos en cursos serán reintegrados actualizándolos con el Índice de Precios al Consumidor (IPC).\n\nLos procesos de reintegro que a la entrada en vigencia de la presente ley no hayan sido recibidos en la Superintendencia Nacional de Salud, se regirán y culminarán su trámite bajo las disposiciones previstas en el presente artículo.\n\nJURISPRUDENCIA[Mostrar]\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:7",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181051",
+      "number": "Artículo 8°.Límites a los procesos de reorganización institucional",
+      "number_normalized": "8l",
+      "title": "Límites a los procesos de reorganización institucional",
+      "text": "Artículo 8°.Límites a los procesos de reorganización institucional. El Gobierno nacional reglamentará dentro de los cuatro (4) meses siguientes a la vigencia de la presente ley, los límites específicos a los procesos de reorganización institucional adelantados por las Entidades Promotoras de Salud ante la Superintendencia Nacional de Salud, cuando la entidad solicitante de esta figura se encuentre sometida a una medida especial y regulará las condiciones de revocación de autorización de funcionamiento cuando se presente un incumplimiento a las condiciones aprobadas en dichos procesos.",
+      "canonical_id": "co:ley:1949:2019:art:8l",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181052",
+      "number": "Artículo 9°.Garantías para el pago de acreencias en procesos de reorganización institucional",
+      "number_normalized": "9g",
+      "title": "Garantías para el pago de acreencias en procesos de reorganización institucional",
+      "text": "Artículo 9°.Garantías para el pago de acreencias en procesos de reorganización institucional. Los activos de las Entidades Administradoras de Planes de Beneficios que participen en un proceso de reorganización institucional y que no hayan sido transferidos a la nueva entidad resultante del proceso de reorganización, servirán de garantías para el pago de acreencias de la nueva entidad.",
+      "canonical_id": "co:ley:1949:2019:art:9g",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181054",
+      "number": "Artículo 10.Instrucciones contables",
+      "number_normalized": "10",
+      "title": "Instrucciones contables",
+      "text": "Artículo 10.Instrucciones contables. Adiciónese el parágrafo 2° al numeral 2 del artículo 10 de la Ley 1314 de 2009, el cual quedará así:\n\n“[...] Parágrafo 2°. Para efectos de determinar el cumplimiento de las condiciones financieras y de solvencia aplicables a las Entidades Administradoras de Planes de Beneficios y demás sujetos vigilados, la Superintendencia Nacional de Salud, podrá fijar criterios e instrucciones contables, respecto del reconocimiento, presentación y revelación de los estados financiaros, en cumplimiento de los marcos técnicos normativos de contabilidad e información financiera, a que hace referencia la presente ley.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:10",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181055",
+      "number": "Artículo 11.",
+      "number_normalized": "11",
+      "title": "Recursos por multas",
+      "text": "Artículo 11.Modifíquese el artículo 120 de la Ley 1438 de 2011 un parágrafo, el cual quedará así:\n\nArtículo 120.Recursos por multas.Las multas impuestas por la Superintendencia Nacional de Salud serán apropiadas en el Presupuesto General de la Nación como recursos adicionales de la Superintendencia Nacional de Salud.\n\nParágrafo.Para cada vigencia, el Gobierno nacional determinará el porcentaje del recaudo total por concepto de multas impuestas por la Superintendencia Nacional de Salud que se destinará a la sostenibilidad financiera del Sistema de Seguridad Social en Salud.\n\nAfecta la vigencia de:[Mostrar]",
+      "canonical_id": "co:ley:1949:2019:art:11",
+      "notes": [],
+      "previous_versions": []
+    },
+    {
+      "art_id": "30181056",
+      "number": "Artículo 12.Vigencia",
+      "number_normalized": "12",
+      "title": "Vigencia",
+      "text": "Artículo 12.Vigencia. La presente ley rige a partir de la fecha de su promulgación.",
+      "canonical_id": "co:ley:1949:2019:art:12",
+      "notes": [],
+      "previous_versions": []
+    }
+  ],
+  "modifications": [],
+  "jurisprudence": [
+    {
+      "article_affected": "Artículo 2",
+      "raw_type": "Declarada inhibida",
+      "normalized_type": "UNKNOWN",
+      "mapped": false,
+      "source_text": "Sentencia de la Corte Constitucional  C-496 de 2019",
+      "source_suin_id": "30038747",
+      "source_anchor": "ver_30209613",
+      "context": "( parcial )"
+    },
+    {
+      "article_affected": "Artículo 3",
+      "raw_type": "Declarada inhibida",
+      "normalized_type": "UNKNOWN",
+      "mapped": false,
+      "source_text": "Sentencia de la Corte Constitucional  C-496 de 2019",
+      "source_suin_id": "30038747",
+      "source_anchor": "ver_30209613",
+      "context": "( parcial )"
+    },
+    {
+      "article_affected": "Artículo 6",
+      "raw_type": "Declarada inhibida por ineptitud sustantiva de la demanda",
+      "normalized_type": "UNKNOWN",
+      "mapped": false,
+      "source_text": "Sentencia de la Corte Constitucional  C-122 de 2020",
+      "source_suin_id": "30039121",
+      "source_anchor": "ver_30216555",
+      "context": "(contra del parágrafo 1º )"
+    },
+    {
+      "article_affected": "Artículo 7",
+      "raw_type": "Declarada exequible",
+      "normalized_type": "UNKNOWN",
+      "mapped": false,
+      "source_text": "Sentencia de la Corte Constitucional  C-162 de 2021",
+      "source_suin_id": "30041796",
+      "source_anchor": "ver_30246350",
+      "context": "(por los cargos relacionados con el presunto desconocimiento del debido proceso administrativo y con la violación del principio de unidad de materia. )"
+    }
+  ],
+  "toc": [
+    {
+      "level": "articulo",
+      "text": "Artículo [1]",
+      "anchor": "30181042"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [2]",
+      "anchor": "30181043"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [3]",
+      "anchor": "30181044"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [4]",
+      "anchor": "30181046"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [5]",
+      "anchor": "30181047"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [6]",
+      "anchor": "30181048"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [7]",
+      "anchor": "30181050"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [8]",
+      "anchor": "30181051"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [9]",
+      "anchor": "30181052"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [10]",
+      "anchor": "30181054"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [11]",
+      "anchor": "30181055"
+    },
+    {
+      "level": "articulo",
+      "text": "Artículo [12]",
+      "anchor": "30181056"
+    }
+  ]
+}
