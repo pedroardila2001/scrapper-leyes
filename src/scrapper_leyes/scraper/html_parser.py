@@ -218,6 +218,7 @@ def _extract_articles(
     anio = metadata.get("anio", "")
 
     seen_art_ids: set[str] = set()
+    seen_numbers: set[str] = set()
 
     # Find all <a name="ver_XXXXX"> anchors that precede article divs
     for anchor in soup.find_all("a", attrs={"name": re.compile(r"^ver_\d+")}):
@@ -250,6 +251,12 @@ def _extract_articles(
         art_num_norm = normalize_article_number(strong_text)
         if art_num_norm is None:
             continue
+
+        # Dedup by article number: SUIN anchors some articles twice (original +
+        # modified-version anchor) with identical text. Keep the first.
+        if art_num_norm in seen_numbers:
+            continue
+        seen_numbers.add(art_num_norm)
 
         seen_art_ids.add(art_id)
 

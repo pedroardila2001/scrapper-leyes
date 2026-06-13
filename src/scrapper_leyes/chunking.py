@@ -357,10 +357,17 @@ def chunk_norm(
     }
 
     chunks: list[Chunk] = []
+    seen_cids: set[str] = set()
     for art in parsed.get("articles", []):
         body = (art.get("text") or "").strip()
         if not body:
             continue
+        # Defensive dedup: SUIN anchors some articles twice → the parser may
+        # emit the same article (same canonical_id) more than once. Keep first.
+        _cid_check = art.get("canonical_id") or art.get("art_id") or art.get("number")
+        if _cid_check in seen_cids:
+            continue
+        seen_cids.add(_cid_check)
         number = art.get("number", "?")
         num_norm = art.get("number_normalized")
         art_id = art.get("art_id") or ""
