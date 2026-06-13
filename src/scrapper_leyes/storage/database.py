@@ -126,12 +126,18 @@ class Database:
         ("external_id", "TEXT"),
         ("source_url", "TEXT"),
         ("canonical_id", "TEXT"),
+        # Biblioteca / entity taxonomy
+        ("rama", "TEXT"),
+        ("cabeza", "TEXT"),
+        ("entidad_norm", "TEXT"),
     )
 
     # Indexes that depend on the new columns — created only after migration.
     _MIGRATION_INDEXES = """
     CREATE INDEX IF NOT EXISTS idx_catalog_source ON catalog(source);
     CREATE INDEX IF NOT EXISTS idx_catalog_canonical ON catalog(canonical_id);
+    CREATE INDEX IF NOT EXISTS idx_catalog_rama ON catalog(rama);
+    CREATE INDEX IF NOT EXISTS idx_catalog_entidad_norm ON catalog(entidad_norm);
     -- Dedup sentencias by (canonical_id, source). Restricted to SENTENCIA so it
     -- never collapses legislation rows where numero repeats across entidades
     -- (e.g. two Resolución 1 de 2020 from different entities).
@@ -154,6 +160,7 @@ class Database:
         self.conn.executescript(self._MIGRATION_INDEXES)
         self.conn.commit()
         self._backfill_source_columns()
+        self._backfill_taxonomy()
 
     def _backfill_source_columns(self) -> None:
         """Populate source/external_id/canonical_id for pre-F0 rows."""
@@ -177,6 +184,35 @@ class Database:
             updates,
         )
         self.conn.commit()
+
+    def _backfill_taxonomy(self, force: bool = False) -> int:
+        """Classify rows into rama/cabeza/entidad_norm for the biblioteca.
+
+        One-time by default (only rows where rama IS NULL); ``force=True`` to
+        reclassify everything after improving the taxonomy.
+        """
+        from scrapper_leyes.taxonomia import classify, entidad_key
+
+        where = "" if force else " WHERE rama IS NULL"
+        rows = self.conn.execute(
+            f"SELECT id, tipo, sector, entidad, corte FROM catalog{where}"
+        ).fetchall()
+        if not rows:
+            return 0
+        updates: list[tuple[str, str, str, int]] = []
+        for r in rows:
+            rama, cabeza, _ = classify(r["tipo"], r["sector"], r["entidad"], r["corte"])
+            updates.append((rama, cabeza, entidad_key(r["entidad"]), r["id"]))
+        self.conn.executemany(
+            "UPDATE catalog SET rama = ?, cabeza = ?, entidad_norm = ? WHERE id = ?",
+            updates,
+        )
+        self.conn.commit()
+        return len(updates)
+
+    def reclassify_entities(self) -> int:
+        """Force-recompute the biblioteca classification for all rows."""
+        return self._backfill_taxonomy(force=True)
 
     def close(self) -> None:
         self.conn.close()

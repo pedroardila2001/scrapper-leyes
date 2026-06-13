@@ -173,10 +173,13 @@ def get_catalog(
     search: Optional[str] = None,
     scrape_status: Optional[str] = None,
     vigencia: Optional[str] = None,
+    rama: Optional[str] = None,
+    cabeza: Optional[str] = None,
+    entidad_norm: Optional[str] = None,
     limit: int = Query(default=50, le=500),
     offset: int = 0,
 ):
-    """Paginated catalog with filtering."""
+    """Paginated catalog with filtering (incl. biblioteca entity filters)."""
     conn = _get_conn()
     try:
         where_clauses = ["1=1"]
@@ -191,6 +194,15 @@ def get_catalog(
         if vigencia:
             where_clauses.append("vigencia LIKE ?")
             params.append(f"%{vigencia}%")
+        if rama:
+            where_clauses.append("rama = ?")
+            params.append(rama)
+        if cabeza:
+            where_clauses.append("cabeza = ?")
+            params.append(cabeza)
+        if entidad_norm:
+            where_clauses.append("entidad_norm = ?")
+            params.append(entidad_norm)
         if search:
             where_clauses.append(
                 "(numero LIKE ? OR anio LIKE ? OR entidad LIKE ? OR suin_id LIKE ? OR materia LIKE ?)"
@@ -233,6 +245,29 @@ def get_catalog_types():
             ).fetchall()
         ]
         return {"types": tipos}
+    finally:
+        conn.close()
+
+
+# ── Biblioteca (entity taxonomy) ──────────────────────────────────────────
+
+@app.get("/api/biblioteca")
+def get_biblioteca():
+    """Entity taxonomy tree (Rama → cabeza → entidad) with document counts.
+
+    Built from the catalog so it reflects exactly what we have ingested.
+    """
+    from scrapper_leyes.taxonomia import build_library_tree
+
+    conn = _get_conn()
+    try:
+        rows = [
+            dict(r)
+            for r in conn.execute(
+                "SELECT tipo, sector, entidad, corte FROM catalog"
+            ).fetchall()
+        ]
+        return build_library_tree(rows)
     finally:
         conn.close()
 
