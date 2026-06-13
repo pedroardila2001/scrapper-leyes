@@ -3,7 +3,8 @@ import CatalogTable from "./components/CatalogTable";
 import DocumentView from "./components/DocumentView";
 import Dashboard from "./components/Dashboard";
 import GlobalGraph from "./components/GlobalGraph";
-import { Scale, LayoutDashboard, BookOpen, Network } from "lucide-react";
+import Biblioteca from "./components/Biblioteca";
+import { Scale, LayoutDashboard, BookOpen, Network, Library } from "lucide-react";
 import "./App.css";
 
 function Sidebar() {
@@ -23,6 +24,10 @@ function Sidebar() {
         <Link to="/" className={isActive("/")}>
           <LayoutDashboard className="icon" size={18} />
           <span>Dashboard</span>
+        </Link>
+        <Link to="/biblioteca" className={isActive("/biblioteca")}>
+          <Library className="icon" size={18} />
+          <span>Biblioteca</span>
         </Link>
         <Link to="/catalog" className={isActive("/catalog")}>
           <BookOpen className="icon" size={18} />
@@ -49,6 +54,7 @@ function App() {
           <div className="view-container">
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/biblioteca" element={<Biblioteca />} />
               <Route path="/catalog" element={<CatalogTable />} />
               <Route path="/norm/:id" element={<DocumentView />} />
               <Route path="/global" element={<GlobalGraph />} />

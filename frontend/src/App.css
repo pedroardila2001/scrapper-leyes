@@ -515,3 +515,104 @@ nav {
   font-size: 0.72rem;
   font-weight: 500;
 }
+
+/* ── Biblioteca (entity library tree) ────────────────────────────────── */
+
+.biblioteca { max-width: 900px; }
+.biblioteca-head { margin-bottom: 1.25rem; }
+
+.lib-search {
+  position: relative;
+  margin-top: 1rem;
+}
+.lib-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+.lib-search input {
+  width: 100%;
+  padding: 0.7rem 0.9rem 0.7rem 2.4rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+}
+.lib-search input:focus { border-color: var(--accent); }
+
+.lib-tree {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.lib-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+.lib-row:hover { background: var(--bg-hover); }
+.lib-name { flex: 1; }
+.lib-count {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  background: var(--bg-input);
+  border-radius: 999px;
+  padding: 1px 8px;
+  min-width: 2rem;
+  text-align: center;
+}
+.lib-icon { display: inline-flex; color: var(--accent); }
+
+.lib-row-rama { font-weight: 600; color: var(--text-main); }
+.lib-row-cabeza { padding-left: 2rem; font-weight: 500; }
+.lib-row-entidad { padding-left: 3.4rem; color: var(--text-muted); font-size: 0.85rem; }
+.lib-row-all { padding-left: 3.4rem; color: var(--accent); font-size: 0.8rem; font-style: italic; }
+.lib-children { display: flex; flex-direction: column; }
+
+.chev { transition: transform 0.15s ease; color: var(--text-dim); flex: 0 0 auto; }
+.chev.open { transform: rotate(90deg); }
+
+/* ── Active filter chip (Directorio) ─────────────────────────────────── */
+
+.filter-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.chip-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.78rem;
+}
+.chip-clear:hover { color: var(--text-main); border-color: var(--accent); }

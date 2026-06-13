@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const API = "http://localhost:8000";
 const PAGE_SIZE = 30;
@@ -25,12 +25,30 @@ export default function CatalogTable() {
   const [tipoFilter, setTipoFilter] = useState("");
   const [offset, setOffset] = useState(0);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Biblioteca deep-link filters (rama / cabeza / entidad).
+  const rama = searchParams.get("rama") || "";
+  const cabeza = searchParams.get("cabeza") || "";
+  const entidadNorm = searchParams.get("entidad_norm") || "";
+  const entidadLabel = searchParams.get("label") || "";
+  const entityFilter = rama || cabeza || entidadNorm;
+
+  // Reset pagination whenever the entity filter changes.
+  useEffect(() => { setOffset(0); }, [rama, cabeza, entidadNorm]);
+
+  const clearEntityFilter = () => {
+    setSearchParams({});
+  };
 
   const fetchData = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (search) params.set("search", search);
       if (tipoFilter) params.set("tipo", tipoFilter);
+      if (rama) params.set("rama", rama);
+      if (cabeza) params.set("cabeza", cabeza);
+      if (entidadNorm) params.set("entidad_norm", entidadNorm);
       params.set("limit", String(PAGE_SIZE));
       params.set("offset", String(offset));
 
@@ -40,7 +58,7 @@ export default function CatalogTable() {
     } catch (e) {
       console.error("API error", e);
     }
-  }, [search, tipoFilter, offset]);
+  }, [search, tipoFilter, offset, rama, cabeza, entidadNorm]);
 
   useEffect(() => {
     fetchData();
@@ -64,6 +82,19 @@ export default function CatalogTable() {
   return (
     <div className="catalog-container">
       <h2 className="page-title">Directorio Legal</h2>
+
+      {entityFilter && (
+        <div className="filter-chip">
+          <span>
+            Filtrando por{" "}
+            <strong>{entidadLabel || entidadNorm || cabeza || rama}</strong>
+            {cabeza && !entidadNorm ? ` · ${rama}` : ""}
+          </span>
+          <button className="chip-clear" onClick={clearEntityFilter} title="Quitar filtro">
+            <X size={14} /> Quitar
+          </button>
+        </div>
+      )}
 
       <div className="search-bar">
         <input
