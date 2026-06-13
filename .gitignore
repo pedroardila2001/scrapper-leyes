@@ -1,0 +1,10 @@
+# Stray root DB (the real one lives in data/catalog.db)
+/catalog.db
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
