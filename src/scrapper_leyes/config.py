@@ -79,10 +79,10 @@ class Settings:
 
     # ── Chunking ────────────────────────────────────────────────────────
     chunk_max_chars: int = field(
-        default_factory=lambda: int(os.environ.get("CHUNK_MAX_CHARS", "2400"))
+        default_factory=lambda: int(os.environ.get("CHUNK_MAX_CHARS", "3000"))
     )
     chunk_overlap_chars: int = field(
-        default_factory=lambda: int(os.environ.get("CHUNK_OVERLAP_CHARS", "200"))
+        default_factory=lambda: int(os.environ.get("CHUNK_OVERLAP_CHARS", "240"))
     )
 
     # ── Derived paths ───────────────────────────────────────────────────

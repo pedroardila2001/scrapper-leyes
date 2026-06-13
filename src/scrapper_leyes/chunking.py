@@ -35,12 +35,12 @@ from scrapper_leyes.models import (
 # ── Tunables (overridable by callers) ───────────────────────────────────────
 
 # Target body size for a single chunk, in characters. ~4 chars/token, so
-# 2400 chars ≈ 600 tokens — comfortably inside bge-m3's 8192-token window while
-# keeping chunks focused enough for precise retrieval.
-DEFAULT_MAX_CHARS = 2400
-# Overlap carried from the tail of the previous chunk into the next one, so a
-# clause split across a seam is still recoverable on both sides.
-DEFAULT_OVERLAP_CHARS = 200
+# 3000 chars ≈ 750 tokens — comfortably inside bge-m3's 8192-token window while
+# keeping chunks focused. Most articles fit in a single chunk at this size.
+DEFAULT_MAX_CHARS = 3000
+# Overlap carried into a continuation chunk — a WHOLE trailing sentence of the
+# previous chunk (clean boundary), never a mid-word fragment.
+DEFAULT_OVERLAP_CHARS = 240
 
 # Deterministic namespace for chunk UUIDs (frozen — do not change or IDs churn).
 CHUNK_NAMESPACE = uuid.UUID("6f6c6579-6573-4c45-4759-455343485348")
@@ -66,7 +66,10 @@ _WHOLE_DOC_MARKERS = (
     "todo el documento",
 )
 
-_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.;:])\s+")
+# Split only at sentence ends: a period/!/? followed by whitespace and an
+# uppercase letter (or §). Deliberately does NOT split on ';' or ':' so legal
+# enumerations (incisos, "1) …; 2) …") stay intact.
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ§¿¡])")
 
 
 # ── Chunk container ─────────────────────────────────────────────────────────
@@ -132,20 +135,66 @@ def _hard_window(text: str, max_chars: int, overlap: int) -> list[str]:
     return [c for c in out if c]
 
 
+def _pack_sentences(block: str, max_chars: int) -> list[str]:
+    """Split an oversized paragraph at SENTENCE boundaries (never mid-word).
+
+    A single sentence longer than ``max_chars`` (e.g. a huge enumeration with
+    no periods) falls back to a hard char window as a last resort.
+    """
+    pieces: list[str] = []
+    buf = ""
+    for sent in _SENTENCE_SPLIT_RE.split(block):
+        sent = sent.strip()
+        if not sent:
+            continue
+        if len(sent) > max_chars:
+            if buf:
+                pieces.append(buf)
+                buf = ""
+            pieces.extend(_hard_window(sent, max_chars, 0))
+            continue
+        if buf and len(buf) + 1 + len(sent) > max_chars:
+            pieces.append(buf)
+            buf = sent
+        else:
+            buf = f"{buf} {sent}".strip()
+    if buf:
+        pieces.append(buf)
+    return pieces
+
+
+def _apply_sentence_overlap(chunks: list[str], overlap: int) -> list[str]:
+    """Prepend the previous chunk's last whole sentence to each continuation.
+
+    Clean-boundary overlap: never a mid-word fragment. Skipped if the trailing
+    sentence is longer than ``overlap`` (keeps chunk sizes bounded).
+    """
+    out = [chunks[0]]
+    for i in range(1, len(chunks)):
+        sents = [s for s in _SENTENCE_SPLIT_RE.split(chunks[i - 1]) if s.strip()]
+        tail = sents[-1].strip() if sents else ""
+        if tail and len(tail) <= overlap:
+            out.append(f"{tail}\n\n{chunks[i]}")
+        else:
+            out.append(chunks[i])
+    return out
+
+
 def split_text(
     text: str,
     max_chars: int = DEFAULT_MAX_CHARS,
     overlap: int = DEFAULT_OVERLAP_CHARS,
 ) -> list[str]:
-    """Split ``text`` into coherent pieces, never mid-clause when avoidable.
+    """Split ``text`` into coherent pieces, on clean structural boundaries.
 
-    Strategy, in order of preference:
-      1. Keep whole paragraphs (parsed.json joins incisos/parágrafos with
-         ``\\n\\n``, so paragraphs already map to legal sub-units).
-      2. Greedily pack paragraphs until ``max_chars`` would be exceeded.
-      3. A paragraph that is itself too long is split on sentence boundaries.
-      4. A single sentence longer than ``max_chars`` falls back to a char
-         window. Consecutive chunks share ``overlap`` characters of tail.
+    Guarantees a chunk is never cut in the middle of a paragraph:
+      1. Paragraphs (incisos/parágrafos — parsed.json joins them with ``\\n\\n``)
+         are the atomic unit; whole paragraphs are greedily packed up to
+         ``max_chars``.
+      2. A paragraph that alone exceeds ``max_chars`` is split at SENTENCE
+         boundaries (period/!/?), never on ';'/':' nor mid-word.
+      3. Continuation chunks carry the previous chunk's last whole sentence as
+         overlap (clean boundary).
 
     Returns ``[]`` for empty input and ``[text]`` when it already fits.
     """
@@ -155,51 +204,32 @@ def split_text(
     if len(text) <= max_chars:
         return [text]
 
-    # 1–2: explode into atomic units no larger than max_chars.
-    units: list[str] = []
-    for para in re.split(r"\n\s*\n", text):
-        para = para.strip()
-        if not para:
-            continue
-        if len(para) <= max_chars:
-            units.append(para)
-            continue
-        # 3: sentence-level split for an oversized paragraph.
-        buf = ""
-        for sent in _SENTENCE_SPLIT_RE.split(para):
-            sent = sent.strip()
-            if not sent:
-                continue
-            if len(sent) > max_chars:
-                if buf:
-                    units.append(buf)
-                    buf = ""
-                units.extend(_hard_window(sent, max_chars, overlap))  # 4
-                continue
-            if buf and len(buf) + 1 + len(sent) > max_chars:
-                units.append(buf)
-                buf = sent
-            else:
-                buf = f"{buf} {sent}".strip()
-        if buf:
-            units.append(buf)
-
-    # Greedy-pack units into chunks, carrying an overlap tail across seams.
+    blocks = [b.strip() for b in re.split(r"\n\s*\n", text) if b.strip()]
     chunks: list[str] = []
-    current = ""
-    for unit in units:
-        if current and len(current) + 2 + len(unit) > max_chars:
-            chunks.append(current)
-            tail = current[-overlap:] if overlap else ""
-            # Start next chunk from a clean boundary inside the tail.
-            if tail:
-                cut = tail.find(" ")
-                tail = tail[cut + 1 :] if cut != -1 else ""
-            current = f"{tail}\n\n{unit}".strip() if tail else unit
-        else:
-            current = f"{current}\n\n{unit}".strip() if current else unit
-    if current:
-        chunks.append(current)
+    buf: list[str] = []
+    buf_len = 0
+
+    def _flush() -> None:
+        nonlocal buf, buf_len
+        if buf:
+            chunks.append("\n\n".join(buf))
+            buf = []
+            buf_len = 0
+
+    for block in blocks:
+        if len(block) > max_chars:
+            # Oversized paragraph: flush, then split it on sentence boundaries.
+            _flush()
+            chunks.extend(_pack_sentences(block, max_chars))
+            continue
+        if buf and buf_len + 2 + len(block) > max_chars:
+            _flush()
+        buf.append(block)
+        buf_len += len(block) + 2
+    _flush()
+
+    if overlap > 0 and len(chunks) > 1:
+        chunks = _apply_sentence_overlap(chunks, overlap)
     return chunks
 
 

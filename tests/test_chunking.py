@@ -39,6 +39,30 @@ def test_split_text_respects_max_chars_with_overlap_slack():
     assert all(len(p) <= 400 + 60 for p in pieces)
 
 
+def test_split_text_keeps_paragraphs_intact():
+    # Each chunk must consist of whole paragraphs (no mid-paragraph cut) when
+    # paragraphs themselves fit under max_chars.
+    paras = [(f"Inciso {i}: " + "texto " * 30).strip() for i in range(8)]
+    body = "\n\n".join(paras)
+    pieces = split_text(body, max_chars=500, overlap=0)
+    assert len(pieces) > 1
+    for p in pieces:
+        for para in p.split("\n\n"):
+            para = para.strip()
+            if not para:
+                continue
+            # Every emitted paragraph must match a full source paragraph.
+            assert any(para == src for src in paras), f"paragraph fragment: {para!r}"
+
+
+def test_does_not_split_on_semicolons():
+    # An enumeration with ';' must not be cut at the semicolons.
+    body = "El objeto comprende: a) lo uno; b) lo otro; c) lo demás. " + ("relleno " * 60)
+    pieces = split_text(body, max_chars=300, overlap=0)
+    # The enumeration sentence stays whole in one chunk.
+    assert any("a) lo uno; b) lo otro; c) lo demás." in p for p in pieces)
+
+
 def test_split_text_handles_single_oversized_paragraph():
     body = "x" * 5000  # unsplittable blob → hard window
     pieces = split_text(body, max_chars=1000, overlap=100)
