@@ -59,24 +59,42 @@ def catalog() -> None:
 @catalog.command()
 @click.option("--tipo", default=None, help="Filter by norm type (e.g. LEY)")
 @click.option("--limit", default=None, type=int, help="Max records to fetch")
+@click.option(
+    "--dataset",
+    default="legislacion",
+    help="Dataset Socrata a sincronizar: legislacion | cc_sentencias",
+)
 @click.pass_context
-def sync(ctx: click.Context, tipo: str | None, limit: int | None) -> None:
+def sync(ctx: click.Context, tipo: str | None, limit: int | None, dataset: str) -> None:
     """Sincronizar catálogo desde datos.gov.co."""
     settings, db, _ = _get_deps(ctx.obj.get("data_dir"))
 
-    from scrapper_leyes.catalog.socrata_client import fetch_catalog_count, sync_catalog
+    from scrapper_leyes.catalog.socrata_client import (
+        CATALOG_SOURCES,
+        fetch_catalog_count,
+        sync_catalog,
+    )
+
+    catalog_source = CATALOG_SOURCES.get(dataset)
+    if catalog_source is None:
+        console.print(
+            f"[red]Dataset desconocido: {dataset}. "
+            f"Opciones: {', '.join(CATALOG_SOURCES)}[/red]"
+        )
+        db.close()
+        sys.exit(1)
 
     # Show remote count first
     try:
-        remote_count = fetch_catalog_count(settings, tipo=tipo)
+        remote_count = fetch_catalog_count(settings, tipo=tipo, catalog_source=catalog_source)
         console.print(
-            f"[bold]Registros en Socrata{f' (tipo={tipo})' if tipo else ''}: "
+            f"[bold]Registros en Socrata [{dataset}]{f' (tipo={tipo})' if tipo else ''}: "
             f"{remote_count:,}[/bold]"
         )
     except Exception as e:
         console.print(f"[yellow]No se pudo obtener conteo remoto: {e}[/yellow]")
 
-    total = sync_catalog(settings, db, tipo=tipo, limit=limit)
+    total = sync_catalog(settings, db, tipo=tipo, limit=limit, catalog_source=catalog_source)
     local_count = db.get_catalog_count(tipo=tipo)
 
     console.print(f"\n[green]✓ Sincronizados {total:,} registros[/green]")
