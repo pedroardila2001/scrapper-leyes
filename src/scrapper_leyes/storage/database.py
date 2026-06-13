@@ -6,6 +6,8 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
+from scrapper_leyes.models import build_canonical_id
+
 
 SCHEMA_SQL = """
 -- ── Catalog (from Socrata) ──────────────────────────────────────────────
@@ -22,7 +24,12 @@ CREATE TABLE IF NOT EXISTS catalog (
     articulos       TEXT,
     corte           TEXT,            -- e.g. "cc", "csj", "ce"
     magistrado_ponente TEXT,
-    -- Resolved SUIN mapping
+    -- Multi-source generalization (F0)
+    source          TEXT,            -- 'suin' | 'corte_constitucional' | 'csj' | 'consejo_estado' | ...
+    external_id     TEXT,            -- id in the source system (generalizes suin_id)
+    source_url      TEXT,            -- canonical document URL in the source
+    canonical_id    TEXT,            -- co:... dedup key across sources
+    -- Resolved SUIN mapping (kept for backward compat; mirror of external_id for SUIN)
     suin_id         TEXT,
     resolve_status  TEXT NOT NULL DEFAULT 'pending',
         -- pending | resolved | ambiguous | not_found | error
@@ -87,6 +94,20 @@ CREATE TABLE IF NOT EXISTS vigencia_discrepancies (
 """
 
 
+def source_for(tipo: str | None, corte: str | None) -> str:
+    """Map a norm type + corte to its canonical data source.
+
+    Legislation lives in SUIN; sentencias map to their issuing court.
+    """
+    if (tipo or "").upper() == "SENTENCIA":
+        if corte == "csj":
+            return "csj"
+        if corte == "ce":
+            return "consejo_estado"
+        return "corte_constitucional"
+    return "suin"
+
+
 class Database:
     """SQLite database wrapper with schema auto-creation."""
 
@@ -99,8 +120,62 @@ class Database:
         self.conn.execute("PRAGMA foreign_keys=ON")
         self._init_schema()
 
+    # Columns added after the original schema; ALTERed in on existing DBs.
+    _NEW_COLUMNS = (
+        ("source", "TEXT"),
+        ("external_id", "TEXT"),
+        ("source_url", "TEXT"),
+        ("canonical_id", "TEXT"),
+    )
+
+    # Indexes that depend on the new columns — created only after migration.
+    _MIGRATION_INDEXES = """
+    CREATE INDEX IF NOT EXISTS idx_catalog_source ON catalog(source);
+    CREATE INDEX IF NOT EXISTS idx_catalog_canonical ON catalog(canonical_id);
+    -- Dedup sentencias by (canonical_id, source). Restricted to SENTENCIA so it
+    -- never collapses legislation rows where numero repeats across entidades
+    -- (e.g. two Resolución 1 de 2020 from different entities).
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_catalog_sentencia_canon
+        ON catalog(canonical_id, source)
+        WHERE canonical_id IS NOT NULL AND tipo = 'SENTENCIA';
+    """
+
     def _init_schema(self) -> None:
         self.conn.executescript(SCHEMA_SQL)
+        self.conn.commit()
+        self._migrate()
+
+    def _migrate(self) -> None:
+        """Idempotent, additive migration for the multi-source generalization."""
+        existing = {r[1] for r in self.conn.execute("PRAGMA table_info(catalog)")}
+        for name, decl in self._NEW_COLUMNS:
+            if name not in existing:
+                self.conn.execute(f"ALTER TABLE catalog ADD COLUMN {name} {decl}")
+        self.conn.executescript(self._MIGRATION_INDEXES)
+        self.conn.commit()
+        self._backfill_source_columns()
+
+    def _backfill_source_columns(self) -> None:
+        """Populate source/external_id/canonical_id for pre-F0 rows."""
+        rows = self.conn.execute(
+            "SELECT id, tipo, numero, anio, suin_id, corte "
+            "FROM catalog WHERE source IS NULL"
+        ).fetchall()
+        if not rows:
+            return
+        updates: list[tuple[str, str | None, str, int]] = []
+        for r in rows:
+            src = source_for(r["tipo"], r["corte"])
+            try:
+                cid = build_canonical_id(r["tipo"], str(r["numero"]), str(r["anio"] or ""))
+            except Exception:
+                cid = None
+            updates.append((src, r["suin_id"], cid, r["id"]))
+        self.conn.executemany(
+            "UPDATE catalog SET source = ?, external_id = COALESCE(external_id, ?), "
+            "canonical_id = COALESCE(canonical_id, ?) WHERE id = ?",
+            updates,
+        )
         self.conn.commit()
 
     def close(self) -> None:
@@ -130,6 +205,31 @@ class Database:
         self.conn.commit()
         return cursor.rowcount
 
+    # ── Multi-source seeding (F0) ───────────────────────────────────────
+
+    _SEED_COLUMNS = (
+        "tipo", "numero", "anio", "sector", "subtipo", "vigencia", "entidad",
+        "materia", "articulos", "corte", "magistrado_ponente",
+        "source", "external_id", "source_url", "canonical_id",
+    )
+
+    def upsert_catalog_seed(self, rows: list[dict[str, Any]]) -> int:
+        """Insert catalog rows from any source (Socrata dataset or discoverer).
+
+        Fills the multi-source columns and dedups via the existing unique
+        indexes (legislation by tipo+numero+anio+entidad; sentencias by
+        canonical_id+source). Returns count of newly inserted rows.
+        """
+        cols = ", ".join(self._SEED_COLUMNS)
+        placeholders = ", ".join(f":{c}" for c in self._SEED_COLUMNS)
+        normalized = [{c: row.get(c) for c in self._SEED_COLUMNS} for row in rows]
+        cursor = self.conn.executemany(
+            f"INSERT OR IGNORE INTO catalog ({cols}) VALUES ({placeholders})",
+            normalized,
+        )
+        self.conn.commit()
+        return cursor.rowcount
+
     def get_catalog_count(self, tipo: str | None = None) -> int:
         if tipo:
             row = self.conn.execute(
@@ -152,16 +252,24 @@ class Database:
         self,
         tipo: str | None = None,
         limit: int | None = None,
+        source: str | None = None,
     ) -> list[dict[str, Any]]:
-        """Get catalog rows ready for scraping (resolved + pending scrape)."""
+        """Get catalog rows ready for scraping (resolved + pending scrape).
+
+        Readiness requires a resolved external id (external_id or its SUIN
+        mirror suin_id). Optionally scope to a single source.
+        """
         sql = """SELECT * FROM catalog
                  WHERE resolve_status = 'resolved'
                    AND scrape_status = 'pending'
-                   AND suin_id IS NOT NULL"""
+                   AND COALESCE(external_id, suin_id) IS NOT NULL"""
         params: list[Any] = []
         if tipo:
             sql += " AND tipo = ?"
             params.append(tipo)
+        if source:
+            sql += " AND source = ?"
+            params.append(source)
         sql += " ORDER BY anio DESC, numero"
         if limit:
             sql += " LIMIT ?"
@@ -172,13 +280,17 @@ class Database:
         self,
         tipo: str | None = None,
         limit: int | None = None,
+        source: str | None = None,
     ) -> list[dict[str, Any]]:
-        """Get catalog rows needing suin_id resolution."""
+        """Get catalog rows needing external-id resolution."""
         sql = "SELECT * FROM catalog WHERE resolve_status = 'pending'"
         params: list[Any] = []
         if tipo:
             sql += " AND tipo = ?"
             params.append(tipo)
+        if source:
+            sql += " AND source = ?"
+            params.append(source)
         sql += " ORDER BY anio DESC, numero"
         if limit:
             sql += " LIMIT ?"
@@ -191,13 +303,24 @@ class Database:
         suin_id: str | None,
         status: str,
         note: str | None = None,
+        *,
+        external_id: str | None = None,
+        source: str | None = None,
     ) -> None:
+        """Mark a catalog row resolved.
+
+        ``suin_id`` is kept for backward compatibility (SUIN indexer) and is
+        mirrored into ``external_id``; new sources pass ``external_id``/``source``.
+        """
+        ext = external_id if external_id is not None else suin_id
         self.conn.execute(
             """UPDATE catalog
-               SET suin_id = ?, resolve_status = ?, resolve_note = ?,
+               SET suin_id = ?, external_id = COALESCE(?, external_id),
+                   source = COALESCE(?, source),
+                   resolve_status = ?, resolve_note = ?,
                    updated_at = CURRENT_TIMESTAMP
                WHERE id = ?""",
-            (suin_id, status, note, catalog_id),
+            (suin_id, ext, source, status, note, catalog_id),
         )
         self.conn.commit()
 
