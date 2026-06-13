@@ -8,3 +8,8 @@ __pycache__/
 venv/
 *.egg-info/
 .pytest_cache/
+
+# Playwright artifacts
+.playwright-mcp/
+*-inicial.png
+*-expandida.png
