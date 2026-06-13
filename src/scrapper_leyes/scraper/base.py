@@ -1,7 +1,70 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any
+from dataclasses import dataclass, field
+from datetime import date
+from typing import Any, Iterator
 
 from scrapper_leyes.models import ParsedNorm
+
+
+@dataclass
+class CatalogSeed:
+    """A document discovered in a source, ready to seed the catalog.
+
+    Produced by crawl-driven sources (relatorías, normogramas) that enumerate
+    their own documents instead of being seeded from a Socrata dataset.
+    """
+
+    tipo: str
+    numero: str
+    source: str
+    anio: str | None = None
+    canonical_id: str | None = None
+    external_id: str | None = None
+    source_url: str | None = None
+    corte: str | None = None
+    magistrado_ponente: str | None = None
+    subtipo: str | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    def to_catalog_row(self) -> dict[str, Any]:
+        """Shape for Database.upsert_catalog_seed."""
+        return {
+            "tipo": self.tipo,
+            "numero": self.numero,
+            "anio": self.anio,
+            "subtipo": self.subtipo,
+            "corte": self.corte,
+            "magistrado_ponente": self.magistrado_ponente,
+            "source": self.source,
+            "external_id": self.external_id,
+            "source_url": self.source_url,
+            "canonical_id": self.canonical_id,
+            **self.extra,
+        }
+
+
+class BaseDiscoverer(ABC):
+    """Enumerates documents from a source that has no pre-seeded catalog.
+
+    For relatorías / normogramas (CSJ, Consejo de Estado, DIAN, …) the source's
+    own buscador is the index: ``discover`` yields CatalogSeeds that the
+    orchestrator persists via ``Database.upsert_catalog_seed``, after which the
+    normal resolve→scrape pipeline applies.
+    """
+
+    @abstractmethod
+    def discover(
+        self,
+        *,
+        desde: date | None = None,
+        hasta: date | None = None,
+        filtro: dict[str, Any] | None = None,
+    ) -> Iterator[CatalogSeed]:
+        """Yield CatalogSeeds for documents in the given window / filter."""
+        raise NotImplementedError
+
 
 class BaseIndexer(ABC):
     """
