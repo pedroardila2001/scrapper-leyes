@@ -30,6 +30,7 @@ from scrapper_leyes.models import (
     TIPO_CANONICAL,
     build_canonical_id,
     normalize_article_number,
+    strip_suin_ui_noise,
 )
 
 # ── Tunables (overridable by callers) ───────────────────────────────────────
@@ -389,7 +390,7 @@ def chunk_norm(
     chunks: list[Chunk] = []
     seen_cids: set[str] = set()
     for art in parsed.get("articles", []):
-        body = (art.get("text") or "").strip()
+        body = strip_suin_ui_noise((art.get("text") or "").strip())
         if not body:
             continue
         # Defensive dedup: SUIN anchors some articles twice → the parser may
@@ -492,7 +493,7 @@ def chunk_sentencia(
 
     chunks: list[Chunk] = []
     for key, nice in section_labels.items():
-        body = (parsed.get(key) or "").strip()
+        body = strip_suin_ui_noise((parsed.get(key) or "").strip())
         if not body:
             continue
         sec_cid = f"{norm_cid}:{key}"

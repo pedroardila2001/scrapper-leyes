@@ -24,6 +24,7 @@ from scrapper_leyes.models import (
     build_canonical_id,
     normalize_affectation_type,
     normalize_article_number,
+    strip_suin_ui_noise,
 )
 
 
@@ -309,7 +310,8 @@ def _clean_article_text(div: Tag) -> str:
         t = p.get_text(strip=True)
         if t:
             text_parts.append(t)
-    return "\n\n".join(text_parts) if text_parts else div.get_text(strip=True)
+    raw = "\n\n".join(text_parts) if text_parts else div.get_text(strip=True)
+    return strip_suin_ui_noise(raw)
 
 
 def _extract_article_notes(soup: BeautifulSoup, art_id: str) -> list[str]:

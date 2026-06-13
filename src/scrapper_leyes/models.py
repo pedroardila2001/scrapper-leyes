@@ -126,6 +126,31 @@ _ART_NUM_RE = re.compile(
 )
 
 
+# ═══════════════════════════════════════════════════════════════════════════
+# SUIN UI noise stripping
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Toggle labels and UI leftovers SUIN bakes into the document text. They add
+# nothing legal and pollute both the displayed chunks and the embeddings.
+_SUIN_NOISE_RE = re.compile(
+    r"\[\s*(?:Mostrar|Ocultar)\s*\]"
+    r"|TEXTO\s+CORRESPONDIENTE\s+A[^\n]*"
+    r"|Afecta\s+la\s+vigencia\s+de\s*:?[ \t]*"
+    r"|Legislaci[oó]n\s+Anterior[ \t]*",
+    re.IGNORECASE,
+)
+
+
+def strip_suin_ui_noise(text: str) -> str:
+    """Remove SUIN toggle/UI artifacts from document text."""
+    if not text:
+        return text
+    text = _SUIN_NOISE_RE.sub("", text)
+    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
 def normalize_article_number(raw_text: str) -> str | None:
     """Extract normalized article ref from raw text like 'Artículo 5°.'
 
