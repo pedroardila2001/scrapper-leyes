@@ -56,6 +56,17 @@ class Settings:
         default_factory=lambda: os.environ.get("QDRANT_COLLECTION", "legal_corpus")
     )
 
+    # ── Knowledge graph (Neo4j) ─────────────────────────────────────────
+    neo4j_uri: str = field(
+        default_factory=lambda: os.environ.get("NEO4J_URI", "bolt://localhost:7687")
+    )
+    neo4j_user: str = field(
+        default_factory=lambda: os.environ.get("NEO4J_USER", "neo4j")
+    )
+    neo4j_password: str = field(
+        default_factory=lambda: os.environ.get("NEO4J_PASSWORD", "password")
+    )
+
     # ── Embeddings (local, multilingual) ────────────────────────────────
     # bge-m3 is multilingual (Spanish-capable) — replaces the English-only
     # bge-small-en. Sparse via a real BM25 model, not a hardcoded placeholder.

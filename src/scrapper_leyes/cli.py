@@ -334,6 +334,29 @@ def vector(ctx: click.Context, tipo: str | None, recreate: bool) -> None:
         db.close()
 
 
+@export.command()
+@click.pass_context
+def graph(ctx: click.Context) -> None:
+    """Exportar normas, artículos, sentencias y citaciones al grafo Neo4j."""
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+
+    from scrapper_leyes.export_neo4j import Neo4jExporter
+
+    console.print(f"[bold]Exportando a Neo4j[/bold] ({settings.neo4j_uri})")
+    exporter = Neo4jExporter(
+        settings, db, cache,
+        uri=settings.neo4j_uri,
+        user=settings.neo4j_user,
+        password=settings.neo4j_password,
+    )
+    try:
+        exporter.export_all()
+        console.print("\n[green]✓ Grafo exportado a Neo4j[/green]")
+    finally:
+        exporter.close()
+        db.close()
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Test command (for Docker)
 # ═══════════════════════════════════════════════════════════════════════════

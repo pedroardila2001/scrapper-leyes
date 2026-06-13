@@ -482,23 +482,35 @@ def get_norm_graph(suin_id: str):
                         "label": jur.get("normalized_type", "EXEQUIBLE"),
                     })
 
-            # Citations (extracted by NER)
+            # Citations (extracted by NER). Dedupe and cap so heavily-citing
+            # sentencias don't render as an unreadable hairball.
+            MAX_CITAS = 30
+            citas_unicas: list[str] = []
+            vistas: set[str] = set()
             for cita in parsed.get("citaciones", []):
                 cita_id = cita.strip() if isinstance(cita, str) else str(cita)
-                if cita_id and cita_id not in seen_ids:
-                    nodes.append({
-                        "id": cita_id,
-                        "name": cita_id,
-                        "group": "citacion",
-                        "val": 4,
-                    })
+                if cita_id and cita_id not in vistas:
+                    vistas.add(cita_id)
+                    citas_unicas.append(cita_id)
+
+            for cita_id in citas_unicas[:MAX_CITAS]:
+                # Distinguish cited sentencias from cited norms for coloring.
+                grupo = "sentencia_citada" if "sentencia" in cita_id.lower() else "citacion"
+                if cita_id not in seen_ids:
+                    nodes.append({"id": cita_id, "name": cita_id, "group": grupo, "val": 4})
                     seen_ids.add(cita_id)
-                if cita_id:
-                    links.append({
-                        "source": suin_id,
-                        "target": cita_id,
-                        "label": "CITA_A",
-                    })
+                links.append({"source": suin_id, "target": cita_id, "label": "CITA_A"})
+
+            extra = len(citas_unicas) - MAX_CITAS
+            if extra > 0:
+                more_id = f"{suin_id}__mas_citas"
+                nodes.append({
+                    "id": more_id,
+                    "name": f"+{extra} citaciones más",
+                    "group": "resumen",
+                    "val": 6,
+                })
+                links.append({"source": suin_id, "target": more_id, "label": "CITA_A"})
 
             # Magistrado Ponente (for sentencias)
             mp = parsed.get("magistrado_ponente")
