@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ForceGraph2D from "react-force-graph-2d";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,19 @@ export default function GlobalGraph() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const fgRef = useRef<any>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => setSize({ width: el.clientWidth, height: el.clientHeight });
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [loading]);
 
   useEffect(() => {
     axios
@@ -46,26 +59,32 @@ export default function GlobalGraph() {
           Exploración macroscópica de {data.nodes.length} normas y sentencias con {data.links.length} interconexiones. Haz clic en un nodo para ver su red específica.
         </p>
       </div>
-      <div style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden" }}>
-        <ForceGraph2D
-          graphData={data}
-          nodeAutoColorBy="group"
-          nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
-          nodeLabel={(node: any) => `${node.name}`}
-          nodeVal={(node: any) => node.val || 5}
-          linkLabel={(link: any) => link.label}
-          linkDirectionalArrowLength={3.5}
-          linkDirectionalArrowRelPos={1}
-          linkColor={() => "rgba(148, 163, 184, 0.4)"}
-          backgroundColor="#0f172a"
-          onNodeClick={(node: any) => {
-            if (node.suin_id) {
-              navigate(`/norm/${node.suin_id}`);
-            } else {
-              alert(`Este nodo (${node.name}) no tiene un documento descargado todavía.`);
-            }
-          }}
-        />
+      <div ref={containerRef} style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden" }}>
+        {size.width > 0 && (
+          <ForceGraph2D
+            ref={fgRef}
+            graphData={data}
+            width={size.width}
+            height={size.height}
+            nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
+            nodeLabel={(node: any) => `${node.name}`}
+            nodeVal={(node: any) => node.val || 5}
+            linkLabel={(link: any) => link.label}
+            linkDirectionalArrowLength={3.5}
+            linkDirectionalArrowRelPos={1}
+            linkColor={() => "rgba(148, 163, 184, 0.4)"}
+            backgroundColor="#0f172a"
+            cooldownTicks={100}
+            onEngineStop={() => fgRef.current?.zoomToFit(400, 60)}
+            onNodeClick={(node: any) => {
+              if (node.suin_id) {
+                navigate(`/norm/${node.suin_id}`);
+              } else {
+                alert(`Este nodo (${node.name}) no tiene un documento descargado todavía.`);
+              }
+            }}
+          />
+        )}
       </div>
     </div>
   );

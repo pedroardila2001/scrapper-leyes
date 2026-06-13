@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
@@ -6,6 +6,27 @@ import ForceGraph2D from "react-force-graph-2d";
 import { ArrowLeft } from "lucide-react";
 
 const API = "http://localhost:8000";
+
+/** Measure a container so ForceGraph2D gets an explicit width/height
+ *  (it renders a blank canvas otherwise). */
+function useElementSize() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () =>
+      setSize({ width: el.clientWidth, height: el.clientHeight || 500 });
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return { ref, size };
+}
+
+const stripArticulo = (n: string) =>
+  (n || "").replace(/^\s*art[ií]culo\s+/i, "").trim() || n;
 
 export default function DocumentView() {
   const { id } = useParams();
@@ -44,8 +65,21 @@ export default function DocumentView() {
       rawText = `## Consideraciones\n\n${docData.consideraciones}\n\n`;
       if (docData.resuelve) rawText += `## Resuelve\n\n${docData.resuelve}`;
     } else if (docData.articles && docData.articles.length > 0) {
+      // Dedupe repeated articles (parser sometimes emits the same one twice)
+      // and avoid the "Artículo Artículo" doubling.
+      const seen = new Set<string>();
       rawText = docData.articles
-        .map((a: any) => `### Artículo ${a.number || "?"}\n\n${a.text}`)
+        .filter((a: any) => {
+          const k = a.canonical_id || a.art_id || a.number;
+          if (seen.has(k)) return false;
+          seen.add(k);
+          return true;
+        })
+        .map((a: any) => {
+          const num = stripArticulo(a.number || "?");
+          const title = a.title ? ` — ${a.title}` : "";
+          return `### Artículo ${num}${title}\n\n${a.text}`;
+        })
         .join("\n\n---\n\n");
     }
     if (!rawText) rawText = "No hay texto procesado disponible para este documento.";
@@ -199,22 +233,30 @@ function GraphTab({ data }: { data: any }) {
     magistrado: "#ec4899",
   };
 
+  const { ref, size } = useElementSize();
+  const fgRef = useRef<any>(null);
+
   return (
-    <div style={{ height: "100%", width: "100%", minHeight: 500 }}>
-      <ForceGraph2D
-        graphData={data}
-        nodeAutoColorBy="group"
-        nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
-        nodeLabel={(node: any) => `${node.name}`}
-        nodeVal={(node: any) => node.val || 3}
-        linkLabel={(link: any) => link.label}
-        linkDirectionalArrowLength={4}
-        linkDirectionalArrowRelPos={1}
-        linkColor={() => "rgba(148, 163, 184, 0.3)"}
-        backgroundColor="#0f172a"
-        width={undefined}
-        height={500}
-      />
+    <div ref={ref} style={{ height: "100%", width: "100%", minHeight: 500 }}>
+      {size.width > 0 && (
+        <ForceGraph2D
+          ref={fgRef}
+          graphData={data}
+          width={size.width}
+          height={size.height || 500}
+          nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
+          nodeLabel={(node: any) => `${node.group}: ${node.name}`}
+          nodeVal={(node: any) => node.val || 3}
+          nodeRelSize={5}
+          linkLabel={(link: any) => link.label}
+          linkDirectionalArrowLength={4}
+          linkDirectionalArrowRelPos={1}
+          linkColor={() => "rgba(148, 163, 184, 0.35)"}
+          backgroundColor="#0f172a"
+          cooldownTicks={80}
+          onEngineStop={() => fgRef.current?.zoomToFit(400, 40)}
+        />
+      )}
     </div>
   );
 }
