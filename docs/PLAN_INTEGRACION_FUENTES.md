@@ -154,7 +154,7 @@ Socrata-CC, SUIN y WebRelatoria → guardar todas las `source_url` como proceden
 
 | Fase | Entrega | Fuentes | Esfuerzo | Resultado |
 |------|---------|---------|----------|-----------|
-| **F0** | Refactor multi-fuente | — | M | `source`/`external_id`/`canonical_id` en catalog; `SocrataCatalogSource`; `BaseDiscoverer`; factory ampliada. **Habilita todo lo demás.** |
+| **F0** ✅ | Refactor multi-fuente | — | M | **HECHO.** `source`/`external_id`/`source_url`/`canonical_id` en catalog (migración + backfill); `SocrataCatalogSource` genérico + dataset `cc_sentencias` (v2k4-2t8s); `BaseDiscoverer`/`CatalogSeed`; `factory.get_discoverer`. **Habilita todo lo demás.** |
 | **F1** | Corte Constitucional completa | #3, #4 | S | Siembra 29.310 sentencias desde `v2k4-2t8s`; scrape relatoría; parser CC. **Gran salto de cobertura jurisprudencial con poco esfuerzo.** |
 | **F2** | Jurisprudencia histórica vía SUIN | #2 (jurisp.) | S | Activar la rama de jurisprudencia de SUIN (CC, CE, ex-Sala Const. CSJ 1910-1991). Reutiliza scraper SUIN. |
 | **F3** | WebRelatoria (CSJ + CE) | #5, #6 | L | Cliente `WebRelatoria` parametrizable + discoverer crawl + parsers por sala/sección + Mi Relatoría/SAMAI para CE reciente. |

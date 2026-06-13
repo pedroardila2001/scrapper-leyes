@@ -67,7 +67,11 @@ Catálogo sincronizado desde datos.gov.co (dataset `fiev-nid6`).
 | `vigencia` | TEXT | Estado según Socrata (snapshot) |
 | `entidad` | TEXT | Entidad emisora |
 | `materia` | TEXT | Materias (pipe-separated) |
-| `suin_id` | TEXT | ID resuelto en SUIN |
+| `source` | TEXT | Fuente del documento: `suin`, `corte_constitucional`, `csj`, `consejo_estado`, … |
+| `external_id` | TEXT | ID en la fuente (generaliza `suin_id`) |
+| `source_url` | TEXT | URL canónica del documento en la fuente |
+| `canonical_id` | TEXT | `co:…` — clave de deduplicación entre fuentes |
+| `suin_id` | TEXT | ID resuelto en SUIN (espejo de `external_id` para SUIN) |
 | `resolve_status` | TEXT | pending/resolved/ambiguous/not_found/error |
 | `scrape_status` | TEXT | pending/done/error/skipped/needs_ocr |
 | `suin_vigencia` | TEXT | Estado según la página de SUIN |
