@@ -284,43 +284,12 @@ def get_norm_vectors(suin_id: str):
         if not parsed:
             raise HTTPException(404, "No parsed data")
 
-        chunks: list[dict[str, Any]] = []
-        chunk_id = 1
+        # Use the SAME chunker the vector exporter uses, so the dashboard shows
+        # exactly what the deep-agent retrieves (coherent chunks + vigencia).
+        from scrapper_leyes.chunking import chunk_document
 
-        # For laws: each article is a chunk
-        for art in parsed.get("articles", []):
-            text = art.get("text", "")
-            if text:
-                chunks.append({
-                    "chunk_id": chunk_id,
-                    "section": f"Artículo {art.get('number', '?')}",
-                    "canonical_id": art.get("canonical_id", ""),
-                    "title": art.get("title", ""),
-                    "text": text[:2000],
-                    "char_count": len(text),
-                    "has_notes": bool(art.get("notes")),
-                    "tipo": row["tipo"],
-                    "numero": row["numero"],
-                    "anio": row["anio"],
-                })
-                chunk_id += 1
-
-        # For sentencias: each section is a chunk
-        for section_key in ["hechos", "consideraciones", "resuelve"]:
-            text = parsed.get(section_key, "")
-            if text:
-                chunks.append({
-                    "chunk_id": chunk_id,
-                    "section": section_key.replace("_", " ").title(),
-                    "text": text[:3000],
-                    "char_count": len(text),
-                    "tipo": row["tipo"],
-                    "numero": row["numero"],
-                    "anio": row["anio"],
-                    "corte": row_dict.get("corte"),
-                    "magistrado": row_dict.get("magistrado_ponente"),
-                })
-                chunk_id += 1
+        produced = chunk_document(parsed, row_dict)
+        chunks = [c.to_api_dict(i + 1) for i, c in enumerate(produced)]
 
         # Citations as metadata
         citaciones = parsed.get("citaciones", [])
