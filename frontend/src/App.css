@@ -1,29 +1,30 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   Cerebro Legal – Premium Dark UI
+   Cerebro Legal – Light / Juridical UI
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --bg-dark: #0f172a;
-  --bg-panel: #1e293b;
-  --bg-card: #1e293b;
-  --bg-hover: #334155;
-  --bg-input: #0f172a;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-glow: rgba(59, 130, 246, 0.15);
-  --green: #10b981;
-  --amber: #f59e0b;
-  --purple: #8b5cf6;
-  --red: #ef4444;
-  --text-main: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --border: #334155;
-  --border-subtle: #1e293b;
-  --radius: 10px;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --bg-dark: #f5f4f0;        /* app background (warm paper) */
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-hover: #efece4;       /* subtle hover / table header */
+  --bg-input: #ffffff;
+  --accent: #1d6b53;         /* deep institutional green */
+  --accent-hover: #155441;
+  --accent-glow: rgba(29, 107, 83, 0.10);
+  --green: #1d6b53;
+  --amber: #b7791f;
+  --purple: #6b4fa0;
+  --red: #b3261e;
+  --text-main: #1c1d22;
+  --text-secondary: #3f4651;
+  --text-muted: #6b7280;
+  --text-dim: #9aa0aa;
+  --border: #e4e1d8;         /* warm hairline */
+  --border-subtle: #efece4;
+  --radius: 8px;
+  --shadow: 0 1px 2px rgba(28, 29, 34, 0.05), 0 1px 3px rgba(28, 29, 34, 0.04);
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Layout ──────────────────────────────────────────────────────────── */
@@ -39,7 +40,7 @@
 .sidebar {
   width: 260px;
   min-width: 260px;
-  background: linear-gradient(180deg, #1a2332 0%, #0f172a 100%);
+  background: #fbfaf7;
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -91,7 +92,7 @@ nav {
 }
 
 .nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--bg-hover);
   color: var(--text-secondary);
 }
 
@@ -165,7 +166,8 @@ nav {
 }
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 18px rgba(28, 29, 34, 0.10);
+  border-color: #d8d4c8;
 }
 .stat-icon { opacity: 0.9; }
 .stat-value {
@@ -219,7 +221,7 @@ nav {
 }
 .bar-track {
   height: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #ece9e1;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -317,18 +319,18 @@ nav {
   cursor: pointer;
 }
 .data-table tbody tr:hover {
-  background: rgba(59, 130, 246, 0.06);
+  background: var(--accent-glow);
 }
 
 .tag {
   display: inline-block;
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--accent-glow);
   color: var(--accent);
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 600;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(29, 107, 83, 0.22);
   letter-spacing: 0.02em;
 }
 
@@ -616,3 +618,69 @@ nav {
   font-size: 0.78rem;
 }
 .chip-clear:hover { color: var(--text-main); border-color: var(--accent); }
+
+/* ── Light / Juridical refinements ───────────────────────────────────── */
+
+.page-title,
+.brand h1,
+.biblioteca-head .page-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.panel-header h3 { font-family: var(--serif); font-weight: 600; }
+
+.brand { border-bottom: 1px solid var(--border); }
+.brand-sub { color: var(--text-muted); }
+.logo { color: var(--accent); }
+
+/* Sidebar nav: lighter weight, green active accent */
+.nav-item { color: var(--text-secondary); }
+.nav-item.active {
+  background-color: var(--accent-glow);
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+/* Panels: flatter, paper-like */
+.doc-panel, .data-table, .stat-card, .chart-card, .lib-tree {
+  box-shadow: var(--shadow);
+}
+.panel-header { background: #fbfaf7; }
+
+/* Document text gets a readable serif body for legal reading */
+.markdown-body { font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary); }
+.markdown-body h3 { font-family: var(--serif); color: var(--text-main); margin-top: 1.2rem; }
+
+/* Tabs */
+.tab { color: var(--text-muted); font-weight: 500; }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Graph legend ────────────────────────────────────────────────────── */
+
+.graph-wrap { position: relative; height: 100%; width: 100%; }
+.graph-legend {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }

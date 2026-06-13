@@ -47,8 +47,8 @@ export default function GlobalGraph() {
   }
 
   const colorMap: Record<string, string> = {
-    norma: "#3b82f6",
-    sentencia: "#f59e0b",
+    norma: "#1d6b53",
+    sentencia: "#b7791f",
   };
 
   return (
@@ -59,21 +59,25 @@ export default function GlobalGraph() {
           Exploración macroscópica de {data.nodes.length} normas y sentencias con {data.links.length} interconexiones. Haz clic en un nodo para ver su red específica.
         </p>
       </div>
-      <div ref={containerRef} style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden" }}>
+      <div ref={containerRef} className="graph-wrap" style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden" }}>
+        <div className="graph-legend">
+          <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.norma }} />Norma</div>
+          <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.sentencia }} />Sentencia</div>
+        </div>
         {size.width > 0 && (
           <ForceGraph2D
             ref={fgRef}
             graphData={data}
             width={size.width}
             height={size.height}
-            nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
+            nodeColor={(node: any) => colorMap[node.group] || "#94a3b8"}
             nodeLabel={(node: any) => `${node.name}`}
             nodeVal={(node: any) => node.val || 5}
             linkLabel={(link: any) => link.label}
             linkDirectionalArrowLength={3.5}
             linkDirectionalArrowRelPos={1}
-            linkColor={() => "rgba(148, 163, 184, 0.4)"}
-            backgroundColor="#0f172a"
+            linkColor={() => "rgba(60, 70, 81, 0.25)"}
+            backgroundColor="#faf9f6"
             cooldownTicks={100}
             onEngineStop={() => fgRef.current?.zoomToFit(400, 60)}
             onNodeClick={(node: any) => {

@@ -198,61 +198,98 @@ function VectorsTab({ data }: { data: any }) {
       <p style={{ fontSize: "0.8rem", color: "var(--text-dim)", marginBottom: "1rem" }}>
         Estos son los fragmentos de texto que se almacenan como vectores en la base de datos para búsqueda semántica.
       </p>
-      {data.chunks.map((chunk: any, idx: number) => (
+      {data.chunks.map((chunk: any, idx: number) => {
+        const vig = chunk.estado_vigencia;
+        const vigStyle =
+          vig === "derogado"
+            ? { bg: "rgba(179,38,30,0.10)", fg: "#b3261e" }
+            : vig === "modificado"
+            ? { bg: "rgba(183,121,31,0.12)", fg: "#b7791f" }
+            : { bg: "rgba(29,107,83,0.10)", fg: "#1d6b53" };
+        return (
         <div key={chunk.chunk_id || idx} className="vector-chunk" style={{ marginBottom: '1rem', padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius)', background: 'var(--bg-card)' }}>
           <div className="chunk-header" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '0.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem', gap: '0.5rem' }}>
-            <span style={{ fontWeight: 'bold', color: '#60a5fa' }}>{chunk.section || chunk.title || `Chunk ${idx+1}`}</span>
-            <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.75rem', flexWrap: 'wrap' }}>
-                {chunk.tipo && <span style={{ background: '#1e293b', color: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>{chunk.tipo} {chunk.numero} de {chunk.anio}</span>}
-                {chunk.corte && <span style={{ background: '#1e293b', color: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>{chunk.corte}</span>}
-                {chunk.magistrado && <span style={{ background: '#1e293b', color: '#e2e8f0', padding: '2px 8px', borderRadius: '12px' }}>MP: {chunk.magistrado}</span>}
-                <span style={{ color: 'var(--text-muted)' }}>{chunk.char_count?.toLocaleString()} chars</span>
+            <span style={{ fontWeight: 700, color: 'var(--accent)', fontFamily: 'var(--serif)' }}>{chunk.section || chunk.title || `Chunk ${idx+1}`}</span>
+            <div style={{ display: 'flex', gap: '0.4rem', fontSize: '0.72rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                {vig && <span style={{ background: vigStyle.bg, color: vigStyle.fg, padding: '2px 8px', borderRadius: '12px', fontWeight: 600 }}>{vig}</span>}
+                {chunk.tipo && <span style={{ background: 'var(--bg-hover)', color: 'var(--text-secondary)', padding: '2px 8px', borderRadius: '12px' }}>{chunk.tipo} {chunk.numero} de {chunk.anio}</span>}
+                {chunk.magistrado && <span style={{ background: 'var(--bg-hover)', color: 'var(--text-secondary)', padding: '2px 8px', borderRadius: '12px' }}>MP: {chunk.magistrado}</span>}
+                <span style={{ color: 'var(--text-dim)' }}>{chunk.char_count?.toLocaleString()} chars</span>
             </div>
           </div>
-          <div className="chunk-text" style={{ fontSize: '0.9rem', lineHeight: '1.6', color: 'var(--text-main)', whiteSpace: 'pre-wrap' }}>{chunk.text}</div>
+          <div className="chunk-text" style={{ fontSize: '0.9rem', lineHeight: '1.7', color: 'var(--text-secondary)', whiteSpace: 'pre-wrap' }}>{chunk.text}</div>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
 
+const GROUP_COLORS: Record<string, string> = {
+  norma: "#1d6b53",
+  titulo: "#0f766e",
+  capitulo: "#0e7490",
+  articulo: "#3f9d7e",
+  seccion: "#6b4fa0",
+  modificacion: "#b3261e",
+  sentencia: "#b7791f",
+  sentencia_citada: "#b7791f",
+  citacion: "#8a6d3b",
+  magistrado: "#a23b72",
+  resumen: "#6b7280",
+};
+
+const GROUP_LABELS: Record<string, string> = {
+  norma: "Norma",
+  titulo: "Título",
+  capitulo: "Capítulo",
+  articulo: "Artículo",
+  seccion: "Sección",
+  modificacion: "Modificación",
+  sentencia: "Sentencia",
+  sentencia_citada: "Sentencia citada",
+  citacion: "Norma citada",
+  magistrado: "Magistrado",
+  resumen: "Resumen",
+};
+
 function GraphTab({ data }: { data: any }) {
+  const { ref, size } = useElementSize();
+  const fgRef = useRef<any>(null);
+
   if (!data || !data.nodes || data.nodes.length === 0) {
     return <p style={{ color: "var(--text-muted)" }}>No hay datos de grafo para este documento.</p>;
   }
 
-  const colorMap: Record<string, string> = {
-    norma: "#3b82f6",
-    titulo: "#14b8a6",
-    capitulo: "#0ea5e9",
-    articulo: "#10b981",
-    sentencia: "#f59e0b",
-    seccion: "#8b5cf6",
-    modificacion: "#ef4444",
-    citacion: "#a855f7",
-    magistrado: "#ec4899",
-  };
-
-  const { ref, size } = useElementSize();
-  const fgRef = useRef<any>(null);
+  const presentGroups = Array.from(new Set(data.nodes.map((n: any) => n.group))) as string[];
 
   return (
-    <div ref={ref} style={{ height: "100%", width: "100%", minHeight: 500 }}>
+    <div ref={ref} className="graph-wrap" style={{ minHeight: 500 }}>
+      <div className="graph-legend">
+        {presentGroups
+          .filter((g) => GROUP_LABELS[g])
+          .map((g) => (
+            <div className="legend-item" key={g}>
+              <span className="legend-dot" style={{ background: GROUP_COLORS[g] || "#94a3b8" }} />
+              {GROUP_LABELS[g]}
+            </div>
+          ))}
+      </div>
       {size.width > 0 && (
         <ForceGraph2D
           ref={fgRef}
           graphData={data}
           width={size.width}
           height={size.height || 500}
-          nodeColor={(node: any) => colorMap[node.group] || "#64748b"}
-          nodeLabel={(node: any) => `${node.group}: ${node.name}`}
+          nodeColor={(node: any) => GROUP_COLORS[node.group] || "#94a3b8"}
+          nodeLabel={(node: any) => `${GROUP_LABELS[node.group] || node.group}: ${node.name}`}
           nodeVal={(node: any) => node.val || 3}
           nodeRelSize={5}
           linkLabel={(link: any) => link.label}
           linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}
-          linkColor={() => "rgba(148, 163, 184, 0.35)"}
-          backgroundColor="#0f172a"
+          linkColor={() => "rgba(60, 70, 81, 0.22)"}
+          backgroundColor="#faf9f6"
           cooldownTicks={80}
           onEngineStop={() => fgRef.current?.zoomToFit(400, 40)}
         />
