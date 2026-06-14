@@ -113,6 +113,9 @@ export default function DocumentView() {
             <button className={`tab ${tab === "texto" ? "active" : ""}`} onClick={() => setTab("texto")}>
               Metadatos
             </button>
+            <button className={`tab ${tab === "vigencia" ? "active" : ""}`} onClick={() => setTab("vigencia")}>
+              Vigencia
+            </button>
             <button className={`tab ${tab === "vectores" ? "active" : ""}`} onClick={() => setTab("vectores")}>
               Chunks ({vectorData?.total_chunks || 0})
             </button>
@@ -123,6 +126,7 @@ export default function DocumentView() {
         </div>
         <div className="panel-content">
           {tab === "texto" && <MetadataTab docData={docData} catalog={catalog} />}
+          {tab === "vigencia" && <VigenciaTab id={id} articles={docData?.articles} />}
           {tab === "vectores" && <VectorsTab data={vectorData} />}
           {tab === "grafo" && <GraphTab data={graphData} />}
         </div>
@@ -183,6 +187,123 @@ function MetadataTab({ docData, catalog }: { docData: any; catalog: any }) {
             ))}
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+const ESTADO_STYLE: Record<string, { bg: string; fg: string; label: string }> = {
+  vigente: { bg: "rgba(29,107,83,0.12)", fg: "#1d6b53", label: "Vigente" },
+  modificado: { bg: "rgba(183,121,31,0.14)", fg: "#b7791f", label: "Vigente con modificaciones" },
+  exequible_condicionada: { bg: "rgba(107,79,160,0.14)", fg: "#6b4fa0", label: "Exequible condicionada" },
+  suspendido: { bg: "rgba(107,114,128,0.14)", fg: "#6b7280", label: "Suspendido" },
+  derogado: { bg: "rgba(179,38,30,0.12)", fg: "#b3261e", label: "Derogado" },
+  inexequible: { bg: "rgba(179,38,30,0.12)", fg: "#b3261e", label: "Inexequible" },
+  desconocido: { bg: "rgba(107,114,128,0.12)", fg: "#6b7280", label: "Sin determinar" },
+};
+
+function VigenciaTab({ id, articles }: { id?: string; articles?: any[] }) {
+  const [art, setArt] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [report, setReport] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (art) params.set("art", art);
+    if (fecha) params.set("fecha", fecha);
+    axios
+      .get(`${API}/api/norms/${id}/vigencia?${params}`)
+      .then((res) => setReport(res.data))
+      .catch(() => setReport(null))
+      .finally(() => setLoading(false));
+  }, [id, art, fecha]);
+
+  const opts = (articles || [])
+    .map((a: any) => a.number_normalized)
+    .filter((n: any) => n);
+
+  const st = ESTADO_STYLE[report?.estado] || ESTADO_STYLE.desconocido;
+
+  return (
+    <div>
+      <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+        <select className="search-input" style={{ flex: "0 0 160px" }} value={art} onChange={(e) => setArt(e.target.value)}>
+          <option value="">Norma completa</option>
+          {opts.map((n: string) => (
+            <option key={n} value={n}>Artículo {n}</option>
+          ))}
+        </select>
+        <input
+          className="search-input"
+          style={{ flex: "0 0 180px" }}
+          type="date"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
+          title="Texto/estado a una fecha"
+        />
+        {fecha && <button className="chip-clear" onClick={() => setFecha("")}>hoy</button>}
+      </div>
+
+      {loading && <p className="muted">Resolviendo vigencia…</p>}
+
+      {report && !loading && (
+        <>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem" }}>
+            <span style={{ background: st.bg, color: st.fg, padding: "4px 12px", borderRadius: "999px", fontWeight: 700 }}>
+              {st.label}
+            </span>
+            <span style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>{report.motivo}</span>
+          </div>
+
+          {report.fecha_consulta && (
+            <p style={{ fontSize: "0.8rem", color: "var(--text-dim)", marginBottom: "0.75rem" }}>
+              Al {report.fecha_consulta}: se muestra la versión{" "}
+              {report.texto_es_vigente ? "vigente" : "anterior (histórica)"}.
+            </p>
+          )}
+
+          {report.texto_aplicable && (
+            <div className="vector-chunk" style={{ padding: "1rem", border: "1px solid var(--border)", borderRadius: "var(--radius)", marginBottom: "1rem", whiteSpace: "pre-wrap", fontSize: "0.9rem", lineHeight: 1.7, color: "var(--text-secondary)" }}>
+              {report.texto_aplicable}
+            </div>
+          )}
+
+          {report.versiones?.length > 1 && (
+            <div style={{ marginBottom: "1rem" }}>
+              <h4 style={{ fontFamily: "var(--serif)", marginBottom: "0.4rem" }}>Versiones ({report.versiones.length})</h4>
+              {report.versiones.map((v: any, i: number) => (
+                <div key={i} style={{ fontSize: "0.8rem", color: "var(--text-muted)", padding: "0.2rem 0" }}>
+                  {v.vigente ? "● " : "○ "}
+                  {v.desde || "—"} → {v.hasta || (v.vigente ? "actual" : "—")}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {report.afectaciones?.length > 0 && (
+            <div style={{ marginBottom: "1rem" }}>
+              <h4 style={{ fontFamily: "var(--serif)", marginBottom: "0.4rem" }}>Afectado por ({report.afectaciones.length})</h4>
+              {report.afectaciones.map((a: any, i: number) => (
+                <div key={i} style={{ fontSize: "0.82rem", padding: "0.2rem 0" }}>
+                  <span className="tag">{a.tipo}</span> {a.fuente} {a.contexto || ""}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {report.jurisprudencia?.length > 0 && (
+            <div>
+              <h4 style={{ fontFamily: "var(--serif)", marginBottom: "0.4rem" }}>Jurisprudencia ({report.jurisprudencia.length})</h4>
+              {report.jurisprudencia.map((j: any, i: number) => (
+                <div key={i} style={{ fontSize: "0.82rem", padding: "0.2rem 0" }}>
+                  <span className="tag">{j.tipo}</span> {j.fuente}
+                </div>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

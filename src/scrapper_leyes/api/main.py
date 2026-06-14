@@ -339,6 +339,42 @@ def get_norm_vectors(suin_id: str):
         conn.close()
 
 
+# ── Vigencia temporal ─────────────────────────────────────────────────────
+
+@app.get("/api/norms/{suin_id}/vigencia")
+def get_norm_vigencia(
+    suin_id: str,
+    art: Optional[str] = None,
+    fecha: Optional[str] = None,
+):
+    """Resuelve el estado de vigencia de una norma o artículo a una fecha.
+
+    - ``art``: número normalizado de artículo (p.ej. '5', '5a', 'trans:1'). Si
+      se omite, resuelve la norma completa.
+    - ``fecha``: 'DD/MM/YYYY' o 'YYYY-MM-DD'. Si se omite, estado/texto actual.
+    """
+    from scrapper_leyes.vigencia import resolve
+
+    conn = _get_conn()
+    try:
+        row = conn.execute(
+            "SELECT * FROM catalog WHERE suin_id = ?", (suin_id,)
+        ).fetchone()
+        if not row:
+            raise HTTPException(404, "Norm not found")
+        row_dict = dict(row)
+        parsed = _find_parsed(suin_id, row["tipo"], row_dict.get("corte"))
+        if not parsed:
+            raise HTTPException(404, "No parsed data")
+
+        report = resolve(parsed, row_dict, art_ref=art, fecha=fecha)
+        if report is None:
+            raise HTTPException(404, f"Artículo {art} no encontrado en la norma")
+        return report.to_dict()
+    finally:
+        conn.close()
+
+
 # ── Knowledge Graph ─────────────────────────────────────────────────────
 
 @app.get("/api/norms/{suin_id}/graph")
