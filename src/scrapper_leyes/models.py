@@ -130,13 +130,18 @@ _ART_NUM_RE = re.compile(
 # SUIN UI noise stripping
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Toggle labels and UI leftovers SUIN bakes into the document text. They add
-# nothing legal and pollute both the displayed chunks and the embeddings.
+# Toggle labels and UI leftovers SUIN bakes into the document text. The hidden
+# content behind these toggles (jurisprudence, affectations) is parsed into
+# structured fields elsewhere — here we only strip the visible label noise so it
+# never reaches the chunks/embeddings.
 _SUIN_NOISE_RE = re.compile(
+    # Toggle header + [Mostrar]/[Ocultar] marker, as a unit.
+    r"(?:JURISPRUDENCIA|CONCORDANCIAS|NOTAS?\s+DE\s+VIGENCIA|"
+    r"Afecta\s+la\s+vigencia\s+de|Legislaci[oó]n\s+Anterior)\s*:?\s*"
     r"\[\s*(?:Mostrar|Ocultar)\s*\]"
     r"|TEXTO\s+CORRESPONDIENTE\s+A[^\n]*"
-    r"|Afecta\s+la\s+vigencia\s+de\s*:?[ \t]*"
-    r"|Legislaci[oó]n\s+Anterior[ \t]*",
+    r"|Afecta\s+la\s+vigencia\s+de\s*:?"
+    r"|\[\s*(?:Mostrar|Ocultar)\s*\]",
     re.IGNORECASE,
 )
 
@@ -293,8 +298,11 @@ class ParsedArticle:
     title: str | None  # "Objeto", "Ámbito de aplicación"
     text: str  # Full text of the article
     canonical_id: str  # co:ley:1712:2014:art:1
-    notes: list[str] = field(default_factory=list)  # Vigencia notes
+    notes: list[str] = field(default_factory=list)  # Vigencia notes (incoming)
     previous_versions: list[dict[str, Any]] = field(default_factory=list)
+    # Outgoing affectations: what THIS article derogates/modifies of other norms
+    # (parsed from SUIN's "Afecta la vigencia de" toggle, NotasOrigen{art_id}).
+    affects: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass

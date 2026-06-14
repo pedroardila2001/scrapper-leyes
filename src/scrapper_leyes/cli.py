@@ -286,6 +286,8 @@ def parse(ctx: click.Context, suin_id: str) -> None:
         db.close()
         sys.exit(1)
 
+    from scrapper_leyes.scraper.html_parser import parse_suin_html
+
     html = raw.decode("utf-8", errors="replace")
     parsed_norm = parse_suin_html(html, suin_id)
     cache.store_parsed("suin", tipo, suin_id, parsed_norm.to_dict())
@@ -294,6 +296,51 @@ def parse(ctx: click.Context, suin_id: str) -> None:
                   f"{len(parsed_norm.modifications)} modificaciones, "
                   f"{len(parsed_norm.jurisprudence)} sentencias[/green]")
 
+    db.close()
+
+
+@scrape.command()
+@click.option("--tipo", default=None, help="Filter by norm type (e.g. LEY)")
+@click.pass_context
+def reparse(ctx: click.Context, tipo: str | None) -> None:
+    """Re-parsear todas las normas SUIN descargadas (regenera parsed.json).
+
+    Refresca con el parser actual: texto limpio (sin ruido de UI) y afectaciones
+    salientes (qué deroga/modifica cada artículo de otras normas).
+    """
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+
+    from scrapper_leyes.scraper.html_parser import parse_suin_html
+
+    sql = "SELECT * FROM catalog WHERE scrape_status = 'done' AND tipo != 'SENTENCIA'"
+    params: list[str] = []
+    if tipo:
+        sql += " AND tipo = ?"
+        params.append(tipo)
+    rows = db.conn.execute(sql, params).fetchall()
+
+    ok = 0
+    affects_total = 0
+    for row in rows:
+        suin_id = row["suin_id"]
+        if not suin_id:
+            continue
+        raw = cache.load_raw("suin", row["tipo"], suin_id)
+        if not raw:
+            continue
+        try:
+            parsed = parse_suin_html(raw.decode("utf-8", errors="replace"), suin_id)
+        except Exception as e:
+            console.print(f"[yellow]✗ {suin_id}: {e}[/yellow]")
+            continue
+        cache.store_parsed("suin", row["tipo"], suin_id, parsed.to_dict())
+        affects_total += sum(len(a.affects) for a in parsed.articles)
+        ok += 1
+
+    console.print(
+        f"\n[green]✓ Re-parseadas {ok} normas[/green] "
+        f"({affects_total} afectaciones salientes capturadas)"
+    )
     db.close()
 
 

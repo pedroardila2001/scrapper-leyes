@@ -116,6 +116,40 @@ class Neo4jExporter:
                 # ── Export citation edges (CITA_A) ──────────────────────────
                 self._export_citations(session, norm_id, parsed)
 
+                # ── Export outgoing affectations (DEROGA/MODIFICA/…) ─────────
+                self._export_origin_affectations(session, norm_id, parsed)
+
+    def _export_origin_affectations(self, session, source_id: str, parsed: dict[str, Any]):
+        """Create directed affectation edges from a norm to the norms it affects.
+
+        Reads each article's ``affects`` (parsed from SUIN's official
+        "Afecta la vigencia de" toggle) → edges like (norma)-[:DEROGA_TOTAL]->(target).
+        These are authoritative, directional edges (source='suin').
+        """
+        seen: set[tuple[str, str]] = set()
+        for art in parsed.get("articles", []):
+            for aff in art.get("affects", []):
+                rel = aff.get("normalized_type") or "AFECTA"
+                if not re.fullmatch(r"[A-Z_]+", rel):
+                    rel = "AFECTA"
+                target_text = aff.get("target_text", "")
+                parsed_target = self._citation_to_node_id(target_text)
+                if not parsed_target:
+                    continue
+                target_id, target_name = parsed_target
+                key = (rel, target_id)
+                if key in seen:
+                    continue
+                seen.add(key)
+                session.run(
+                    f"MATCH (s {{id: $sid}}) "
+                    f"MERGE (t:Norma {{id: $tid}}) ON CREATE SET t.nombre = $tn "
+                    f"WITH s, t "
+                    f"MERGE (s)-[r:{rel}]->(t) "
+                    f"SET r.source = 'suin', r.texto = $txt",
+                    sid=source_id, tid=target_id, tn=target_name, txt=target_text,
+                )
+
     def _export_sentencia(self, session, row: dict[str, Any]):
         """Creates a Node for a Sentencia and its relationships to Norms."""
         sent_id = row.get("canonical_id") or f"co:sentencia:{row.get('corte', 'cc')}:{row['numero']}:{row.get('anio', '?')}"

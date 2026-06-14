@@ -7,6 +7,14 @@ from scrapper_leyes.chunking import (
     chunk_document,
     split_text,
 )
+from scrapper_leyes.models import strip_suin_ui_noise
+
+
+def test_strip_suin_toggle_headers():
+    assert strip_suin_ui_noise("Texto.\n\nJURISPRUDENCIA[Mostrar]").strip() == "Texto."
+    assert strip_suin_ui_noise("Algo. Afecta la vigencia de:[Mostrar]").strip() == "Algo."
+    assert strip_suin_ui_noise("Art. 5. CONCORDANCIAS[Ocultar]").strip() == "Art. 5."
+    assert strip_suin_ui_noise("texto normal") == "texto normal"
 
 
 # ── split_text ──────────────────────────────────────────────────────────────

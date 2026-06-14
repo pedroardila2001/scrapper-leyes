@@ -444,7 +444,7 @@ def get_norm_graph(suin_id: str):
                             seen_ids.add(aid)
                         links.append({"source": aid, "target": suin_id, "label": "PERTENECE_A"})
 
-            # Modifications (norms that modify this one)
+            # Modifications (norms that modify this one — INCOMING)
             for mod in parsed.get("modifications", []):
                 src_text = mod.get("source_text", "")
                 src_id = mod.get("source_suin_id", src_text[:30])
@@ -461,6 +461,32 @@ def get_norm_graph(suin_id: str):
                         "source": src_id,
                         "target": suin_id,
                         "label": mod.get("normalized_type", "MODIFICA"),
+                    })
+
+            # Outgoing affectations (what THIS norm derogates/modifies of others)
+            seen_affects: set[str] = set()
+            for art in parsed.get("articles", []):
+                for aff in art.get("affects", []):
+                    tgt_text = aff.get("target_text", "")
+                    tgt_id = aff.get("target_suin_id") or tgt_text[:30]
+                    if not tgt_id:
+                        continue
+                    edge_key = f"{aff.get('normalized_type')}|{tgt_id}"
+                    if edge_key in seen_affects:
+                        continue
+                    seen_affects.add(edge_key)
+                    if tgt_id not in seen_ids:
+                        nodes.append({
+                            "id": tgt_id,
+                            "name": tgt_text[:50],
+                            "group": "afecta",
+                            "val": 5,
+                        })
+                        seen_ids.add(tgt_id)
+                    links.append({
+                        "source": suin_id,
+                        "target": tgt_id,
+                        "label": aff.get("normalized_type", "AFECTA"),
                     })
 
             # Jurisprudence (sentencias that affect this norm)
@@ -587,7 +613,7 @@ def get_global_graph(limit: int = Query(default=1000, le=5000)):
     MATCH (n)
     WHERE (n:Norma OR n:Sentencia) AND n.suin_id IS NOT NULL
     OPTIONAL MATCH (n)-[r]-(m)
-    WHERE type(r) IN ['CITA_A', 'MODIFICA', 'EXEQUIBLE', 'INEXEQUIBLE', 'SIMILAR_A']
+    WHERE NOT type(r) IN ['PERTENECE_A', 'FUE_PONENTE_DE']
       AND (m:Norma OR m:Sentencia) AND m.suin_id IS NOT NULL
     RETURN n, r, m
     LIMIT {limit}

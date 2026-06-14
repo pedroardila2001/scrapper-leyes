@@ -220,6 +220,10 @@ def _extract_articles(
 
     seen_art_ids: set[str] = set()
     seen_numbers: set[str] = set()
+    # Map EVERY anchor's art_id → article number (incl. duplicate anchors), so
+    # we can attribute toggle data (NotasOrigen) attached to a non-kept anchor.
+    art_id_to_number: dict[str, str] = {}
+    by_number: dict[str, ParsedArticle] = {}
 
     # Find all <a name="ver_XXXXX"> anchors that precede article divs
     for anchor in soup.find_all("a", attrs={"name": re.compile(r"^ver_\d+")}):
@@ -253,6 +257,9 @@ def _extract_articles(
         if art_num_norm is None:
             continue
 
+        # Record the art_id → number mapping for EVERY anchor (kept or not).
+        art_id_to_number[art_id] = art_num_norm
+
         # Dedup by article number: SUIN anchors some articles twice (original +
         # modified-version anchor) with identical text. Keep the first.
         if art_num_norm in seen_numbers:
@@ -276,24 +283,40 @@ def _extract_articles(
         # Build canonical ID
         canonical_id = build_canonical_id(tipo, numero, anio, art=art_num_norm)
 
-        # Extract vigencia notes for this article
+        # Extract vigencia notes + previous versions for this article
         notes = _extract_article_notes(soup, art_id)
-
-        # Extract previous versions
         prev_versions = _extract_previous_versions(soup, art_id)
 
-        articles.append(
-            ParsedArticle(
-                art_id=art_id,
-                number=strong_text,
-                number_normalized=art_num_norm,
-                title=title,
-                text=article_text,
-                canonical_id=canonical_id,
-                notes=notes,
-                previous_versions=prev_versions,
-            )
+        article = ParsedArticle(
+            art_id=art_id,
+            number=strong_text,
+            number_normalized=art_num_norm,
+            title=title,
+            text=article_text,
+            canonical_id=canonical_id,
+            notes=notes,
+            previous_versions=prev_versions,
         )
+        articles.append(article)
+        by_number[art_num_norm] = article
+
+    # Second pass: attribute OUTGOING affectations (NotasOrigen). The toggle is
+    # often attached to a non-kept (modified-version) anchor of the article, so
+    # we resolve it by number rather than by the kept article's art_id.
+    for div in soup.find_all("div", id=re.compile(r"NotasOrigen\d+")):
+        m = re.search(r"NotasOrigen(\d+)", div.get("id", ""))
+        if not m:
+            continue
+        number = art_id_to_number.get(m.group(1))
+        article = by_number.get(number) if number else None
+        if article is None:
+            continue
+        seen = {f"{a['normalized_type']}|{a['target_text']}" for a in article.affects}
+        for aff in _extract_origin_affectations_from_div(div):
+            key = f"{aff['normalized_type']}|{aff['target_text']}"
+            if key not in seen:
+                seen.add(key)
+                article.affects.append(aff)
 
     return articles
 
@@ -322,6 +345,48 @@ def _extract_article_notes(soup: BeautifulSoup, art_id: str) -> list[str]:
         for li in div.find_all("li", class_="referencia"):
             notes.append(li.get_text(strip=True))
     return notes
+
+
+def _extract_origin_affectations_from_div(div: Tag) -> list[dict[str, Any]]:
+    """Parse OUTGOING affectations from a ``NotasOrigen`` toggle div — what an
+    article derogates/modifies of other norms.
+
+    Same structure as incoming affectations: <li class="referencia"> with a
+    <span> type and an <a> linking the affected target norm.
+    """
+    out: list[dict[str, Any]] = []
+    for li in div.find_all("li", class_="referencia"):
+        span = li.find("span")
+        raw_type = span.get_text(strip=True) if span else ""
+        a_tag = li.find("a")
+        target_text = a_tag.get_text(strip=True) if a_tag else ""
+        target_suin_id = None
+        target_anchor = None
+        if a_tag and a_tag.get("href"):
+            href = a_tag["href"]
+            m = _SUIN_ID_FROM_HREF.search(href)
+            if m:
+                target_suin_id = m.group(1)
+            m2 = _ANCHOR_FROM_HREF.search(href)
+            if m2:
+                target_anchor = f"ver_{m2.group(1)}"
+
+        full = li.get_text(strip=True)
+        context = None
+        if "(" in full and ")" in full:
+            context = full[full.index("(") : full.rindex(")") + 1]
+
+        normalized_type, mapped = normalize_affectation_type(raw_type)
+        out.append({
+            "normalized_type": normalized_type.value,
+            "raw_type": raw_type,
+            "mapped": mapped,
+            "target_text": target_text,
+            "target_suin_id": target_suin_id,
+            "target_anchor": target_anchor,
+            "context": context,
+        })
+    return out
 
 
 def _extract_previous_versions(
