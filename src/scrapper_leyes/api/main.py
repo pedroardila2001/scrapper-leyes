@@ -353,7 +353,9 @@ def get_norm_vigencia(
       se omite, resuelve la norma completa.
     - ``fecha``: 'DD/MM/YYYY' o 'YYYY-MM-DD'. Si se omite, estado/texto actual.
     """
+    from scrapper_leyes.models import build_canonical_id
     from scrapper_leyes.vigencia import resolve
+    from scrapper_leyes.vigencia_graph import resolve_graph
 
     conn = _get_conn()
     try:
@@ -363,14 +365,34 @@ def get_norm_vigencia(
         if not row:
             raise HTTPException(404, "Norm not found")
         row_dict = dict(row)
-        parsed = _find_parsed(suin_id, row["tipo"], row_dict.get("corte"))
-        if not parsed:
-            raise HTTPException(404, "No parsed data")
+        tipo = row_dict.get("tipo", "")
+        numero = str(row_dict.get("numero", ""))
+        anio = str(row_dict.get("anio", ""))
+        norm_vig = row_dict.get("suin_vigencia") or row_dict.get("vigencia")
+        norm_cid = row_dict.get("canonical_id") or build_canonical_id(tipo, numero, anio)
+        art_cid = build_canonical_id(tipo, numero, anio, art=art) if art else None
 
-        report = resolve(parsed, row_dict, art_ref=art, fecha=fecha)
+        # 1) Fuente única de verdad: el grafo (afectaciones entrantes cross-doc).
+        report = resolve_graph(
+            neo4j_driver, norm_cid=norm_cid, art_cid=art_cid,
+            norm_vigencia=norm_vig, fecha=fecha,
+        )
+        # 2) Fallback al resolver basado en parsed.json si el nodo no está en el
+        #    grafo todavía (p.ej. norma no exportada aún).
         if report is None:
-            raise HTTPException(404, f"Artículo {art} no encontrado en la norma")
-        return report.to_dict()
+            parsed = _find_parsed(suin_id, tipo, row_dict.get("corte"))
+            if not parsed:
+                raise HTTPException(404, "No parsed data")
+            report = resolve(parsed, row_dict, art_ref=art, fecha=fecha)
+            if report is None:
+                raise HTTPException(404, f"Artículo {art} no encontrado en la norma")
+            out = report.to_dict()
+            out["fuente_resolucion"] = "parsed_json"
+            return out
+
+        out = report.to_dict()
+        out["fuente_resolucion"] = "grafo"
+        return out
     finally:
         conn.close()
 

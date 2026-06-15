@@ -98,12 +98,17 @@ class Neo4jExporter:
             parsed = self.cache.load_parsed("suin", tipo, suin_id)
             if parsed:
                 # Export articles en un solo UNWIND (no un round-trip por artículo).
+                # El nodo guarda el texto COMPLETO + las versiones previas (json),
+                # para que el resolver de vigencia reconstruya el texto a una fecha
+                # consultando solo el grafo (fuente única de verdad).
+                import json as _json
                 arts = [
                     {
                         "art_id": a.get("canonical_id", f"{norm_id}:art:{a.get('number_normalized', '?')}"),
                         "titulo": a.get("title", ""),
-                        "texto": (a.get("text", "") or "")[:2000],
+                        "texto": a.get("text", "") or "",
                         "numero": a.get("number_normalized", ""),
+                        "prev_versions": _json.dumps(a.get("previous_versions", []), ensure_ascii=False),
                     }
                     for a in parsed.get("articles", [])
                 ]
@@ -112,7 +117,8 @@ class Neo4jExporter:
                         "MATCH (n:Norma {id: $norm_id}) "
                         "UNWIND $arts AS art "
                         "MERGE (a:Articulo {id: art.art_id}) "
-                        "SET a.titulo = art.titulo, a.texto = art.texto, a.numero = art.numero "
+                        "SET a.titulo = art.titulo, a.texto = art.texto, "
+                        "    a.numero = art.numero, a.prev_versions = art.prev_versions "
                         "MERGE (a)-[:PERTENECE_A]->(n)",
                         norm_id=norm_id, arts=arts,
                     )
@@ -122,6 +128,77 @@ class Neo4jExporter:
 
                 # ── Export outgoing affectations (DEROGA/MODIFICA/…) ─────────
                 self._export_origin_affectations(session, norm_id, parsed)
+
+                # ── Export incoming affectations (por artículo, con fecha) ───
+                # modifications + jurisprudence → aristas tipadas hacia el
+                # artículo/norma afectada. Base del resolver de vigencia.
+                self._export_incoming_affectations(session, norm_id, parsed)
+
+    def _export_incoming_affectations(self, session, norm_id: str, parsed: dict[str, Any]):
+        """Create incoming, article-level affectation edges into this norm.
+
+        Lee ``modifications`` (lo que OTRAS normas le hicieron a esta, registrado
+        por SUIN, con granularidad de artículo) y ``jurisprudence`` (control
+        constitucional) → aristas tipadas ``(fuente)-[:{TIPO}]->(artículo|norma)``
+        con ``source`` ('suin' | 'jurisprudencia'), ``articulo`` y ``anio``.
+
+        Estas son la base del resolver de vigencia respaldado por el grafo: para
+        saber el estado de un artículo basta mirar sus aristas entrantes, vengan
+        del documento que vengan (no de un único parsed.json).
+        """
+        from scrapper_leyes.models import normalize_article_number
+
+        # número de artículo normalizado → canonical_id del nodo Articulo.
+        num_to_cid: dict[str, str] = {}
+        for a in parsed.get("articles", []):
+            nn = a.get("number_normalized")
+            if nn:
+                num_to_cid[nn] = a.get("canonical_id", f"{norm_id}:art:{nn}")
+
+        # (rel, label_fuente, label_destino) → lista de aristas a escribir.
+        edges: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
+
+        def _add(items: list[dict[str, Any]], source_tag: str):
+            for it in items:
+                rel = it.get("normalized_type") or "AFECTA"
+                if not re.fullmatch(r"[A-Z_]+", rel):
+                    rel = "AFECTA"
+                src_text = it.get("source_text", "") or ""
+                src = self._citation_to_node_id(src_text)
+                if not src:
+                    continue
+                src_id, src_name = src
+                src_label = "Sentencia" if "sentencia" in src_text.lower() else "Norma"
+                affected = (it.get("article_affected") or "").strip()
+                num = normalize_article_number(affected)
+                if num and num in num_to_cid:
+                    target_id, target_label = num_to_cid[num], "Articulo"
+                else:
+                    target_id, target_label = norm_id, "Norma"
+                anio = ""
+                m = re.search(r"(\d{4})", src_name)
+                if m:
+                    anio = m.group(1)
+                edges.setdefault((rel, src_label, target_label), []).append({
+                    "sid": src_id, "sname": src_name, "tid": target_id,
+                    "articulo": affected, "anio": anio, "texto": src_text,
+                    "source": source_tag,
+                })
+
+        _add(parsed.get("modifications", []), "suin")
+        _add(parsed.get("jurisprudence", []), "jurisprudencia")
+
+        for (rel, sl, tl), batch in edges.items():
+            session.run(
+                f"UNWIND $batch AS e "
+                f"MERGE (s:{sl} {{id: e.sid}}) ON CREATE SET s.nombre = e.sname "
+                f"WITH s, e "
+                f"MATCH (t:{tl} {{id: e.tid}}) "
+                f"MERGE (s)-[r:{rel}]->(t) "
+                f"SET r.source = e.source, r.articulo = e.articulo, "
+                f"    r.anio = e.anio, r.texto = e.texto",
+                batch=batch,
+            )
 
     def _export_origin_affectations(self, session, source_id: str, parsed: dict[str, Any]):
         """Create directed affectation edges from a norm to the norms it affects.
@@ -435,41 +512,47 @@ class Neo4jExporter:
         if m:
             return (f"co:decreto:{m.group(2)}:{m.group(3)}", f"Decreto {m.group(2)} de {m.group(3)}")
 
-        # Sentencia X-NNN de YYYY
-        m = re.match(
-            r"sentencia\s+([a-z]{1,2})-(\d+)\s+de\s+(\d{4})",
-            cita_lower,
-        )
-        if m:
-            prefix = m.group(1)
-            sala_map = {"c": "plena", "t": "revision", "su": "plena", "a": "auto"}
-            sala = sala_map.get(prefix, "plena")
-            return (f"co:sentencia:cc:{sala}:{prefix}-{m.group(2)}:{m.group(3)}", f"Sentencia {prefix.upper()}-{m.group(2)} de {m.group(3)}")
+        # Sentencia: el código (C/T/SU/A-NNN de YYYY) puede no ir pegado a la
+        # palabra "Sentencia" (p.ej. "Sentencia de la Corte Constitucional
+        # C-623 de 2007"), así que lo buscamos en cualquier parte del texto.
+        if "sentencia" in cita_lower or "corte" in cita_lower:
+            m = re.search(r"\b(su|c|t|a)-(\d+)\s+de\s+(\d{4})", cita_lower)
+            if m:
+                prefix = m.group(1)
+                sala_map = {"c": "plena", "t": "revision", "su": "plena", "a": "auto"}
+                sala = sala_map.get(prefix, "plena")
+                return (
+                    f"co:sentencia:cc:{sala}:{prefix}-{m.group(2)}:{m.group(3)}",
+                    f"Sentencia {prefix.upper()}-{m.group(2)} de {m.group(3)}",
+                )
 
-        # Ley X de Y
-        m = re.match(r"ley\s+(\d+)\s+de\s+(\d{4})", cita_lower)
-        if m:
-            return (f"co:ley:{m.group(1)}:{m.group(2)}", f"Ley {m.group(1)} de {m.group(2)}")
+        # Normas: usamos re.search (no re.match) para reconocer la referencia
+        # aunque venga precedida de "Artículo N …" ('Artículo 276 LEY 1450 de
+        # 2011'). Decreto ANTES de Ley para no confundir "Decreto Ley".
 
-        # Decreto X de Y
-        m = re.match(r"decreto\s+(?:ley\s+)?(\d+)\s+de\s+(\d{4})", cita_lower)
+        # Decreto (incl. Decreto Ley) X de Y
+        m = re.search(r"decreto\s+(?:ley\s+)?(\d+)\s+de\s+(\d{4})", cita_lower)
         if m:
             return (f"co:decreto:{m.group(1)}:{m.group(2)}", f"Decreto {m.group(1)} de {m.group(2)}")
 
+        # Ley X de Y
+        m = re.search(r"ley\s+(\d+)\s+de\s+(\d{4})", cita_lower)
+        if m:
+            return (f"co:ley:{m.group(1)}:{m.group(2)}", f"Ley {m.group(1)} de {m.group(2)}")
+
         # Resolución X de Y
-        m = re.match(r"resoluci[oó]n\s+(\d+)\s+de\s+(\d{4})", cita_lower)
+        m = re.search(r"resoluci[oó]n\s+(\d+)\s+de\s+(\d{4})", cita_lower)
         if m:
             return (f"co:resolucion:{m.group(1)}:{m.group(2)}", f"Resolución {m.group(1)} de {m.group(2)}")
 
         # Acto Legislativo X de Y
-        m = re.match(r"acto\s+legislativo\s+(\d+)\s+de\s+(\d{4})", cita_lower)
+        m = re.search(r"acto\s+legislativo\s+(\d+)\s+de\s+(\d{4})", cita_lower)
         if m:
             return (f"co:acto_legislativo:{m.group(1)}:{m.group(2)}", f"Acto Legislativo {m.group(1)} de {m.group(2)}")
 
-        # Artículo X de la Constitución
-        m = re.match(r"art[ií]culo\s+(\d+)\s+de\s+la\s+constituci[oó]n", cita_lower)
-        if m:
-            return (f"co:constitucion:1991", "Constitución Política de 1991")
+        # Constitución
+        if "constituci" in cita_lower:
+            return ("co:constitucion:1991", "Constitución Política de 1991")
 
         return None
 
