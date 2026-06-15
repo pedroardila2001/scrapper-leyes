@@ -417,6 +417,9 @@ class LegalMapper:
             consideraciones=consideraciones,
             resuelve=resuelve,
             citaciones=citaciones_str,
-            raw_text=md_text[:5000],
+            # El texto íntegro vive en hechos/consideraciones/resuelve; raw_text
+            # es solo un respaldo. No lo recortamos a 5000 (eso hacía que el front
+            # mostrara las sentencias "cortadas") — guardamos el markdown completo.
+            raw_text=md_text,
         )
         return sentencia

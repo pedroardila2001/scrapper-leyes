@@ -56,13 +56,16 @@ export default function DocumentView() {
     return <div style={{ padding: "2rem", color: "var(--text-muted)" }}>Cargando documento...</div>;
   }
 
-  // Build readable text from the parsed data
+  // Build readable text from the parsed data.
+  // Orden de prioridad: secciones estructuradas (sentencias) y artículos (leyes)
+  // van PRIMERO; raw_text es solo el último recurso (está recortado a 5000 en el
+  // parser, así que nunca debe ser la fuente principal de una sentencia).
   let rawText = "";
   if (docData) {
-    if (docData.raw_text) {
-      rawText = docData.raw_text;
-    } else if (docData.consideraciones) {
-      rawText = `## Consideraciones\n\n${docData.consideraciones}\n\n`;
+    const tieneSecciones = docData.consideraciones || docData.resuelve || docData.hechos;
+    if (tieneSecciones) {
+      if (docData.hechos) rawText += `## Hechos\n\n${docData.hechos}\n\n`;
+      if (docData.consideraciones) rawText += `## Consideraciones\n\n${docData.consideraciones}\n\n`;
       if (docData.resuelve) rawText += `## Resuelve\n\n${docData.resuelve}`;
     } else if (docData.articles && docData.articles.length > 0) {
       // Dedupe repeated articles (parser sometimes emits the same one twice)
@@ -81,6 +84,8 @@ export default function DocumentView() {
           return `### Artículo ${num}${title}\n\n${a.text}`;
         })
         .join("\n\n---\n\n");
+    } else if (docData.raw_text) {
+      rawText = docData.raw_text; // fallback (puede estar recortado)
     }
     if (!rawText) rawText = "No hay texto procesado disponible para este documento.";
   }
