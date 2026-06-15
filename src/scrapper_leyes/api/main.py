@@ -608,8 +608,49 @@ def get_norm_graph(suin_id: str):
 def search_norms(
     q: str = Query(..., min_length=2),
     limit: int = Query(default=20, le=100),
+    tipo: Optional[str] = None,
+    anio: Optional[str] = None,
+    estado_vigencia: Optional[str] = None,
+    excluir_derogadas: bool = False,
 ):
-    """Simple text search across catalog and parsed data."""
+    """Búsqueda semántica híbrida (dense+sparse) sobre Qdrant — la herramienta 1
+    del deep-agent. Filtrable por tipo/año/vigencia.
+
+    Si la colección de vectores aún no existe (no se ha corrido `export vector`),
+    cae con elegancia al keyword search de SQLite para no romper el dashboard.
+    """
+    from scrapper_leyes.search import CollectionMissing, get_searcher
+
+    try:
+        searcher = get_searcher()
+        hits = searcher.search(
+            q,
+            limit=limit,
+            tipo=tipo,
+            anio=anio,
+            estado_vigencia=estado_vigencia,
+            excluir_derogadas=excluir_derogadas,
+        )
+        return {
+            "query": q,
+            "modo": "semantica",
+            "total": len(hits),
+            "results": [h.to_dict() for h in hits],
+        }
+    except CollectionMissing:
+        out = _keyword_search(q, limit)
+        out["modo"] = "keyword_fallback"
+        out["aviso"] = "Índice vectorial vacío; corre `export vector`. Resultados por coincidencia léxica."
+        return out
+    except Exception as e:  # pragma: no cover - resiliencia del endpoint
+        logging.getLogger(__name__).warning("Búsqueda semántica falló (%s); fallback keyword", e)
+        out = _keyword_search(q, limit)
+        out["modo"] = "keyword_fallback"
+        return out
+
+
+def _keyword_search(q: str, limit: int) -> dict[str, Any]:
+    """Fallback léxico sobre el catálogo (el comportamiento previo)."""
     conn = _get_conn()
     try:
         s = f"%{q}%"
@@ -623,10 +664,8 @@ def search_norms(
         results = []
         for row in rows:
             item = dict(row)
-            # Try to get a snippet from parsed data
             parsed = _find_parsed(row["suin_id"], row["tipo"], row.get("corte")) if row["suin_id"] else None
             if parsed:
-                # Search in raw_text for a snippet
                 raw = parsed.get("raw_text", "") or ""
                 idx = raw.lower().find(q.lower())
                 if idx >= 0:
@@ -641,70 +680,106 @@ def search_norms(
 
 # ── Global Knowledge Graph ──────────────────────────────────────────────
 
+def _graph_node_dict(node, degree: int = 0) -> dict[str, Any]:
+    """Normaliza un nodo Norma/Sentencia para el frontend.
+
+    Distingue 3 grupos: ``sentencia``, ``norma`` (ingeridas, con suin_id) y
+    ``fantasma`` (referenciadas por una cita/afectación pero aún no ingeridas —
+    p.ej. la Constitución o leyes citadas). Los fantasmas se dimensionan por
+    grado para que los hubs reales (Constitución, códigos) se vean.
+    """
+    es_sentencia = "Sentencia" in node.labels
+    ingerido = bool(node.get("suin_id"))
+    if not ingerido:
+        group = "fantasma"
+        val = min(4 + degree, 22)
+    else:
+        group = "sentencia" if es_sentencia else "norma"
+        val = 10 if es_sentencia else 8
+    tipo_str = "Sentencia" if es_sentencia else (node.get("tipo") or "Norma")
+    label = node.get("nombre") or f"{tipo_str} {node.get('numero', '')} de {node.get('anio', '')}"
+    return {
+        "id": node.get("id"),
+        "suin_id": node.get("suin_id"),
+        "name": label.strip(),
+        "group": group,
+        "ingerido": ingerido,
+        "val": val,
+    }
+
+
 @app.get("/api/graph/global")
-def get_global_graph(limit: int = Query(default=1000, le=5000)):
-    """Fetch a global view of the Knowledge Graph from Neo4j."""
-    # We query only Norma and Sentencia to avoid cluttering with thousands of Articulos
+def get_global_graph(
+    limit: int = Query(default=2000, le=8000),
+    incluir_fantasmas: bool = True,
+):
+    """Vista global del grafo de conocimiento desde Neo4j.
+
+    Por defecto incluye nodos *fantasma* (normas/sentencias referenciadas pero no
+    ingeridas) para que la red se vea conectada en torno a sus hubs reales (la
+    Constitución, códigos, leyes muy citadas). Pasa ``incluir_fantasmas=false``
+    para ver solo lo ingerido.
+    """
+    # Solo Norma/Sentencia (no Articulos, que saturarían). Incluimos aristas a
+    # stubs salvo que se pidan ocultar. Excluimos jerarquía/ponencia del grafo.
+    ghost_clause = "" if incluir_fantasmas else "AND m.suin_id IS NOT NULL"
     query = f"""
     MATCH (n)
     WHERE (n:Norma OR n:Sentencia) AND n.suin_id IS NOT NULL
     OPTIONAL MATCH (n)-[r]-(m)
     WHERE NOT type(r) IN ['PERTENECE_A', 'FUE_PONENTE_DE']
-      AND (m:Norma OR m:Sentencia) AND m.suin_id IS NOT NULL
+      AND (m:Norma OR m:Sentencia) {ghost_clause}
     RETURN n, r, m
     LIMIT {limit}
     """
-    
-    nodes = []
+
+    nodes: list[dict[str, Any]] = []
     links = []
-    seen_nodes = set()
+    node_idx: dict[str, int] = {}
     seen_links = set()
+    degree: dict[str, int] = {}
 
     with neo4j_driver.session() as session:
-        result = session.run(query)
-        for record in result:
-            n = record.get("n")
-            if n and n.get("id") not in seen_nodes:
-                group = "sentencia" if "Sentencia" in n.labels else "norma"
-                tipo_str = "Sentencia" if "Sentencia" in n.labels else n.get("tipo", "Norma")
-                label = n.get("nombre") or f"{tipo_str} {n.get('numero', '')} de {n.get('anio', '')}"
-                nodes.append({
-                    "id": n.get("id"),
-                    "suin_id": n.get("suin_id"),
-                    "name": label.strip(),
-                    "group": group,
-                    "val": 10 if group == "sentencia" else 8,
-                })
-                seen_nodes.add(n.get("id"))
-                
-            m = record.get("m")
-            if m and m.get("id") not in seen_nodes:
-                group = "sentencia" if "Sentencia" in m.labels else "norma"
-                tipo_str = "Sentencia" if "Sentencia" in m.labels else m.get("tipo", "Norma")
-                label = m.get("nombre") or f"{tipo_str} {m.get('numero', '')} de {m.get('anio', '')}"
-                nodes.append({
-                    "id": m.get("id"),
-                    "suin_id": m.get("suin_id"),
-                    "name": label.strip(),
-                    "group": group,
-                    "val": 10 if group == "sentencia" else 8,
-                })
-                seen_nodes.add(m.get("id"))
-                
-            r = record.get("r")
+        records = list(session.run(query))
+
+        # Primer paso: grado de cada nodo (para dimensionar fantasmas/hubs).
+        for record in records:
+            n, m, r = record.get("n"), record.get("m"), record.get("r")
             if r and n and m:
-                # Dedupe undirected edges (e.g. SIMILAR_A) by sorting the pair.
+                degree[n.get("id")] = degree.get(n.get("id"), 0) + 1
+                degree[m.get("id")] = degree.get(m.get("id"), 0) + 1
+
+        def _add(node):
+            nid = node.get("id")
+            if nid in node_idx:
+                return
+            node_idx[nid] = len(nodes)
+            nodes.append(_graph_node_dict(node, degree.get(nid, 0)))
+
+        for record in records:
+            n, m, r = record.get("n"), record.get("m"), record.get("r")
+            if n:
+                _add(n)
+            if m:
+                _add(m)
+            if r and n and m:
                 pair = "|".join(sorted([str(n.get("id")), str(m.get("id"))]))
                 link_id = f"{pair}-{r.type}"
                 if link_id not in seen_links:
                     links.append({
                         "source": n.get("id"),
                         "target": m.get("id"),
-                        "label": r.type
+                        "label": r.type,
                     })
                     seen_links.add(link_id)
-                    
+
     return {
         "nodes": nodes,
-        "links": links
+        "links": links,
+        "stats": {
+            "total": len(nodes),
+            "ingeridas": sum(1 for x in nodes if x["ingerido"]),
+            "fantasmas": sum(1 for x in nodes if not x["ingerido"]),
+            "aristas": len(links),
+        },
     }

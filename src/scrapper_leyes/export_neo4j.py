@@ -97,20 +97,24 @@ class Neo4jExporter:
         if suin_id and row.get("scrape_status") == "done":
             parsed = self.cache.load_parsed("suin", tipo, suin_id)
             if parsed:
-                # Export articles
-                for article in parsed.get("articles", []):
-                    art_cid = article.get("canonical_id", f"{norm_id}:art:{article.get('number_normalized', '?')}")
+                # Export articles en un solo UNWIND (no un round-trip por artículo).
+                arts = [
+                    {
+                        "art_id": a.get("canonical_id", f"{norm_id}:art:{a.get('number_normalized', '?')}"),
+                        "titulo": a.get("title", ""),
+                        "texto": (a.get("text", "") or "")[:2000],
+                        "numero": a.get("number_normalized", ""),
+                    }
+                    for a in parsed.get("articles", [])
+                ]
+                if arts:
                     session.run(
-                        "MERGE (a:Articulo {id: $art_id}) "
-                        "SET a.titulo = $titulo, a.texto = $texto, a.numero = $numero "
-                        "WITH a "
                         "MATCH (n:Norma {id: $norm_id}) "
+                        "UNWIND $arts AS art "
+                        "MERGE (a:Articulo {id: art.art_id}) "
+                        "SET a.titulo = art.titulo, a.texto = art.texto, a.numero = art.numero "
                         "MERGE (a)-[:PERTENECE_A]->(n)",
-                        art_id=art_cid,
-                        titulo=article.get("title", ""),
-                        texto=article.get("text", "")[:2000],
-                        numero=article.get("number_normalized", ""),
-                        norm_id=norm_id,
+                        norm_id=norm_id, arts=arts,
                     )
 
                 # ── Export citation edges (CITA_A) ──────────────────────────
@@ -142,7 +146,7 @@ class Neo4jExporter:
                     continue
                 seen.add(key)
                 session.run(
-                    f"MATCH (s {{id: $sid}}) "
+                    f"MATCH (s:Norma {{id: $sid}}) "
                     f"MERGE (t:Norma {{id: $tid}}) ON CREATE SET t.nombre = $tn "
                     f"WITH s, t "
                     f"MERGE (s)-[r:{rel}]->(t) "
@@ -212,43 +216,41 @@ class Neo4jExporter:
         if not citaciones:
             return
 
+        sent_citas: list[dict[str, str]] = []
+        norm_citas: list[dict[str, str]] = []
         for cita_raw in citaciones:
             if not cita_raw or not isinstance(cita_raw, str):
                 continue
-
             cita_clean = cita_raw.strip()
             if not cita_clean:
                 continue
-
-            # Try to parse the citation into a canonical-like ID
             parsed_cita = self._citation_to_node_id(cita_clean)
             if not parsed_cita:
                 continue
             target_id, target_name = parsed_cita
-
-            # Determine target label
+            entry = {"target_id": target_id, "nombre": target_name, "texto": cita_clean}
             if "sentencia" in cita_clean.lower():
-                # It's a sentencia citation
-                session.run(
-                    "MERGE (t:Sentencia {id: $target_id}) "
-                    "ON CREATE SET t.nombre = $nombre "
-                    "WITH t "
-                    "MATCH (s {id: $source_id}) "
-                    "MERGE (s)-[:CITA_A {texto: $texto}]->(t)",
-                    target_id=target_id, nombre=target_name,
-                    source_id=source_id, texto=cita_clean,
-                )
+                sent_citas.append(entry)
             else:
-                # It's a norm citation (ley, decreto, etc.)
-                session.run(
-                    "MERGE (t:Norma {id: $target_id}) "
-                    "ON CREATE SET t.nombre = $nombre "
-                    "WITH t "
-                    "MATCH (s {id: $source_id}) "
-                    "MERGE (s)-[:CITA_A {texto: $texto}]->(t)",
-                    target_id=target_id, nombre=target_name,
-                    source_id=source_id, texto=cita_clean,
-                )
+                norm_citas.append(entry)
+
+        # Un UNWIND por tipo de destino (en vez de un run por cita).
+        if sent_citas:
+            session.run(
+                "MATCH (s {id: $source_id}) "
+                "UNWIND $citas AS c "
+                "MERGE (t:Sentencia {id: c.target_id}) ON CREATE SET t.nombre = c.nombre "
+                "MERGE (s)-[:CITA_A {texto: c.texto}]->(t)",
+                source_id=source_id, citas=sent_citas,
+            )
+        if norm_citas:
+            session.run(
+                "MATCH (s {id: $source_id}) "
+                "UNWIND $citas AS c "
+                "MERGE (t:Norma {id: c.target_id}) ON CREATE SET t.nombre = c.nombre "
+                "MERGE (s)-[:CITA_A {texto: c.texto}]->(t)",
+                source_id=source_id, citas=norm_citas,
+            )
 
     # ── Similarity edges (embeddings) ───────────────────────────────────
 
@@ -291,62 +293,122 @@ class Neo4jExporter:
     ) -> None:
         """Create SIMILAR_A edges between thematically related documents.
 
-        Uses bge-m3 embeddings + cosine kNN so the graph is interconnected
-        beyond explicit citations/affectations. Edges carry a `score` and are
-        tagged so they're distinguishable from authoritative edges.
+        Escala a todo el corpus: en vez de una matriz coseno n×n en RAM (que
+        revienta pasados unos miles de nodos), embebe un vector representativo
+        por documento, lo sube a una colección auxiliar en Qdrant y consulta el
+        kNN con HNSW (memoria acotada a top_k por nodo). Las aristas llevan
+        `score` y `source='embedding'` para distinguirlas de las autoritativas.
         """
+        import uuid
+
         rows = self.db.conn.execute(
             "SELECT * FROM catalog WHERE scrape_status = 'done' AND canonical_id IS NOT NULL"
         ).fetchall()
         items: list[tuple[str, str]] = []
+        label_for_cid: dict[str, str] = {}
         for r in rows:
             row = dict(r)
             rep = self._representative_text(row)
             if rep and rep.strip():
-                items.append((row["canonical_id"], rep))
+                cid = row["canonical_id"]
+                items.append((cid, rep))
+                label_for_cid[cid] = "Sentencia" if row.get("tipo") == "SENTENCIA" else "Norma"
         if len(items) < 3:
             return
 
         try:
-            import numpy as np
             from fastembed import TextEmbedding
+            from qdrant_client import QdrantClient
+            from qdrant_client.http import models
         except ImportError:
-            logger.warning("fastembed/numpy no disponible; se omiten aristas SIMILAR_A")
+            logger.warning("fastembed/qdrant no disponible; se omiten aristas SIMILAR_A")
             return
 
+        # Cliente Qdrant (mismo destino que el vector store).
+        if self.settings.qdrant_url:
+            client = QdrantClient(url=self.settings.qdrant_url, api_key=self.settings.qdrant_api_key)
+        else:
+            client = QdrantClient(
+                host=self.settings.qdrant_host, port=self.settings.qdrant_port,
+                api_key=self.settings.qdrant_api_key,
+            )
+
         logger.info(
-            "Computando aristas de similitud para %d nodos (%s)...",
+            "Computando aristas de similitud (kNN Qdrant) para %d nodos (%s)...",
             len(items), self.settings.embedding_model_dense,
         )
         model = TextEmbedding(self.settings.embedding_model_dense)
-        vecs = np.array(list(model.embed([t for _, t in items])), dtype="float32")
-        vecs /= np.linalg.norm(vecs, axis=1, keepdims=True) + 1e-9
-        sims = vecs @ vecs.T
 
-        edges = 0
+        # Colección auxiliar de "representantes de documento" (1 vector por norma).
+        rep_coll = f"{self.settings.qdrant_collection}__docreps"
+        ns = uuid.UUID("6f6c6579-6573-4c45-4759-455343485348")
+        cid_for_pid: dict[str, str] = {}
+
+        # Embeber + upsert en lotes; no se retienen los vectores en memoria.
+        first = True
+        BATCH = 256
+        for start in range(0, len(items), BATCH):
+            chunk = items[start:start + BATCH]
+            vecs = list(model.embed([t for _, t in chunk]))
+            if first:
+                size = len(vecs[0])
+                if client.collection_exists(rep_coll):
+                    client.delete_collection(rep_coll)
+                client.create_collection(
+                    collection_name=rep_coll,
+                    vectors_config=models.VectorParams(size=size, distance=models.Distance.COSINE),
+                )
+                first = False
+            points = []
+            for (cid, _), vec in zip(chunk, vecs):
+                pid = str(uuid.uuid5(ns, cid))
+                cid_for_pid[pid] = cid
+                points.append(models.PointStruct(id=pid, vector=vec.tolist(), payload={"cid": cid}))
+            client.upsert(collection_name=rep_coll, points=points)
+
+        # kNN por documento, usando el vector ya almacenado (query por point id).
+        # Acumulamos las aristas agrupadas por par de labels para escribirlas con
+        # UNWIND indexado (sin cartesian product, escalable a todo el corpus).
         seen_pairs: set[tuple[str, str]] = set()
-        for i in range(len(items)):
-            order = sims[i].argsort()[::-1]
-            added = 0
-            for j in order:
-                if j == i:
+        edges_by_labels: dict[tuple[str, str], list[dict[str, Any]]] = {}
+        for pid, cid in cid_for_pid.items():
+            res = client.query_points(
+                collection_name=rep_coll, query=pid, limit=top_k + 1, with_payload=True,
+            )
+            for p in res.points:
+                other = (p.payload or {}).get("cid")
+                if not other or other == cid:
                     continue
-                score = float(sims[i][j])
-                if score < threshold or added >= top_k:
-                    break
-                added += 1
-                a, b = items[i][0], items[j][0]
-                pair = (a, b) if a < b else (b, a)
+                score = float(p.score)
+                if score < threshold:
+                    continue
+                pair = (cid, other) if cid < other else (other, cid)
                 if pair in seen_pairs:
                     continue
                 seen_pairs.add(pair)
-                session.run(
-                    "MATCH (x {id: $a}), (y {id: $b}) "
-                    "MERGE (x)-[r:SIMILAR_A]-(y) "
-                    "SET r.score = $s, r.source = 'embedding'",
-                    a=a, b=b, s=round(score, 3),
+                la = label_for_cid.get(pair[0], "Norma")
+                lb = label_for_cid.get(pair[1], "Norma")
+                edges_by_labels.setdefault((la, lb), []).append(
+                    {"a": pair[0], "b": pair[1], "s": round(score, 3)}
                 )
-                edges += 1
+
+        edges = 0
+        for (la, lb), batch in edges_by_labels.items():
+            # Labels explícitos → usa los índices :Norma(id)/:Sentencia(id).
+            session.run(
+                f"UNWIND $edges AS e "
+                f"MATCH (x:{la} {{id: e.a}}), (y:{lb} {{id: e.b}}) "
+                f"MERGE (x)-[r:SIMILAR_A]-(y) "
+                f"SET r.score = e.s, r.source = 'embedding'",
+                edges=batch,
+            )
+            edges += len(batch)
+
+        # La colección auxiliar es efímera; la dejamos limpia.
+        try:
+            client.delete_collection(rep_coll)
+        except Exception:  # pragma: no cover
+            pass
         logger.info("Creadas %d aristas SIMILAR_A", edges)
 
     @staticmethod

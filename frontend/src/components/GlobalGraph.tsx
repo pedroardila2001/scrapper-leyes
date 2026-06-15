@@ -49,20 +49,24 @@ export default function GlobalGraph() {
   const colorMap: Record<string, string> = {
     norma: "#1d6b53",
     sentencia: "#b7791f",
+    fantasma: "#b8b2a4",
   };
+  const stats = data.stats || {};
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
       <div style={{ paddingBottom: "1rem" }}>
         <h2 className="page-title">Red de Conocimiento Global</h2>
         <p className="page-subtitle">
-          Exploración macroscópica de {data.nodes.length} normas y sentencias con {data.links.length} interconexiones. Haz clic en un nodo para ver su red específica.
+          {stats.ingeridas ?? data.nodes.length} documentos ingeridos
+          {stats.fantasmas ? ` · ${stats.fantasmas} referenciados (no ingeridos)` : ""} con {data.links.length} interconexiones. Haz clic en un nodo para ver su red específica.
         </p>
       </div>
       <div ref={containerRef} className="graph-wrap" style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden" }}>
         <div className="graph-legend">
           <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.norma }} />Norma</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.sentencia }} />Sentencia</div>
+          <div className="legend-item"><span className="legend-dot" style={{ background: colorMap.fantasma }} />Referenciado (no ingerido)</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: "#1d6b53", opacity: 0.4 }} />— similar (tema)</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: "#3f4651", opacity: 0.5 }} />→ cita / afecta</div>
         </div>

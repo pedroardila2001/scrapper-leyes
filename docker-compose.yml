@@ -40,6 +40,8 @@ services:
       - QDRANT_URL=http://qdrant:6333
     volumes:
       - ./data:/app/data
+      - ./src:/app/src          # código editable montado → sin rebuild en dev
+    command: ["uvicorn", "scrapper_leyes.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     depends_on:
       - neo4j
       - qdrant
@@ -62,6 +64,7 @@ services:
       - QDRANT_URL=http://qdrant:6333
     volumes:
       - ./data:/app/data
+      - ./src:/app/src          # código editable montado → sin rebuild en dev
     depends_on:
       - neo4j
       - qdrant
