@@ -489,6 +489,56 @@ def graph(ctx: click.Context) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Sources registry
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+@main.group()
+def sources() -> None:
+    """Registro de fuentes del sistema legal colombiano."""
+
+
+@sources.command(name="list")
+@click.option("--capa", default=None, help="Filtrar por capa (A/B/C/D)")
+@click.option("--pendientes", is_flag=True, help="Solo fuentes sin conector")
+def sources_list(capa: str | None, pendientes: bool) -> None:
+    """Listar todas las fuentes registradas y su estado."""
+    from scrapper_leyes.sources import CAPA_LABEL, all_sources
+
+    specs = all_sources()
+    if capa:
+        specs = [s for s in specs if s.capa == capa.upper()]
+    if pendientes:
+        specs = [s for s in specs if not s.implementado]
+
+    table = Table(title="Fuentes del ordenamiento jurídico colombiano")
+    table.add_column("Fuente", style="bold")
+    table.add_column("Capa")
+    table.add_column("Modo")
+    table.add_column("Prio")
+    table.add_column("Estado")
+    _color = {
+        "operativo": "green", "parcial": "yellow",
+        "andamiaje": "orange3", "pendiente": "red",
+    }
+    for s in specs:
+        table.add_row(
+            s.nombre,
+            CAPA_LABEL.get(s.capa, s.capa).split(" · ")[0],
+            s.modo,
+            s.prioridad,
+            f"[{_color.get(s.estado, 'white')}]{s.estado}[/]",
+        )
+    console.print(table)
+    total = len(all_sources())
+    operativas = sum(1 for s in all_sources() if s.implementado)
+    console.print(
+        f"\n{operativas}/{total} fuentes con conector. "
+        f"`scrapper-leyes sources list --pendientes` para ver lo que falta."
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Test command (for Docker)
 # ═══════════════════════════════════════════════════════════════════════════
 

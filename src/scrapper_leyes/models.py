@@ -50,6 +50,15 @@ TIPO_CANONICAL: dict[str, str] = {
     "DIRECTIVA MINISTERIAL": "directiva_ministerial",
     "CIRCULAR VICEPRESIDENCIAL": "circular_vicepresidencial",
     "CARTA CIRCULAR": "carta_circular",
+    # ── Fuentes nuevas (doctrina, supranacional, jurisprudencia especial) ──
+    "CONCEPTO": "concepto",
+    "TRATADO": "tratado",
+    "DECISION CAN": "decision_can",
+    "FALLO DISCIPLINARIO": "fallo_disciplinario",
+    "OPINION CONSULTIVA": "opinion_consultiva",
+    "AUTO": "auto",
+    "PROYECTO DE LEY": "proyecto_ley",
+    "EXPOSICION DE MOTIVOS": "exposicion_motivos",
 }
 
 
@@ -331,6 +340,14 @@ class ParsedSentencia(ParsedNorm):
     hechos: str | None = None
     consideraciones: str | None = None
     resuelve: str | None = None
+    # Ordered, normalized structural sections (heading-driven). Source of truth
+    # for chunking; hechos/consideraciones/resuelve are derived from it for
+    # backward compatibility. Each item: see sentencia_sections.Section.to_dict.
+    sections: list[dict[str, Any]] = field(default_factory=list)
+    # Typed orders parsed from the parte resolutiva (RESUELVE). Each item: see
+    # sentencia_decision.OrderDecision.to_dict — order_number, decision_type
+    # (EXEQUIBLE/INEXEQUIBLE/…), scope, condicion, targets (structured citations).
+    orders: list[dict[str, Any]] = field(default_factory=list)
     citaciones: list[str] = field(default_factory=list)
     # the 'articles' field from ParsedNorm can be left empty for sentencias
     # full raw text can be appended/stored as well.

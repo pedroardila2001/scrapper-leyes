@@ -151,6 +151,24 @@ _CORTE_CABEZA = {
     "cc": "Corte Constitucional",
     "csj": "Corte Suprema de Justicia",
     "ce": "Consejo de Estado",
+    "cndj": "Comisión Nacional de Disciplina Judicial",
+    "jep": "Jurisdicción Especial para la Paz",
+    "idh": "Sistema Interamericano",
+    "can": "Comunidad Andina",
+    "cne": "Consejo Nacional Electoral",
+}
+
+# Rama a la que pertenece cada corte/órgano emisor de jurisprudencia. Las cortes
+# internacionales/supranacionales NO son Rama Judicial colombiana.
+_CORTE_RAMA = {
+    "cc": RAMA_JUDICIAL,
+    "csj": RAMA_JUDICIAL,
+    "ce": RAMA_JUDICIAL,
+    "cndj": RAMA_JUDICIAL,
+    "jep": RAMA_JUDICIAL,
+    "cne": ORGANO_ELECTORAL,
+    "idh": "Internacional",
+    "can": "Internacional",
 }
 
 
@@ -249,8 +267,19 @@ def _rama_from_entidad(entidad: str | None) -> tuple[str | None, str | None]:
     ):
         return (ORGANO_AUTONOMO, "Organismos Autónomos e Independientes")
 
-    # Internacional.
-    if "comunidad andina" in key or "organizacion internacional" in key:
+    # Comisiones de Regulación (CREG/CRC/CRA): ejecutivas pero con cabeza propia
+    # (regulación sectorial con fuerza normativa, distinta de las Superintendencias).
+    if key.startswith("comision de regulacion") or key in ("creg", "crc", "cra"):
+        return (RAMA_EJECUTIVA, "Comisiones de Regulación")
+
+    # Internacional / supranacional.
+    if "corte interamericana" in key or "comision interamericana" in key:
+        return ("Internacional", "Sistema Interamericano")
+    if "comunidad andina" in key or "acuerdo de cartagena" in key:
+        return ("Internacional", "Comunidad Andina")
+    if "tribunal" in key and ("andin" in key or "justicia de la comunidad" in key):
+        return ("Internacional", "Comunidad Andina")
+    if "organizacion internacional" in key or "naciones unidas" in key:
         return ("Internacional", "Organismos Internacionales")
 
     # Emisores claramente ejecutivos → cabeza la decide el sector.
@@ -261,7 +290,6 @@ def _rama_from_entidad(entidad: str | None) -> tuple[str | None, str | None]:
         or key.startswith("agencia")
         or key.startswith("unidad administrativa")
         or key.startswith("instituto")
-        or key.startswith("comision de regulacion")
         or key.startswith("presidencia")
         or key.startswith("poder ejecutivo")
         or key.startswith("direccion")
@@ -287,19 +315,24 @@ def classify(
     Sentencias → Rama Judicial según su corte. Para normas, el emisor (entidad)
     decide la rama; las entidades ejecutivas se agrupan por sector administrativo.
     """
-    if (tipo or "").upper() == "SENTENCIA":
-        cabeza = _CORTE_CABEZA.get((corte or "").lower(), "Rama Judicial")
-        return (RAMA_JUDICIAL, cabeza, cabeza)
+    if (tipo or "").upper() in ("SENTENCIA", "AUTO", "OPINION CONSULTIVA"):
+        corte_l = (corte or "").lower()
+        rama = _CORTE_RAMA.get(corte_l, RAMA_JUDICIAL)
+        cabeza = _CORTE_CABEZA.get(corte_l, "Rama Judicial")
+        return (rama, cabeza, cabeza)
 
     entidad_disp = normalize_entidad(entidad)
     rama_e, cabeza_e = _rama_from_entidad(entidad)
 
     if rama_e == RAMA_EJECUTIVA:
-        # Cabeza = sector administrativo (agrupa ministerio + sus agencias).
+        # Entidades ejecutivas con cabeza propia (p.ej. Comisiones de Regulación)
+        # la conservan; el resto agrupa por sector administrativo.
+        if cabeza_e:
+            return (RAMA_EJECUTIVA, cabeza_e, entidad_disp)
         sec = normalize_sector(sector)
         if sec is not None and sec[0] == RAMA_EJECUTIVA:
             return (RAMA_EJECUTIVA, sec[1], entidad_disp)
-        return (RAMA_EJECUTIVA, cabeza_e or "Otras entidades ejecutivas", entidad_disp)
+        return (RAMA_EJECUTIVA, "Otras entidades ejecutivas", entidad_disp)
 
     if rama_e is not None:
         return (rama_e, cabeza_e or rama_e, entidad_disp)

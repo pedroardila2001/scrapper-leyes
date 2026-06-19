@@ -41,11 +41,22 @@ def test_congreso_variants_merge():
 
 
 def test_executive_agency_grouped_by_sector():
+    # Una agencia ejecutiva común se agrupa bajo su sector administrativo.
     rama, cabeza, ent = classify(
-        "RESOLUCION", "Minas y Energía", "COMISION DE REGULACION DE ENERGIA Y GAS"
+        "RESOLUCION", "Minas y Energía", "AGENCIA NACIONAL DE HIDROCARBUROS"
     )
     assert rama == RAMA_EJECUTIVA
     assert cabeza == "Minas y Energía"
+
+
+def test_comision_regulacion_es_cabeza_propia():
+    # Las Comisiones de Regulación (CREG/CRC/CRA) NO se diluyen en su sector:
+    # son cabeza propia (regulación con fuerza normativa, ≠ Superintendencias).
+    rama, cabeza, _ = classify(
+        "RESOLUCION", "Minas y Energía", "COMISION DE REGULACION DE ENERGIA Y GAS"
+    )
+    assert rama == RAMA_EJECUTIVA
+    assert cabeza == "Comisiones de Regulación"
 
 
 def test_ministry_grouped_under_its_sector():
