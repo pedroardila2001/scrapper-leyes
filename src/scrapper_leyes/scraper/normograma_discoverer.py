@@ -105,6 +105,10 @@ class NormogramaDiscoverer(BaseDiscoverer):
         if not m:
             return None
         tipo_raw, _ent, numero, anio = m.group(1).lower(), m.group(2), m.group(3), m.group(4)
+        # El último grupo de 4 dígitos debe ser un año plausible; si no, el nombre
+        # no encaja en el patrón <tipo>_<ent>_<num>_<año> (es ruido) → descartar.
+        if not (1900 <= int(anio) <= 2030):
+            return None
         tipo = _TIPO_MAP.get(tipo_raw, tipo_raw.upper().replace("_", " "))
         cid = None
         try:

@@ -45,6 +45,22 @@ solo discoverer parametrizable por host cubre todas**, reutilizando el parser SU
 
 ---
 
+## Volumen medido (discoverer Normograma, BFS real 2026-06-19)
+
+| Fuente | Documentos descubiertos | Composición principal | Años |
+|---|---|---|---|
+| **CREG** | **4.888** | 3.948 resoluciones · 603 conceptos · 149 acuerdos · 151 circulares | 1960–2026 |
+| **CRA** | **3.323** | 1.654 resoluciones · 1.249 conceptos · 370 circulares | 1986–2026 |
+| **CRC** | **2.170** | 1.081 resoluciones · 587 conceptos · 274 circulares | 1995–2026 |
+| **DIAN** | 0 (BFS no aplica) | TOC servido por JS → requiere headless/API o enumeración | — |
+| **Tratados** | 1.261 (Socrata) | metadatos | — |
+
+→ Solo las 3 Comisiones de Regulación = **~10.400 documentos**. Notas: hay
+cross-listing entre gestores (un doc CRA puede aparecer en el de CREG); el
+discoverer dedup por URL pero el conteo puede incluir normas espejadas de otras
+entidades. El resto del universo (cortes, doctrina, control) está pendiente de
+correr su discoverer una vez implementado.
+
 ## Estrategia de implementación (orden de ROI)
 
 1. **Tratados** — ✅ hecho (catálogo Socrata, `catalog sync --dataset tratados`).

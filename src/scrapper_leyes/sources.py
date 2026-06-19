@@ -215,8 +215,10 @@ _SPECS: list[SourceSpec] = [
         tipos=("concepto", "resolucion", "circular"),
         rama="Rama Ejecutiva", cabeza="Sector Hacienda",
         base_url="https://normograma.dian.gov.co/dian/compilacion/",
-        spike="Normograma Avance Jurídico (=SUIN). Discoverer hecho (BFS). Conceptos/oficios "
-              "tributarios/aduaneros/cambiarios. Falta scraper de texto del .htm.",
+        spike="Normograma Avance Jurídico, pero su TOC se sirve por JS (no listado estático) → "
+              "el BFS genérico da 0. Necesita crawler headless (Playwright) o su API de "
+              "búsqueda, o enumeración de docs/<tipo>_dian_<num>_<año>.htm. Documentos sí "
+              "accesibles directo (200). Falta también scraper de texto.",
     ),
     SourceSpec(
         key="superintendencias", nombre="Superintendencias (Financiera, Sociedades, SIC, Salud, SSPD)",
