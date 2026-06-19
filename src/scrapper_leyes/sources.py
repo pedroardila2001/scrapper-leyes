@@ -102,16 +102,20 @@ _SPECS: list[SourceSpec] = [
         modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="alta",
         tipos=("sentencia",), corte="csj", rama="Rama Judicial", cabeza="Corte Suprema de Justicia",
         base_url="https://consultajurisprudencial.ramajudicial.gov.co/WebRelatoria/csj",
-        spike="Capturar flujo JSF (ViewState, POST de búsqueda, paginación). Salas: "
-              "Civil, Penal, Laboral, Plena/Tutelas. Posible Playwright headless.",
+        spike="MECANISMO VERIFICADO: PrimeFaces POST a index.xhtml;jsessionid con ViewState; el "
+              "total sale en 'Resultado: X / N'. **~321.880 providencias** (búsqueda 'derecho'). "
+              "Texto por FileReferenceServlet?corp=csj&ext=pdf&file=<int> (200/PDF). Discoverer: "
+              "drive JSF (Playwright o replay httpx de ViewState) + paginar + extraer file IDs.",
+        notas="La fuente más grande del sistema. Salas: Civil, Penal, Laboral, Plena, Constitucional.",
     ),
     SourceSpec(
         key="consejo_estado", nombre="Consejo de Estado (WebRelatoria)", capa=CAPA_JURISPRUDENCIA,
         modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="alta",
         tipos=("sentencia",), corte="ce", rama="Rama Judicial", cabeza="Consejo de Estado",
         base_url="https://jurisprudencia.ramajudicial.gov.co/WebRelatoria/ce",
-        spike="Igual que CSJ (misma plataforma) + Mi Relatoría/SAMAI para 2021-12+. "
-              "Secciones 1-5 + Sala de Consulta + sentencias de unificación.",
+        spike="MECANISMO VERIFICADO: misma plataforma JSF que CSJ. **~103.351 providencias** "
+              "(búsqueda 'derecho', WebRelatoria <2021). CE ≥2021-12 vive en SAMAI (ASP.NET) → "
+              "pipeline aparte. Texto por FileReferenceServlet?corp=ce. Secciones 1-5 + Consulta.",
     ),
     SourceSpec(
         key="jep", nombre="Jurisdicción Especial para la Paz", capa=CAPA_JURISPRUDENCIA,

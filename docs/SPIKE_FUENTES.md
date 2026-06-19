@@ -55,6 +55,14 @@ solo discoverer parametrizable por host cubre todas**, reutilizando el parser SU
 | **DIAN** | **~26.171** | API Buscar.ashx (Avance Jurídico) — conceptos/oficios/decretos | — |
 | **Tratados** | 1.261 (Socrata) | metadatos | — |
 
+**Altas cortes (verificado vía JSF, búsqueda 'derecho' ≈ match-all):**
+
+| Corte | Providencias | Mecanismo |
+|---|---|---|
+| **Corte Suprema de Justicia** | **~321.880** | PrimeFaces POST + ViewState; total en "Resultado: X / N" |
+| **Consejo de Estado** (WebRelatoria <2021) | **~103.351** | misma plataforma; CE ≥2021 en SAMAI (aparte) |
+
+→ Altas cortes ≈ **425.000 providencias** (la mayor masa del sistema, con diferencia).
 → Comisiones + DIAN = **~36.500 documentos**. **Hallazgo clave**: el motor Avance
 Jurídico expone una API de búsqueda `Buscar.ashx` (declarada en
 `configuracion.txt::direccionAPI`) que devuelve metadatos completos
