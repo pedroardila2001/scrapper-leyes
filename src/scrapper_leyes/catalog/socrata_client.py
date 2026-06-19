@@ -70,8 +70,12 @@ class SocrataCatalogSource:
         if self.row_transform:
             cleaned = self.row_transform(cleaned, raw)
 
-        # Compute canonical_id if a transform didn't already.
-        if not cleaned.get("canonical_id") and cleaned.get("numero"):
+        # Compute canonical_id if a transform didn't already (requiere año válido).
+        if (
+            not cleaned.get("canonical_id")
+            and cleaned.get("numero")
+            and re.fullmatch(r"\d{4}", str(cleaned.get("anio") or ""))
+        ):
             try:
                 cleaned["canonical_id"] = build_canonical_id(
                     cleaned.get("tipo", ""),
@@ -147,12 +151,82 @@ def _cc_sentencia_transform(cleaned: dict[str, Any], raw: dict[str, str]) -> dic
     return cleaned
 
 
+def _slug(text: str, maxlen: int = 60) -> str:
+    """Slug ASCII para usar como 'numero' canónico de documentos sin número."""
+    import unicodedata
+
+    t = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
+    t = re.sub(r"[^a-z0-9]+", "-", t).strip("-")
+    return t[:maxlen].strip("-")
+
+
+def _tratado_transform(cleaned: dict[str, Any], raw: dict[str, str]) -> dict[str, Any]:
+    """Tratados de Colombia (Socrata fdir-hk5z, 1.261 registros).
+
+    No tienen número propio → el 'numero' canónico es un slug del nombre + el año
+    de adopción. Se mapea ``vigente`` SI/NO a vigencia y se conservan la ley
+    aprobatoria y la sentencia de control para enlazar el bloque de
+    constitucionalidad en el grafo (vía materia/external_id).
+    """
+    nombre = (cleaned.pop("_nombre", None) or "").strip()
+    fecha = (cleaned.pop("_fecha", None) or "").strip()  # DD/MM/YYYY
+    vig = (cleaned.pop("_vigente", None) or "").strip().upper()
+    ley = (cleaned.pop("_ley", None) or "").strip()       # 'NN DE AAAA'
+    sent = (cleaned.pop("_sentencia", None) or "").strip()
+
+    anio = None
+    m = re.search(r"(\d{4})", fecha)
+    if m:
+        anio = m.group(1)
+
+    cleaned["materia"] = nombre
+    cleaned["entidad"] = "Ministerio de Relaciones Exteriores"
+    cleaned["vigencia"] = "Vigente" if vig == "SI" else ("No vigente" if vig else None)
+    cleaned["numero"] = _slug(nombre) if nombre else None
+    cleaned["anio"] = anio
+    # Procedencia + enlaces para el grafo (ley aprobatoria / sentencia de control).
+    cleaned["external_id"] = raw.get(":id") or (
+        f"{cleaned['numero']}:{anio}" if cleaned.get("numero") and anio else None
+    )
+    extras = []
+    if ley:
+        extras.append(f"Ley aprobatoria: {ley}")
+    if sent:
+        extras.append(f"Control constitucional: {sent}")
+    if extras and cleaned.get("materia"):
+        cleaned["materia"] = cleaned["materia"] + " — " + "; ".join(extras)
+
+    if cleaned.get("numero") and anio and re.fullmatch(r"\d{4}", anio):
+        cleaned["canonical_id"] = build_canonical_id("TRATADO", cleaned["numero"], anio)
+    else:
+        cleaned["canonical_id"] = None
+    return cleaned
+
+
 LEGISLACION = SocrataCatalogSource(
     key="legislacion",
     dataset_id="fiev-nid6",
     field_map=_LEGISLACION_FIELDS,
     source="suin",
     tipo_filterable=True,
+)
+
+TRATADOS = SocrataCatalogSource(
+    key="tratados",
+    dataset_id="fdir-hk5z",
+    field_map={
+        "nombretratado": "_nombre",
+        "fechaadopcion": "_fecha",
+        "vigente": "_vigente",
+        "numeroleyaprobatoria": "_ley",
+        "sentencianumero": "_sentencia",
+        "naturalezatratado": "subtipo",
+        "temas": "sector",
+    },
+    source="tratados",
+    defaults={"tipo": "TRATADO"},
+    tipo_filterable=False,
+    row_transform=_tratado_transform,
 )
 
 CC_SENTENCIAS = SocrataCatalogSource(
@@ -175,6 +249,7 @@ CC_SENTENCIAS = SocrataCatalogSource(
 CATALOG_SOURCES: dict[str, SocrataCatalogSource] = {
     LEGISLACION.key: LEGISLACION,
     CC_SENTENCIAS.key: CC_SENTENCIAS,
+    TRATADOS.key: TRATADOS,
 }
 
 

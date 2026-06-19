@@ -315,7 +315,14 @@ def classify(
     Sentencias → Rama Judicial según su corte. Para normas, el emisor (entidad)
     decide la rama; las entidades ejecutivas se agrupan por sector administrativo.
     """
-    if (tipo or "").upper() in ("SENTENCIA", "AUTO", "OPINION CONSULTIVA"):
+    tipo_u = (tipo or "").upper()
+
+    # Derecho internacional / supranacional por tipo de documento.
+    if tipo_u in ("TRATADO", "DECISION CAN", "DECISION_CAN"):
+        cabeza = "Comunidad Andina" if "CAN" in tipo_u else "Tratados y derecho internacional"
+        return ("Internacional", cabeza, normalize_entidad(entidad))
+
+    if tipo_u in ("SENTENCIA", "AUTO", "OPINION CONSULTIVA"):
         corte_l = (corte or "").lower()
         rama = _CORTE_RAMA.get(corte_l, RAMA_JUDICIAL)
         cabeza = _CORTE_CABEZA.get(corte_l, "Rama Judicial")

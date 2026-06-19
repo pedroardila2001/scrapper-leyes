@@ -123,16 +123,28 @@ _SPECS: list[SourceSpec] = [
 
     # ── Fuentes que faltaban (tabla del usuario) ────────────────────────────
     SourceSpec(
-        key="corte_idh", nombre="Corte Interamericana de DD.HH. + tratados / bloque de constitucionalidad",
+        key="tratados", nombre="Tratados internacionales de Colombia (bloque de constitucionalidad)",
+        capa=CAPA_LEGISLACION, modo=MODO_CATALOGO, estado=EST_PARCIAL, prioridad="alta",
+        tipos=("tratado",), rama="Internacional", cabeza="Tratados y derecho internacional",
+        dataset_id="fdir-hk5z",
+        base_url="https://www.datos.gov.co/resource/fdir-hk5z.json",
+        spike="VERIFICADO: 1.261 registros, campos vigente/numeroleyaprobatoria/sentencianumero "
+              "→ catálogo Socrata (`catalog sync --dataset tratados`). Falta el TEXTO del "
+              "instrumento: crawl complementario a SISMRE Cancillería (2.437 instrumentos).",
+        notas="Metadatos ya cableados; cada tratado enlaza su ley aprobatoria + sentencia de "
+              "control → base del grafo de bloque de constitucionalidad.",
+    ),
+    SourceSpec(
+        key="corte_idh", nombre="Corte Interamericana de DD.HH.",
         capa=CAPA_JURISPRUDENCIA, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="alta",
-        tipos=("sentencia", "opinion_consultiva", "tratado"), corte="idh",
+        tipos=("sentencia", "opinion_consultiva"), corte="idh",
         rama="Internacional", cabeza="Sistema Interamericano",
         base_url="https://www.corteidh.or.cr",
-        spike="Jurisprudencia IDH (vinculante vía control de convencionalidad) + tratados "
-              "ratificados (rango constitucional). API/buscador de la Corte IDH; cruzar con "
-              "bloque de constitucionalidad citado por la Corte Constitucional.",
-        notas="🔴 Hoy invisible y es fuente vinculante. Modelar relación BLOQUE_DE / "
-              "CONTROL_CONVENCIONALIDAD en el grafo.",
+        spike="VERIFICADO acceso: PDF Serie C determinístico "
+              "`/docs/casos/articulos/seriec_<N>_esp.pdf` (200/PDF) + fichas "
+              "`ver_ficha_tecnica.cfm?nId_Ficha=<N>`. Crawl: iterar fichas (filtrar país=Colombia) "
+              "→ bajar PDF Serie C. ~500-600 sentencias. Modelar CONTROL_CONVENCIONALIDAD en grafo.",
+        notas="🔴 Jurisprudencia vinculante hoy invisible.",
     ),
     SourceSpec(
         key="comisiones_regulacion", nombre="Comisiones de Regulación (CREG, CRC, CRA)",
