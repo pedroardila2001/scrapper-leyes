@@ -22,9 +22,11 @@ class Settings:
     # ── SUIN-Juriscol ───────────────────────────────────────────────────
     suin_base_url: str = "https://www.suin-juriscol.gov.co"
     suin_rate_limit_rps: float = field(
-        default_factory=lambda: float(os.environ.get("RATE_LIMIT_RPS", "1.0"))
+        default_factory=lambda: float(os.environ.get("RATE_LIMIT_RPS", "3.0"))
     )
-    suin_max_concurrent: int = 3
+    suin_max_concurrent: int = field(
+        default_factory=lambda: int(os.environ.get("SCRAPE_WORKERS", "5"))
+    )
     suin_max_retries: int = 3
     suin_retry_base_delay: float = 2.0  # seconds; doubles each retry
     suin_user_agent: str = field(

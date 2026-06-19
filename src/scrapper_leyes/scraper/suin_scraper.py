@@ -180,21 +180,57 @@ class SuinScraper(BaseScraper):
         settings: Settings,
         db: Database,
         cache: ProvenanceCache,
+        *,
+        max_concurrent: int | None = None,
+        rps: float | None = None,
     ) -> None:
         self.settings = settings
         self.db = db
         self.cache = cache
-        self._semaphore = asyncio.Semaphore(settings.suin_max_concurrent)
-        self._rate_interval = 1.0 / settings.suin_rate_limit_rps
-        self._last_request_time = 0.0
+        self._max_concurrent = max_concurrent or settings.suin_max_concurrent
+        self._semaphore = asyncio.Semaphore(self._max_concurrent)
+        base_rps = rps if rps is not None else settings.suin_rate_limit_rps
+        self._base_interval = 1.0 / max(base_rps, 0.01)
+        self._rate_interval = self._base_interval  # se ajusta ante 429/503
+        self._rate_lock = asyncio.Lock()
+        self._next_slot = 0.0
+        self._pushback_until = 0.0
+
+    def reconfigure(self, *, workers: int | None = None, rps: float | None = None) -> None:
+        """Ajusta concurrencia y ritmo por corrida (lo usa el CLI)."""
+        if workers:
+            self._max_concurrent = workers
+            self._semaphore = asyncio.Semaphore(workers)
+        if rps:
+            self._base_interval = 1.0 / max(rps, 0.01)
+            self._rate_interval = self._base_interval
 
     async def _rate_limit(self) -> None:
-        """Enforce rate limiting between requests."""
-        now = time.monotonic()
-        elapsed = now - self._last_request_time
-        if elapsed < self._rate_interval:
-            await asyncio.sleep(self._rate_interval - elapsed)
-        self._last_request_time = time.monotonic()
+        """Espacia los requests a ``1/rps`` de forma segura bajo concurrencia.
+
+        Reserva el siguiente ``slot`` de tiempo de forma atómica (bajo lock) y
+        duerme FUERA del lock, de modo que N workers concurrentes no se pisen ni
+        hagan ráfagas. Es un token-bucket simple y educado con el servidor.
+        """
+        async with self._rate_lock:
+            now = time.monotonic()
+            # Si hubo pushback (429/503), respeta el intervalo ampliado vigente.
+            interval = self._rate_interval if now < self._pushback_until else self._base_interval
+            self._rate_interval = interval
+            slot = max(now, self._next_slot)
+            self._next_slot = slot + interval
+        wait = slot - time.monotonic()
+        if wait > 0:
+            await asyncio.sleep(wait)
+
+    def _slow_down(self) -> None:
+        """Duplica el intervalo (hasta 8×) por una ventana, ante 429/503."""
+        self._rate_interval = min(self._rate_interval * 2, self._base_interval * 8)
+        self._pushback_until = time.monotonic() + 30.0
+        logger.warning(
+            "Pushback del servidor: bajando ritmo a ~%.1f rps por 30s",
+            1.0 / self._rate_interval,
+        )
 
     async def _fetch_with_retry(
         self,
@@ -214,6 +250,8 @@ class SuinScraper(BaseScraper):
                         logger.warning(f"404 for {url}")
                         return resp
                     else:
+                        if resp.status_code in (429, 503):
+                            self._slow_down()
                         logger.warning(
                             f"HTTP {resp.status_code} for {url}, "
                             f"attempt {attempt + 1}/{self.settings.suin_max_retries}"
@@ -359,6 +397,10 @@ class SuinScraper(BaseScraper):
         """
         stats: dict[str, int] = {}
 
+        queue: asyncio.Queue = asyncio.Queue()
+        for norm in catalog_rows:
+            queue.put_nowait(norm)
+
         async with httpx.AsyncClient(
             headers={"User-Agent": self.settings.suin_user_agent},
             timeout=60.0,
@@ -376,10 +418,32 @@ class SuinScraper(BaseScraper):
                     "Scrapeando normas...", total=len(catalog_rows)
                 )
 
-                for norm in catalog_rows:
-                    status = await self.scrape_norm(client, norm)
-                    stats[status] = stats.get(status, 0) + 1
-                    progress.advance(task)
+                async def worker() -> None:
+                    while True:
+                        try:
+                            norm = queue.get_nowait()
+                        except asyncio.QueueEmpty:
+                            return
+                        try:
+                            status = await self.scrape_norm(client, norm)
+                        except Exception as e:  # nunca abortar el lote por una norma
+                            logger.error(
+                                "scrape_norm falló para %s: %s",
+                                norm.get("suin_id"), e,
+                            )
+                            status = "error"
+                        # Actualización síncrona (sin await) → segura sin lock.
+                        stats[status] = stats.get(status, 0) + 1
+                        progress.advance(task)
+
+                # N workers concurrentes consumen la cola; el rate limiter
+                # mantiene el ritmo global educado. Resumible: cada norma
+                # actualiza scrape_status, así que reanudar = volver a correr.
+                workers = [
+                    asyncio.create_task(worker())
+                    for _ in range(self._max_concurrent)
+                ]
+                await asyncio.gather(*workers)
 
         return stats
 
@@ -391,6 +455,8 @@ def run_scrape(
     *,
     tipo: str | None = None,
     limit: int | None = None,
+    workers: int | None = None,
+    rps: float | None = None,
 ) -> dict[str, int]:
     """Run the scraper synchronously (wraps async)."""
     norms = db.get_pending_norms(tipo=tipo, limit=limit)
@@ -398,5 +464,5 @@ def run_scrape(
         logger.info("No pending norms to scrape")
         return {}
 
-    scraper = SuinScraper(settings, db, cache)
+    scraper = SuinScraper(settings, db, cache, max_concurrent=workers, rps=rps)
     return asyncio.run(scraper.scrape_batch(norms))

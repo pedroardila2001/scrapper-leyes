@@ -145,8 +145,17 @@ def scrape() -> None:
 @click.option("--tipo", default=None, help="Filter by norm type (e.g. LEY)")
 @click.option("--limit", default=None, type=int, help="Max norms to scrape")
 @click.option("--source", default="suin", help="Data source to scrape (suin, corte_constitucional)")
+@click.option("--workers", default=None, type=int, help="Requests concurrentes (default: 5)")
+@click.option("--rps", default=None, type=float, help="Requests por segundo, ritmo global (default: 3)")
 @click.pass_context
-def run(ctx: click.Context, tipo: str | None, limit: int | None, source: str) -> None:
+def run(
+    ctx: click.Context,
+    tipo: str | None,
+    limit: int | None,
+    source: str,
+    workers: int | None,
+    rps: float | None,
+) -> None:
     """Ejecutar scraping de normas pendientes."""
     settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
 
@@ -156,6 +165,9 @@ def run(ctx: click.Context, tipo: str | None, limit: int | None, source: str) ->
     factory = ScraperFactory(settings, db, cache)
     indexer = factory.get_indexer(source)
     scraper = factory.get_scraper(source)
+    # Ritmo configurable por corrida (concurrencia / rps).
+    if (workers or rps) and hasattr(scraper, "reconfigure"):
+        scraper.reconfigure(workers=workers, rps=rps)
 
     # Step 1: Resolve IDs if there are unresolved norms
     unresolved = db.get_unresolved_norms(tipo=tipo)
@@ -340,6 +352,78 @@ def reparse(ctx: click.Context, tipo: str | None) -> None:
     console.print(
         f"\n[green]✓ Re-parseadas {ok} normas[/green] "
         f"({affects_total} afectaciones salientes capturadas)"
+    )
+    db.close()
+
+
+# Corte code → cache source folder (mirrors the scrapers).
+_CORTE_SOURCE = {
+    "cc": "corte_constitucional",
+    "csj": "csj",
+    "ce": "consejo_estado",
+}
+
+
+@scrape.command(name="reparse-sentencias")
+@click.option("--corte", default=None, help="Filtrar por corte (cc, csj, ce)")
+@click.pass_context
+def reparse_sentencias(ctx: click.Context, corte: str | None) -> None:
+    """Re-parsear sentencias descargadas (regenera parsed.json).
+
+    Aplica el sectionizer guiado por encabezados (secciones normalizadas) y el
+    parser de la parte resolutiva (órdenes tipadas: EXEQUIBLE / INEXEQUIBLE /
+    …). Usa Docling si está instalado (mejor markdown); si no, cae al fallback
+    de BeautifulSoup. Tras correrlo, re-exporta: ``export graph`` y
+    ``export vector``.
+    """
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+
+    from scrapper_leyes.scraper.legal_mapper import LegalMapper
+
+    sql = "SELECT * FROM catalog WHERE scrape_status = 'done' AND tipo = 'SENTENCIA'"
+    params: list[str] = []
+    if corte:
+        sql += " AND corte = ?"
+        params.append(corte)
+    rows = db.conn.execute(sql, params).fetchall()
+
+    mapper = LegalMapper()
+    ok = 0
+    sections_total = 0
+    orders_total = 0
+    for row in rows:
+        suin_id = row["suin_id"]
+        if not suin_id:
+            continue
+        source = _CORTE_SOURCE.get((row["corte"] or "cc").lower(), "corte_constitucional")
+        raw = cache.load_raw(source, row["tipo"], suin_id)
+        if not raw:
+            console.print(f"[yellow]✗ {suin_id}: sin HTML en caché ({source})[/yellow]")
+            continue
+        catalog_match = {
+            "tipo": row["tipo"],
+            "numero": row["numero"],
+            "anio": row["anio"],
+            "corte": row["corte"],
+            "magistrado_ponente": row["magistrado_ponente"],
+        }
+        try:
+            parsed = mapper.process_html(raw, suin_id, catalog_match)
+        except Exception as e:
+            console.print(f"[yellow]✗ {suin_id}: {e}[/yellow]")
+            continue
+        if not parsed:
+            console.print(f"[yellow]✗ {suin_id}: parseo vacío[/yellow]")
+            continue
+        d = parsed.to_dict()
+        cache.store_parsed(source, row["tipo"], suin_id, d)
+        sections_total += len(d.get("sections", []))
+        orders_total += len(d.get("orders", []))
+        ok += 1
+
+    console.print(
+        f"\n[green]✓ Re-parseadas {ok} sentencias[/green] "
+        f"({sections_total} secciones, {orders_total} órdenes resolutivas)"
     )
     db.close()
 
