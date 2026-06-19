@@ -20,7 +20,7 @@ from scrapper_leyes.taxonomia import classify
 def test_registro_cubre_las_fuentes_que_faltaban():
     # Las 6 fuentes de la tabla del usuario están registradas.
     for key in (
-        "corte_idh", "comisiones_regulacion", "banco_republica",
+        "corte_idh", "creg", "crc", "cra", "banco_republica",
         "organos_control", "cne", "can",
     ):
         assert key in SOURCE_REGISTRY, key
@@ -30,7 +30,9 @@ def test_registro_cubre_las_fuentes_que_faltaban():
 def test_suin_operativo_y_nuevas_pendientes():
     assert get_source("suin").implementado
     pend = {s.key for s in pending_sources()}
-    assert "corte_idh" in pend and "comisiones_regulacion" in pend
+    assert "corte_idh" in pend and "banco_republica" in pend
+    # Las comisiones ya tienen discoverer (parcial) → no están pendientes.
+    assert get_source("creg").implementado
 
 
 def test_specs_bien_formados():

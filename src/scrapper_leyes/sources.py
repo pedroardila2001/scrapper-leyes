@@ -146,15 +146,31 @@ _SPECS: list[SourceSpec] = [
               "→ bajar PDF Serie C. ~500-600 sentencias. Modelar CONTROL_CONVENCIONALIDAD en grafo.",
         notas="🔴 Jurisprudencia vinculante hoy invisible.",
     ),
+    # Comisiones de Regulación — mismo motor Normograma que SUIN (discoverer hecho).
     SourceSpec(
-        key="comisiones_regulacion", nombre="Comisiones de Regulación (CREG, CRC, CRA)",
-        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="alta",
-        tipos=("resolucion", "circular"),
-        rama="Rama Ejecutiva", cabeza="Comisiones de Regulación",
-        base_url="https://www.creg.gov.co",
-        spike="Tres portales (CREG energía/gas, CRC comunicaciones, CRA agua). Cada uno "
-              "publica resoluciones con fuerza normativa sectorial; localizar índice/normograma.",
-        notas="🔴 Regulación sectorial con fuerza normativa; NO son Superintendencias.",
+        key="creg", nombre="CREG — Comisión de Regulación de Energía y Gas",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
+        tipos=("resolucion", "circular"), rama="Rama Ejecutiva", cabeza="Comisiones de Regulación",
+        base_url="https://gestornormativo.creg.gov.co/gestor/entorno/",
+        spike="Normograma Avance Jurídico. Discoverer hecho (BFS). Índice cronológico es JS → "
+              "cosecha parcial; falta scraper de texto del .htm (reutilizable del de SUIN).",
+        notas="🔴 Regulación sectorial con fuerza normativa; ≠ Superintendencias.",
+    ),
+    SourceSpec(
+        key="crc", nombre="CRC — Comisión de Regulación de Comunicaciones",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
+        tipos=("resolucion", "circular"), rama="Rama Ejecutiva", cabeza="Comisiones de Regulación",
+        base_url="https://normograma.crcom.gov.co/crc/compilacion/",
+        spike="Normograma Avance Jurídico (NO tiene Socrata). Discoverer hecho. La Res. CRC "
+              "5050/2016 es la compilatoria maestra. Falta scraper de texto.",
+    ),
+    SourceSpec(
+        key="cra", nombre="CRA — Comisión de Regulación de Agua Potable",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
+        tipos=("resolucion", "circular"), rama="Rama Ejecutiva", cabeza="Comisiones de Regulación",
+        base_url="https://normas.cra.gov.co/gestor/",
+        spike="Normograma Avance Jurídico. Discoverer hecho. Padding a 4 dígitos en el número. "
+              "Falta scraper de texto.",
     ),
     SourceSpec(
         key="banco_republica", nombre="Banco de la República — Junta Directiva",
@@ -195,11 +211,12 @@ _SPECS: list[SourceSpec] = [
     # ── Capa C — Doctrina administrativa ────────────────────────────────────
     SourceSpec(
         key="dian", nombre="DIAN — Normograma", capa=CAPA_DOCTRINA, modo=MODO_CRAWL,
-        estado=EST_PENDIENTE, prioridad="media",
+        estado=EST_PARCIAL, prioridad="alta",
         tipos=("concepto", "resolucion", "circular"),
         rama="Rama Ejecutiva", cabeza="Sector Hacienda",
-        base_url="https://normograma.dian.gov.co",
-        spike="Conceptos/oficios tributarios, aduaneros, cambiarios. Patrón de URL de docs.",
+        base_url="https://normograma.dian.gov.co/dian/compilacion/",
+        spike="Normograma Avance Jurídico (=SUIN). Discoverer hecho (BFS). Conceptos/oficios "
+              "tributarios/aduaneros/cambiarios. Falta scraper de texto del .htm.",
     ),
     SourceSpec(
         key="superintendencias", nombre="Superintendencias (Financiera, Sociedades, SIC, Salud, SSPD)",

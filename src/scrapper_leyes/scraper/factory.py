@@ -79,4 +79,8 @@ class ScraperFactory:
         (CSJ, Consejo de Estado, normogramas, relatorías internacionales). Se
         implementan por fuente; hasta entonces esto lanza un error con el spike.
         """
+        from scrapper_leyes.scraper.normograma_discoverer import NORMOGRAMA_SOURCES
+        if source in NORMOGRAMA_SOURCES:
+            from scrapper_leyes.scraper.normograma_discoverer import NormogramaDiscoverer
+            return NormogramaDiscoverer(source)
         raise self._no_conector(source, "discoverer")
