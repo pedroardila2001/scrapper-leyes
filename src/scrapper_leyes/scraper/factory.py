@@ -83,4 +83,7 @@ class ScraperFactory:
         if source in NORMOGRAMA_SOURCES:
             from scrapper_leyes.scraper.normograma_discoverer import NormogramaDiscoverer
             return NormogramaDiscoverer(source)
+        if source in ("csj", "consejo_estado"):
+            from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaDiscoverer
+            return WebRelatoriaDiscoverer(source)
         raise self._no_conector(source, "discoverer")

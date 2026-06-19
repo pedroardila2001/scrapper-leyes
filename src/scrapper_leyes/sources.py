@@ -99,7 +99,7 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="csj", nombre="Corte Suprema de Justicia (WebRelatoria)", capa=CAPA_JURISPRUDENCIA,
-        modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="alta",
+        modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
         tipos=("sentencia",), corte="csj", rama="Rama Judicial", cabeza="Corte Suprema de Justicia",
         base_url="https://consultajurisprudencial.ramajudicial.gov.co/WebRelatoria/csj",
         spike="MECANISMO VERIFICADO: PrimeFaces POST a index.xhtml;jsessionid con ViewState; el "
@@ -110,7 +110,7 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="consejo_estado", nombre="Consejo de Estado (WebRelatoria)", capa=CAPA_JURISPRUDENCIA,
-        modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="alta",
+        modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
         tipos=("sentencia",), corte="ce", rama="Rama Judicial", cabeza="Consejo de Estado",
         base_url="https://jurisprudencia.ramajudicial.gov.co/WebRelatoria/ce",
         spike="MECANISMO VERIFICADO: misma plataforma JSF que CSJ. **~103.351 providencias** "
