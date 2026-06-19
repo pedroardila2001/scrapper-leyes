@@ -104,6 +104,58 @@ def sync(ctx: click.Context, tipo: str | None, limit: int | None, dataset: str) 
 
 
 @catalog.command()
+@click.option("--source", required=True, help="Fuente crawl-driven (ver `sources list`)")
+@click.option("--desde", default=None, help="Descubrir desde fecha YYYY-MM-DD")
+@click.option("--hasta", default=None, help="Descubrir hasta fecha YYYY-MM-DD")
+@click.option("--limit", default=None, type=int, help="Máx documentos a descubrir")
+@click.pass_context
+def discover(
+    ctx: click.Context,
+    source: str,
+    desde: str | None,
+    hasta: str | None,
+    limit: int | None,
+) -> None:
+    """Descubrir documentos de una fuente crawl-driven y sembrar el catálogo.
+
+    Ejecuta el discoverer de la fuente (relatoría/normograma propio) y persiste
+    los CatalogSeed; después aplica el pipeline normal resolve→scrape→export.
+    """
+    from datetime import date
+
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+    from scrapper_leyes.scraper.factory import ScraperFactory
+
+    factory = ScraperFactory(settings, db, cache)
+    try:
+        discoverer = factory.get_discoverer(source)
+    except NotImplementedError as e:
+        console.print(f"[yellow]{e}[/yellow]")
+        db.close()
+        sys.exit(1)
+    except ValueError as e:
+        console.print(f"[red]{e}[/red]")
+        db.close()
+        sys.exit(1)
+
+    def _d(s: str | None) -> date | None:
+        return date.fromisoformat(s) if s else None
+
+    seeds: list[dict] = []
+    for seed in discoverer.discover(desde=_d(desde), hasta=_d(hasta)):
+        seeds.append(seed.to_catalog_row())
+        if limit and len(seeds) >= limit:
+            break
+
+    inserted = db.upsert_catalog_seed(seeds) if seeds else 0
+    console.print(
+        f"\n[green]✓ Descubiertos {len(seeds)} documentos; "
+        f"nuevos en catálogo: {inserted}[/green]"
+    )
+    db.close()
+
+
+@catalog.command()
 @click.option("--tipo", default=None, help="Filter by norm type")
 @click.pass_context
 def stats(ctx: click.Context, tipo: str | None) -> None:
