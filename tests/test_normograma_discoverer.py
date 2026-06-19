@@ -49,3 +49,23 @@ def test_parse_creg_serie():
 def test_url_no_documento_se_ignora():
     d = NormogramaDiscoverer("cra")
     assert d._seed_from_docurl("https://normas.cra.gov.co/gestor/index.html") is None
+
+
+def test_dian_usa_api():
+    d = NormogramaDiscoverer("dian")
+    assert d.cfg.api_url and "Buscar.ashx" in d.cfg.api_url
+
+
+def test_parse_item_api_dian():
+    d = NormogramaDiscoverer("dian")
+    item = {
+        "nombre": "Concepto 1 de 2003 DIAN", "tipo": "Conceptos",
+        "year": "2003", "numero": "1", "entidad": "DIAN",
+        "link": "concepto_tributario_dian_00001_2003.htm",
+    }
+    s = d._seed_from_api_item(item)
+    assert s.tipo == "CONCEPTO"
+    assert (s.numero, s.anio) == ("1", "2003")
+    assert s.source_url.endswith("docs/concepto_tributario_dian_00001_2003.htm")
+    assert s.canonical_id == "co:concepto:1:2003"
+    assert s.extra["entidad"] == "DIAN"
