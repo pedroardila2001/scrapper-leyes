@@ -272,6 +272,50 @@ def get_biblioteca():
         conn.close()
 
 
+# ── Fuentes / cobertura del sistema legal ─────────────────────────────────
+
+@app.get("/api/sources")
+def get_sources():
+    """Mapa de fuentes del ordenamiento jurídico con volumen disponible (medido
+    en los spikes) e ingerido (lo que ya está en el catálogo)."""
+    from scrapper_leyes.sources import CAPA_LABEL, VOLUMEN_MEDIDO, all_sources
+
+    # Ingerido (con texto) por fuente, desde el catálogo.
+    conn = _get_conn()
+    try:
+        ingerido = {
+            r["source"]: r["n"]
+            for r in conn.execute(
+                "SELECT source, COUNT(*) AS n FROM catalog WHERE scrape_status='done' GROUP BY source"
+            ).fetchall()
+        }
+    finally:
+        conn.close()
+
+    capas: dict[str, dict[str, Any]] = {}
+    for s in all_sources():
+        vol = VOLUMEN_MEDIDO.get(s.key)
+        node = capas.setdefault(
+            s.capa, {"capa": s.capa, "label": CAPA_LABEL.get(s.capa, s.capa),
+                     "fuentes": [], "volumen": 0}
+        )
+        node["fuentes"].append({
+            "key": s.key, "nombre": s.nombre, "modo": s.modo, "estado": s.estado,
+            "prioridad": s.prioridad, "volumen_disponible": vol,
+            "ingerido": ingerido.get(s.key, 0),
+        })
+        node["volumen"] += vol or 0
+
+    total = sum(VOLUMEN_MEDIDO.values())
+    return {
+        "capas": sorted(capas.values(), key=lambda c: c["capa"]),
+        "total_disponible": total,
+        "total_ingerido": sum(ingerido.values()),
+        "total_fuentes": len(all_sources()),
+        "fuentes_con_conector": sum(1 for s in all_sources() if s.implementado),
+    }
+
+
 # ── Document text ────────────────────────────────────────────────────────
 
 @app.get("/api/norms/{suin_id}/text")

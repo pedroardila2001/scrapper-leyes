@@ -292,3 +292,21 @@ CAPA_LABEL = {
     CAPA_DOCTRINA: "C · Doctrina administrativa",
     CAPA_TERRITORIAL: "D · Territorial + antecedentes",
 }
+
+# Volumen de documentos disponible por fuente, MEDIDO en los spikes (no es lo
+# ingerido — es lo que existe para descubrir). None = aún sin medir.
+VOLUMEN_MEDIDO: dict[str, int] = {
+    "suin": 15715,             # catálogo SUIN sembrado
+    "corte_constitucional": 29310,  # catálogo Socrata v2k4-2t8s
+    "tratados": 1261,          # Socrata fdir-hk5z
+    "csj": 321880,             # WebRelatoria (búsqueda 'derecho')
+    "consejo_estado": 103351,  # WebRelatoria <2021
+    "dian": 26171,             # API Buscar.ashx
+    "creg": 4888,              # BFS Normograma
+    "cra": 3323,
+    "crc": 2170,
+}
+
+
+def volumen_de(key: str) -> int | None:
+    return VOLUMEN_MEDIDO.get(key)

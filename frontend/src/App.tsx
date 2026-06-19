@@ -4,7 +4,8 @@ import DocumentView from "./components/DocumentView";
 import Dashboard from "./components/Dashboard";
 import GlobalGraph from "./components/GlobalGraph";
 import Biblioteca from "./components/Biblioteca";
-import { Scale, LayoutDashboard, BookOpen, Network, Library } from "lucide-react";
+import Fuentes from "./components/Fuentes";
+import { Scale, LayoutDashboard, BookOpen, Network, Library, Database } from "lucide-react";
 import "./App.css";
 
 function Sidebar() {
@@ -37,6 +38,10 @@ function Sidebar() {
           <Network className="icon" size={18} />
           <span>Red Global</span>
         </Link>
+        <Link to="/fuentes" className={isActive("/fuentes")}>
+          <Database className="icon" size={18} />
+          <span>Fuentes</span>
+        </Link>
       </nav>
       <div className="sidebar-footer">
         <p>Bodega Legal v1.0</p>
@@ -58,6 +63,7 @@ function App() {
               <Route path="/catalog" element={<CatalogTable />} />
               <Route path="/norm/:id" element={<DocumentView />} />
               <Route path="/global" element={<GlobalGraph />} />
+              <Route path="/fuentes" element={<Fuentes />} />
             </Routes>
           </div>
         </main>
