@@ -62,6 +62,23 @@ def test_parse_filas():
     assert b.canonical_id == "co:sentencia:csj:penal:ap1234-2025:2025"
     assert b.subtipo == "SENTENCIA"
 
+    # El TEMA/descrip completo se captura (lo materializa WebRelatoriaScraper
+    # como raw_text indexable). Debe traer la tesis y NO basura de tags HTML.
+    assert "ACCIÓN DE HABEAS CORPUS" in a.extra["descrip"]
+    assert "class=" not in a.extra["descrip"]
+
+
+def test_webrelatoria_scraper_en_factory():
+    """CSJ/CE se sirven con el scraper de texto WebRelatoria (no el genérico)."""
+    pytest.importorskip("httpx")
+    from scrapper_leyes.config import Settings
+    from scrapper_leyes.scraper.factory import ScraperFactory
+    from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaScraper
+
+    f = ScraperFactory(Settings(), db=None, cache=None)
+    assert isinstance(f.get_scraper("csj"), WebRelatoriaScraper)
+    assert isinstance(f.get_scraper("consejo_estado"), WebRelatoriaScraper)
+
 
 def test_ce_usa_corte_ce():
     d = WebRelatoriaDiscoverer("consejo_estado")

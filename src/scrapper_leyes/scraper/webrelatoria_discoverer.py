@@ -20,7 +20,10 @@ lee el bloque completo. Para días densos (``> 100`` en un único día) se refin
 por ejes secundarios disjuntos (CSJ: tutela/asuntos; CE: tipo de providencia).
 Las particiones son disjuntas y completas (verificado: TUTELA+ASUNTOS = total).
 
-Texto: ``FileReferenceServlet?corp={csj|ce}&ext=pdf&file=<ID>`` (verificado 200/PDF).
+Texto: el cuerpo (CONSIDERACIONES) NO se baja por URL directa — el
+``FileReferenceServlet`` responde 404 y el flujo JSF con estado no es replicable a
+escala. El TEMA completo (tesis + fuente formal) sí viene en el buffer → lo
+materializa :class:`WebRelatoriaScraper` (texto indexable, sin requests extra).
 Nota: el CE >=2021-12 vive además en SAMAI (ASP.NET) → fuente aparte.
 """
 
@@ -36,7 +39,7 @@ from typing import Any, Iterator
 import httpx
 
 from scrapper_leyes.models import build_canonical_id
-from scrapper_leyes.scraper.base import BaseDiscoverer, CatalogSeed
+from scrapper_leyes.scraper.base import BaseDiscoverer, BaseScraper, CatalogSeed
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +153,13 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
         self.max_docs = max_docs
         self.servlet = self.url.replace("/index.xhtml", "/FileReferenceServlet")
         self._search_src = "searchForm:searchButton"  # se resuelve en bootstrap
+        # Hook opcional: si está, se llama por cada fila descubierta (en vez de
+        # acumular en el sink). Lo usa WebRelatoriaScraper para materializar el
+        # texto sin re-buscar (el TEMA ya viene en el buffer).
+        self._on_seed: Any = None
+        self._emitted = 0
+        # El hook puede pedir cortar el recorrido (p.ej. ya no quedan pendientes).
+        self._stop = False
 
     # ── parsing de filas ─────────────────────────────────────────────────
     # Etiqueta → valor hasta la siguiente etiqueta conocida (sirve a CSJ y CE).
@@ -176,8 +186,8 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
         import html as _html
 
         seeds: list[CatalogSeed] = []
-        # Bloques por fila: desde un data-rk hasta el siguiente.
-        blocks = re.findall(r'data-rk="(\d+)"(.*?)(?=data-rk="\d+"|\Z)', table_html, re.S)
+        # Bloques por fila: del data-rk (saltando el resto del tag <tr>) al siguiente.
+        blocks = re.findall(r'data-rk="(\d+)"[^>]*>(.*?)(?=data-rk="\d+"|\Z)', table_html, re.S)
         for doc_id, raw in blocks:
             text = _html.unescape(re.sub(r"<[^>]+>", " ", raw))
             text = re.sub(r"\s+", " ", text).strip()
@@ -232,7 +242,12 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
                 external_id=doc_id,
                 source_url=f"{self.servlet}?corp={self.corte}&ext=pdf&file={doc_id}",
                 subtipo=tipo_prov,
-                extra={"radicado": proceso, "sala": sala, "providencia": providencia},
+                extra={"radicado": proceso, "sala": sala, "providencia": providencia,
+                       # Texto completo de la fila (metadatos + TEMA/tesis +
+                       # FUENTE FORMAL). Es contenido jurídico rico y autocontenido
+                       # que el scraper de texto guarda como raw_text indexable.
+                       # No se persiste al catálogo (solo entran _SEED_COLUMNS).
+                       "descrip": text},
             ))
         return seeds
 
@@ -347,12 +362,20 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
         rows = self._parse_rows(mt.group(1)) if mt else []
         return rows, vs
 
+    async def _emit(self, sink: dict[str, CatalogSeed], s: CatalogSeed) -> None:
+        """Entrega una fila: al hook si está, si no la acumula en el sink."""
+        self._emitted += 1
+        if self._on_seed is not None:
+            await self._on_seed(s)
+        else:
+            sink.setdefault(s.external_id, s)
+
     async def _harvest(
         self, c: httpx.AsyncClient, vs: str, desde: date, hasta: date,
         extra: dict[str, str], axis_idx: int, sink: dict[str, CatalogSeed],
     ) -> str:
         """Recolecta recursivamente todas las filas de [desde, hasta] + filtros."""
-        if self.max_docs and len(sink) >= self.max_docs:
+        if self._stop or (self.max_docs and self._emitted >= self.max_docs):
             return vs
         total, vs = await self._count(c, vs, desde, hasta, extra)
         if total == 0:
@@ -361,7 +384,7 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
         if total <= _WINDOW:
             rows, vs = await self._read_buffer(c, vs)
             for s in rows:
-                sink.setdefault(s.external_id, s)
+                await self._emit(sink, s)
             return vs
 
         if desde < hasta:
@@ -383,7 +406,7 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
         # Ejes agotados: leemos lo que podamos y reportamos la cola perdida.
         rows, vs = await self._read_buffer(c, vs)
         for s in rows:
-            sink.setdefault(s.external_id, s)
+            await self._emit(sink, s)
         logger.warning(
             "[%s] %s: %d resultados con ejes agotados; recuperados <=%d, "
             "cola de ~%d sin capturar (filtros=%s)",
@@ -394,6 +417,7 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
     async def _run(self, desde: date, hasta: date) -> dict[str, CatalogSeed]:
         """Recolecta [desde, hasta] (típicamente un año) y devuelve los seeds."""
         sink: dict[str, CatalogSeed] = {}
+        self._emitted = 0
         async with httpx.AsyncClient(
             timeout=120.0, follow_redirects=True, verify=False
         ) as c:
@@ -403,6 +427,28 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
                         self.source, desde.isoformat(), hasta.isoformat(), total)
             await self._harvest(c, vs, desde, hasta, {}, 0, sink)
         return sink
+
+    async def crawl(self, desde: date, hasta: date, on_seed: Any) -> None:
+        """Recorre [desde, hasta] llamando ``on_seed(seed)`` por cada fila.
+
+        No acumula en memoria (lo usa el scraper de texto para materializar el
+        TEMA sin re-buscar: el buffer de discovery ya lo trae). ``on_seed`` es
+        una corrutina ``async def on_seed(seed: CatalogSeed) -> None``.
+        """
+        self._emitted = 0
+        self._stop = False
+        self._on_seed = on_seed
+        try:
+            async with httpx.AsyncClient(
+                timeout=120.0, follow_redirects=True, verify=False
+            ) as c:
+                vs = await self._bootstrap(c)
+                total, vs = await self._count(c, vs, desde, hasta, {})
+                logger.info("[%s] materializando texto %s..%s (total declarado=%d)",
+                            self.source, desde.isoformat(), hasta.isoformat(), total)
+                await self._harvest(c, vs, desde, hasta, {}, 0, {})
+        finally:
+            self._on_seed = None
 
     def discover(
         self,
@@ -434,3 +480,99 @@ class WebRelatoriaDiscoverer(BaseDiscoverer):
                     return
             logger.info("[%s] año %d: %d seeds (acumulado %d)",
                         self.source, year, len(sink), emitted)
+
+
+class WebRelatoriaScraper(BaseScraper):
+    """Materializa el TEXTO de providencias CSJ/CE indexable, sin requests frágiles.
+
+    WebRelatoria no entrega el cuerpo (CONSIDERACIONES) por URL directa — solo vía
+    un flujo JSF con estado que no es replicable de forma robusta a gran escala.
+    Pero el **buffer de búsqueda ya trae el TEMA completo** de cada providencia
+    (la cadena de tesis jurídicas + FUENTE FORMAL + metadatos), que es contenido
+    rico, autocontenido y citeable. Este scraper re-recorre por fecha (reutilizando
+    la bisección del discoverer) y, para cada fila que esté *pendiente* en el
+    catálogo, guarda ese texto como ``parsed.json`` (``raw_text``) y marca ``done``.
+    El chunker lo indexa vía el fallback "Texto completo".
+
+    Coste: un recorrido por fecha (equivalente al de discovery); 0 requests extra
+    por documento. Para incrementales, acotar con ``--desde``.
+    """
+
+    def __init__(self, settings: Any, db: Any, cache: Any, source: str) -> None:
+        self.settings = settings
+        self.db = db
+        self.cache = cache
+        self.source = source
+
+    def reconfigure(self, workers: int | None = None, rps: float | None = None) -> None:
+        # El ritmo lo marca el recorrido JSF (secuencial por sesión); no aplica.
+        pass
+
+    async def scrape_batch(self, catalog_rows: list[dict[str, Any]]) -> dict[str, int]:
+        from datetime import date as _date
+
+        pending: dict[str, dict[str, Any]] = {}
+        for r in catalog_rows:
+            ext = r.get("suin_id") or r.get("external_id")
+            if ext:
+                pending[str(ext)] = r
+        stats: dict[str, int] = {}
+        if not pending:
+            return stats
+
+        years = sorted(
+            {int(r["anio"]) for r in catalog_rows
+             if r.get("anio") and str(r["anio"]).isdigit()},
+            reverse=True,
+        ) or [_date.today().year]
+
+        disc = WebRelatoriaDiscoverer(self.source)
+
+        async def on_seed(seed: CatalogSeed) -> None:
+            rk = seed.external_id
+            row = pending.get(rk)
+            if row is None:
+                return
+            text = (seed.extra or {}).get("descrip") or ""
+            tipo = row.get("tipo", "SENTENCIA")
+            if not text.strip():
+                self.db.update_scrape_status(rk, "error")
+                stats["empty"] = stats.get("empty", 0) + 1
+                pending.pop(rk, None)
+                return
+            meta = {
+                "numero": row.get("numero") or seed.numero,
+                "anio": row.get("anio") or seed.anio,
+                "corte": self.source,
+                "magistrado_ponente": row.get("magistrado_ponente") or seed.magistrado_ponente,
+                "radicado": (seed.extra or {}).get("radicado"),
+                "sala": (seed.extra or {}).get("sala"),
+            }
+            parsed = {
+                "suin_id": rk,
+                "metadata": {k: v for k, v in meta.items() if v},
+                "articles": [],
+                "modifications": [],
+                "jurisprudence": [],
+                "toc": [],
+                "raw_text": text,
+                "corte": self.source,
+                "sala": meta["sala"],
+                "magistrado_ponente": meta["magistrado_ponente"],
+            }
+            self.cache.store_parsed(self.source, tipo, rk, parsed)
+            self.db.update_scrape_status(rk, "done")
+            stats["done"] = stats.get("done", 0) + 1
+            pending.pop(rk, None)
+            if not pending:
+                disc._stop = True  # ya no queda nada que materializar → cortar
+
+        for y in years:
+            if not pending:
+                break
+            await disc.crawl(_date(y, 1, 1), _date(y, 12, 31), on_seed)
+
+        if pending:
+            # Filas que el recorrido no reencontró (fecha fuera de rango/borrada).
+            stats["not_found"] = stats.get("not_found", 0) + len(pending)
+        return stats

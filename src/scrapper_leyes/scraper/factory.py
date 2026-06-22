@@ -73,18 +73,13 @@ class ScraperFactory:
             from scrapper_leyes.scraper.cc_scraper import CCScraper
             return CCScraper(self.settings, self.db, self.cache)
         if source in ("csj", "consejo_estado"):
-            # El texto de WebRelatoria NO es un PDF directo: el cuerpo
-            # (CONSIDERACIONES/titulación) se obtiene con un flujo JSF con estado
-            # (búsqueda por fecha → selección de fila → POST a j_idt273/j_idt272,
-            # que devuelve el texto inline en mainForm:addInfoDialog). El
-            # discoverer ya siembra el catálogo; falta cablear ese scraper de
-            # texto a medida. Hasta entonces no se enruta al scraper genérico
-            # (su source_url FileReferenceServlet responde 404).
-            raise NotImplementedError(
-                f"Scraper de texto de '{source}' pendiente: WebRelatoria entrega el "
-                "cuerpo vía flujo JSF con estado (consideraciones/titulación inline), "
-                "no por URL directa. El catálogo ya está sembrado por el discoverer."
-            )
+            # WebRelatoria no da el cuerpo por URL directa (el FileReferenceServlet
+            # responde 404 y las CONSIDERACIONES solo salen por un flujo JSF con
+            # estado no replicable a escala). El TEMA completo (tesis jurídicas +
+            # fuente formal) SÍ viene en el buffer de búsqueda → WebRelatoriaScraper
+            # lo materializa re-recorriendo por fecha, sin requests frágiles.
+            from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaScraper
+            return WebRelatoriaScraper(self.settings, self.db, self.cache, source)
         if get_source(source) is None:
             raise self._no_conector(source, "scraper")
         from scrapper_leyes.scraper.url_scraper import UrlScraper
