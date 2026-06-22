@@ -8,9 +8,10 @@ pytest.importorskip("httpx")
 
 from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaDiscoverer
 
-# Fragmento real de la tabla de resultados (2 filas, con tags como vienen).
+# Fragmento real de la tabla de resultados CSJ (cada fila empieza en data-rk;
+# el id se repite como "ID:" dentro de la celda descrip).
 _SAMPLE = """
-<tr><td>SALA DE CASACIÓN LABORAL TUTELA <span>ID:</span> 961712
+<tr data-ri="0" data-rk="961712"><td>SALA DE CASACIÓN LABORAL TUTELA ID: 961712
 NÚMERO DE PROCESO: T 76001220500020260015501
 NÚMERO DE PROVIDENCIA: AHL070-2026
 CLASE DE ACTUACIÓN: SOLICITUD DE NULIDAD
@@ -18,7 +19,7 @@ TIPO DE PROVIDENCIA: AUTO
 FECHA: 21/05/2026
 PONENTE: LUIS BENEDICTO HERRERA DÍAZ
 TEMA: ACCIÓN DE HABEAS CORPUS</td></tr>
-<tr><td>SALA DE CASACIÓN PENAL ASUNTO ID: 953249
+<tr data-ri="1" data-rk="953249"><td>SALA DE CASACIÓN PENAL ASUNTO ID: 953249
 NÚMERO DE PROCESO: 11001020400020260012300
 NÚMERO DE PROVIDENCIA: AP1234-2025
 CLASE DE ACTUACIÓN: CASACIÓN
@@ -26,6 +27,12 @@ TIPO DE PROVIDENCIA: SENTENCIA
 FECHA: 03/12/2025
 PONENTE: GERSON CHAVERRA CASTRO
 TEMA: NULIDAD</td></tr>
+"""
+
+# Fragmento real de la tabla del Consejo de Estado (formato distinto: NR, SECCION,
+# ponente seguido de ACTOR, tipo suelto tras el radicado).
+_SAMPLE_CE = """
+<tr data-ri="0" data-rk="2333536"><td>CONSEJO DE ESTADO NR: 2333536 18001-23-33-000-2015-00179-01 AUTO INTERLOCUTORIO SUSTENTO NORMATIVO : LEY 1437 DE 2011 NORMA DEMANDADA : FECHA : 05/02/2024 SECCION : SECCION TERCERA SUBSECCIÓN A PONENTE : JOSE ROBERTO SACHICA MENDEZ ACTOR : YULIETH DIAZ DEMANDADO : POLICIA NACIONAL DECISION : RECHAZA TEMA : PRUEBAS</td></tr>
 """
 
 
@@ -60,3 +67,19 @@ def test_ce_usa_corte_ce():
     d = WebRelatoriaDiscoverer("consejo_estado")
     assert d.corte == "ce"
     assert "ce/FileReferenceServlet" in d.servlet
+
+
+def test_parse_filas_ce():
+    """El parser unificado también lee el formato del Consejo de Estado."""
+    d = WebRelatoriaDiscoverer("consejo_estado")
+    seeds = d._parse_rows(_SAMPLE_CE)
+    assert len(seeds) == 1
+    s = seeds[0]
+    assert s.external_id == "2333536"
+    assert s.corte == "ce"
+    assert s.anio == "2024"
+    assert "SACHICA" in s.magistrado_ponente
+    assert s.subtipo == "Auto Interlocutorio"
+    assert s.extra["radicado"].startswith("18001-23-33")
+    assert "Tercera" in s.extra["sala"]
+    assert s.source_url.endswith("ce&ext=pdf&file=2333536")
