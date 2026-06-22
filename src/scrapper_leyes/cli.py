@@ -155,6 +155,72 @@ def discover(
     db.close()
 
 
+@catalog.command(name="seed-all")
+@click.option("--limit", default=None, type=int, help="Tope por fuente (para pruebas)")
+@click.option("--only", default=None, help="Solo estas fuentes (coma-separadas)")
+@click.option("--skip", default="", help="Omitir estas fuentes (coma-separadas)")
+@click.pass_context
+def seed_all(ctx: click.Context, limit: int | None, only: str | None, skip: str) -> None:
+    """Sembrar el catálogo desde TODAS las fuentes (Socrata + todos los discoverers).
+
+    Un solo comando para dejar el mapa completo (~660k referencias) listo para
+    indexar. Resiliente: una fuente que falle NO detiene las demás. Las altas
+    cortes (CSJ ~321k, CE ~103k) son crawls de HORAS → correr en tmux.
+    Usa --limit N para una prueba rápida (tope por fuente).
+    """
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+    from scrapper_leyes.catalog.socrata_client import CATALOG_SOURCES, sync_catalog
+    from scrapper_leyes.scraper.factory import ScraperFactory
+    from scrapper_leyes.sources import MODO_CRAWL, all_sources
+
+    skip_set = {s.strip() for s in skip.split(",") if s.strip()}
+    only_set = {s.strip() for s in only.split(",")} if only else None
+
+    def want(key: str) -> bool:
+        return (only_set is None or key in only_set) and key not in skip_set
+
+    results: list[tuple[str, str, str]] = []
+
+    # 1) Catálogos Socrata (legislacion/SUIN, cc_sentencias, tratados).
+    for ds, cs in CATALOG_SOURCES.items():
+        if not want(ds):
+            continue
+        console.print(f"[bold]» Socrata: {ds}…[/bold]")
+        try:
+            n = sync_catalog(settings, db, limit=limit, catalog_source=cs)
+            results.append((ds, "socrata", f"{n:,} sincronizados"))
+        except Exception as e:  # noqa: BLE001
+            results.append((ds, "socrata", f"[red]error: {str(e)[:60]}[/red]"))
+
+    # 2) Discoverers crawl (altas cortes, normogramas, internacional, territorial…).
+    factory = ScraperFactory(settings, db, cache)
+    for spec in all_sources():
+        if spec.modo != MODO_CRAWL or not want(spec.key):
+            continue
+        console.print(f"[bold]» discover: {spec.key}…[/bold]")
+        try:
+            disc = factory.get_discoverer(spec.key)
+            seeds: list[dict] = []
+            for seed in disc.discover():
+                seeds.append(seed.to_catalog_row())
+                if limit and len(seeds) >= limit:
+                    break
+            ins = db.upsert_catalog_seed(seeds) if seeds else 0
+            results.append((spec.key, "crawl", f"{len(seeds):,} descubiertos, +{ins} nuevos"))
+        except Exception as e:  # noqa: BLE001
+            results.append((spec.key, "crawl", f"[red]error: {str(e)[:60]}[/red]"))
+
+    table = Table(title="Siembra del mapa completo")
+    table.add_column("Fuente", style="cyan")
+    table.add_column("Modo")
+    table.add_column("Resultado")
+    for key, modo, res in results:
+        table.add_row(key, modo, res)
+    console.print(table)
+    console.print(f"\n[bold]Total en catálogo: {db.get_catalog_count():,}[/bold]")
+    db.close()
+
+
 @catalog.command()
 @click.option("--tipo", default=None, help="Filter by norm type")
 @click.pass_context
