@@ -89,7 +89,9 @@ class ScraperFactory:
         # Altas cortes vía WebRelatoria (PrimeFaces/JSF).
         if source in ("csj", "consejo_estado"):
             from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaDiscoverer
-            return WebRelatoriaDiscoverer(source)
+            # max_docs=None → sembrar TODO el total (cientos de miles); el tope
+            # real se controla con `catalog discover --limit N`.
+            return WebRelatoriaDiscoverer(source, max_docs=None)
         # Resto de fuentes: un discoverer por familia.
         if source == "jep":
             from scrapper_leyes.scraper.jep_discoverer import JEPDiscoverer
