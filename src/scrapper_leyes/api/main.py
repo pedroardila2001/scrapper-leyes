@@ -16,6 +16,7 @@ from typing import Any, Optional
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase
+from pydantic import BaseModel, Field
 
 # ── App setup ────────────────────────────────────────────────────────────
 
@@ -276,9 +277,17 @@ def get_biblioteca():
 
 @app.get("/api/sources")
 def get_sources():
-    """Mapa de fuentes del ordenamiento jurídico con volumen disponible (medido
-    en los spikes) e ingerido (lo que ya está en el catálogo)."""
-    from scrapper_leyes.sources import CAPA_LABEL, VOLUMEN_MEDIDO, all_sources
+    """Mapa de fuentes del ordenamiento jurídico colombiano.
+
+    Por cada fuente reporta el volumen disponible para descubrir —distinguiendo
+    si está **medido** (conteo contra la fuente real) o **estimado** (cifra de
+    spike/muestreo cuando el discoverer existe pero no se ha corrido el conteo
+    completo)— y lo ya **ingerido** en el catálogo. Así el dashboard refleja el
+    universo COMPLETO mapeado, no solo lo medido.
+    """
+    from scrapper_leyes.sources import (
+        CAPA_LABEL, EST_PENDIENTE, all_sources, volumen_total_de,
+    )
 
     # Ingerido (con texto) por fuente, desde el catálogo.
     conn = _get_conn()
@@ -292,9 +301,12 @@ def get_sources():
     finally:
         conn.close()
 
+    total_medido = total_estimado = 0
     capas: dict[str, dict[str, Any]] = {}
     for s in all_sources():
-        vol = VOLUMEN_MEDIDO.get(s.key)
+        vol, calidad = volumen_total_de(s.key)
+        # Todo lo que no esté 'pendiente' tiene un discoverer/conector cableado.
+        tiene_conector = s.estado != EST_PENDIENTE
         node = capas.setdefault(
             s.capa, {"capa": s.capa, "label": CAPA_LABEL.get(s.capa, s.capa),
                      "fuentes": [], "volumen": 0}
@@ -302,17 +314,25 @@ def get_sources():
         node["fuentes"].append({
             "key": s.key, "nombre": s.nombre, "modo": s.modo, "estado": s.estado,
             "prioridad": s.prioridad, "volumen_disponible": vol,
+            "volumen_calidad": calidad, "tiene_conector": tiene_conector,
             "ingerido": ingerido.get(s.key, 0),
         })
         node["volumen"] += vol or 0
+        if calidad == "medido":
+            total_medido += vol or 0
+        elif calidad == "estimado":
+            total_estimado += vol or 0
 
-    total = sum(VOLUMEN_MEDIDO.values())
+    srcs = all_sources()
     return {
         "capas": sorted(capas.values(), key=lambda c: c["capa"]),
-        "total_disponible": total,
+        "total_medido": total_medido,
+        "total_estimado": total_estimado,
+        "total_disponible": total_medido + total_estimado,  # universo mapeado completo
         "total_ingerido": sum(ingerido.values()),
-        "total_fuentes": len(all_sources()),
-        "fuentes_con_conector": sum(1 for s in all_sources() if s.implementado),
+        "total_fuentes": len(srcs),
+        "fuentes_con_conector": sum(1 for s in srcs if s.estado != EST_PENDIENTE),
+        "fuentes_operativas": sum(1 for s in srcs if s.implementado),
     }
 
 
@@ -849,3 +869,96 @@ def get_global_graph(
             "aristas": len(links),
         },
     }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Tools para LLMs (HTTP/OpenAPI) — mismas funciones que el servidor MCP.
+# Esquema limpio en /docs para function-calling de cualquier LLM.
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+class BuscarRequest(BaseModel):
+    query: str = Field(..., description="Consulta en lenguaje natural")
+    limit: int = Field(10, ge=1, le=50)
+    tipo: Optional[str] = Field(None, description="LEY, DECRETO, SENTENCIA, …")
+    anio: Optional[str] = None
+    estado_vigencia: Optional[str] = Field(None, description="vigente, derogado, …")
+    excluir_derogadas: bool = False
+
+
+class VigenciaRequest(BaseModel):
+    canonical_id: str = Field(..., description="id co:… de la norma")
+    fecha: Optional[str] = Field(None, description="DD/MM/YYYY o YYYY-MM-DD")
+    articulo: Optional[str] = Field(None, description="nº de artículo normalizado")
+
+
+class GrafoRequest(BaseModel):
+    canonical_id: str
+    relacion: Optional[str] = Field(None, description="CITA_A, MODIFICA, DEROGA, …")
+    direccion: str = Field("ambas", description="salientes | entrantes | ambas")
+    limit: int = Field(50, ge=1, le=200)
+
+
+@app.post("/api/tools/buscar", tags=["tools"])
+def tool_buscar(req: BuscarRequest):
+    """Búsqueda semántica híbrida sobre el corpus legal colombiano."""
+    from scrapper_leyes.tools import buscar_normas
+    return buscar_normas(
+        req.query, limit=req.limit, tipo=req.tipo, anio=req.anio,
+        estado_vigencia=req.estado_vigencia, excluir_derogadas=req.excluir_derogadas,
+    )
+
+
+@app.post("/api/tools/texto-vigente", tags=["tools"])
+def tool_texto_vigente(req: VigenciaRequest):
+    """Estado de vigencia y texto operante de una norma/artículo a una fecha."""
+    from scrapper_leyes.tools import texto_vigente
+    return texto_vigente(req.canonical_id, fecha=req.fecha, articulo=req.articulo)
+
+
+@app.post("/api/tools/grafo", tags=["tools"])
+def tool_grafo(req: GrafoRequest):
+    """Vecindario de un nodo en el grafo de conocimiento legal."""
+    from scrapper_leyes.tools import consulta_grafo
+    return consulta_grafo(
+        req.canonical_id, relacion=req.relacion, direccion=req.direccion, limit=req.limit,
+    )
+
+
+class EstadisticaRequest(BaseModel):
+    corte: Optional[str] = None
+    materia: Optional[str] = None
+    magistrado: Optional[str] = None
+    anio_desde: Optional[int] = None
+    anio_hasta: Optional[int] = None
+    tipo: Optional[str] = "SENTENCIA"
+    top: int = Field(15, ge=1, le=50)
+
+
+@app.post("/api/tools/estadistica", tags=["tools"])
+def tool_estadistica(req: EstadisticaRequest):
+    """Jurimetría: distribuciones del corpus jurisprudencial + sentido del fallo."""
+    from scrapper_leyes.tools import estadistica_jurisprudencial
+    return estadistica_jurisprudencial(
+        corte=req.corte, materia=req.materia, magistrado=req.magistrado,
+        anio_desde=req.anio_desde, anio_hasta=req.anio_hasta, tipo=req.tipo, top=req.top,
+    )
+
+
+# GET de conveniencia para el dashboard (mismos datos, query params).
+@app.get("/api/jurimetria", tags=["tools"])
+def get_jurimetria(
+    corte: Optional[str] = None,
+    materia: Optional[str] = None,
+    magistrado: Optional[str] = None,
+    anio_desde: Optional[int] = None,
+    anio_hasta: Optional[int] = None,
+    tipo: Optional[str] = "SENTENCIA",
+    top: int = Query(15, ge=1, le=50),
+):
+    """Jurimetría para la vista del dashboard."""
+    from scrapper_leyes.tools import estadistica_jurisprudencial
+    return estadistica_jurisprudencial(
+        corte=corte, materia=materia, magistrado=magistrado,
+        anio_desde=anio_desde, anio_hasta=anio_hasta, tipo=tipo, top=top,
+    )

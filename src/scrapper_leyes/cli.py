@@ -199,6 +199,10 @@ def scrape() -> None:
 @click.option("--source", default="suin", help="Data source to scrape (suin, corte_constitucional)")
 @click.option("--workers", default=None, type=int, help="Requests concurrentes (default: 5)")
 @click.option("--rps", default=None, type=float, help="Requests por segundo, ritmo global (default: 3)")
+@click.option("--retry-errors", is_flag=True,
+              help="Re-encola las normas en 'error' (bajo el tope de intentos) antes de scrapear")
+@click.option("--max-attempts", default=3, type=int,
+              help="Tope de intentos por norma al re-encolar errores (default: 3)")
 @click.pass_context
 def run(
     ctx: click.Context,
@@ -207,9 +211,24 @@ def run(
     source: str,
     workers: int | None,
     rps: float | None,
+    retry_errors: bool,
+    max_attempts: int,
 ) -> None:
     """Ejecutar scraping de normas pendientes."""
     settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+
+    # Retry entre corridas: re-encola 'error' → 'pending' (con tope de intentos)
+    # para que get_pending_norms vuelva a tomarlas. Sin esto, un fallo de red
+    # deja la norma abandonada para siempre.
+    if retry_errors:
+        requeued = db.reset_errors_to_pending(
+            tipo=tipo, source=source if source != "suin" else None,
+            max_attempts=max_attempts,
+        )
+        console.print(
+            f"[yellow]↻ Re-encoladas {requeued} normas en 'error' "
+            f"(intentos < {max_attempts}).[/yellow]"
+        )
 
     from scrapper_leyes.scraper.factory import ScraperFactory
     import asyncio
@@ -533,8 +552,16 @@ def graph(ctx: click.Context) -> None:
         password=settings.neo4j_password,
     )
     try:
-        exporter.export_all()
-        console.print("\n[green]✓ Grafo exportado a Neo4j[/green]")
+        st = exporter.export_all()
+        console.print(
+            f"\n[green]✓ Grafo exportado:[/green] {st['norms']:,} normas, "
+            f"{st['sentencias']:,} sentencias."
+        )
+        if st["failed"]:
+            console.print(
+                f"[yellow]! {st['failed']} documentos fallaron al exportar "
+                f"(ver logs); el resto del grafo se construyó igual.[/yellow]"
+            )
     finally:
         exporter.close()
         db.close()
@@ -588,6 +615,64 @@ def sources_list(capa: str | None, pendientes: bool) -> None:
         f"\n{operativas}/{total} fuentes con conector. "
         f"`scrapper-leyes sources list --pendientes` para ver lo que falta."
     )
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Verify — calidad/consistencia del knowledge tras la ingesta
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+@main.command()
+@click.option("--strict", is_flag=True,
+              help="Salir con código ≠ 0 también ante WARN (no solo FAIL)")
+@click.pass_context
+def verify(ctx: click.Context, strict: bool) -> None:
+    """Verificar que el knowledge (catálogo+Qdrant+Neo4j) quedó íntegro y usable.
+
+    Corre 5 chequeos (reconciliación, completitud, integridad relacional,
+    recuperación, presupuesto de error) y sale con código ≠ 0 si algo falla —
+    pensado para que el cron diario reviente si la ingesta dejó algo roto.
+    """
+    from scrapper_leyes.verify import FAIL, INFO, PASS, WARN, KnowledgeVerifier
+
+    settings, db, cache = _get_deps(ctx.obj.get("data_dir"))
+    verifier = KnowledgeVerifier(settings, db, cache)
+    style = {PASS: "green", WARN: "yellow", FAIL: "red", INFO: "cyan"}
+    try:
+        results, verdict = verifier.run_all()
+    finally:
+        verifier.close()
+        db.close()
+
+    table = Table(title="Verificación del knowledge")
+    table.add_column("Chequeo", style="bold")
+    table.add_column("Estado")
+    table.add_column("Detalle")
+    for r in results:
+        table.add_row(r.name, f"[{style[r.status]}]{r.status}[/{style[r.status]}]", r.message)
+    console.print(table)
+    console.print(
+        f"\nVeredicto: [{style[verdict]}]{verdict}[/{style[verdict]}]"
+    )
+    if verdict == FAIL or (strict and verdict == WARN):
+        sys.exit(1)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# MCP — servidor de tools para LLMs
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+@main.command()
+@click.option("--transport", default="stdio",
+              type=click.Choice(["stdio", "sse", "streamable-http"]),
+              help="Transporte MCP (stdio local; sse/streamable-http remoto)")
+@click.option("--host", default="0.0.0.0", help="Host para sse/streamable-http")
+@click.option("--port", default=8765, type=int, help="Puerto para sse/streamable-http")
+def mcp(transport: str, host: str, port: int) -> None:
+    """Arrancar el servidor MCP (buscar_normas, texto_vigente, consulta_grafo)."""
+    from scrapper_leyes.mcp_server import run
+    run(transport=transport, host=host, port=port)
 
 
 # ═══════════════════════════════════════════════════════════════════════════

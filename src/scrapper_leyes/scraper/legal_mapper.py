@@ -2,6 +2,8 @@
 extracts heuristic sections, and applies Regex NER for legal citations.
 """
 
+from __future__ import annotations
+
 import logging
 import tempfile
 import os
@@ -9,6 +11,8 @@ import re
 from typing import Any
 
 from scrapper_leyes.models import ParsedSentencia
+from scrapper_leyes.sentencia_decision import parse_operative_orders
+from scrapper_leyes.sentencia_sections import derive_legacy_buckets, split_sections
 
 logger = logging.getLogger(__name__)
 
@@ -346,9 +350,6 @@ class LegalMapper:
         corte = catalog_match.get("corte", "Corte Constitucional")
         sala = "Plena"  # Default or regex extract
         magistrado_ponente = catalog_match.get("magistrado_ponente")
-        hechos = ""
-        consideraciones = ""
-        resuelve = ""
 
         # ── Extract Sala ───────────────────────────────────────────────────
         sala_match = re.search(
@@ -368,31 +369,22 @@ class LegalMapper:
             if m:
                 magistrado_ponente = m.group(1).replace("*", "").replace("_", "").strip()
 
-        # ── Split by RESUELVE / DECISIÓN ──────────────────────────────────
-        resuelve_match = re.split(
-            r"(?:^|\n)#*\s*(?:RESUELVE|DECISIÓN|DECISION|FALLA|SE RESUELVE)\s*(?:\n|$)",
-            md_text, flags=re.IGNORECASE | re.MULTILINE,
-        )
-        if len(resuelve_match) > 1:
-            resuelve = resuelve_match[-1].strip()
-            body_before_resuelve = " ".join(resuelve_match[:-1])
-        else:
-            body_before_resuelve = md_text
+        # ── Heading-driven sectionizer (replaces the old fragile regex) ────
+        # Walks the markdown headings ("# VII. CONSIDERACIONES", "# VIII.
+        # DECISIÓN") and normalizes each to a stable section type. The old
+        # regex required the keyword immediately after the '#', so numbered
+        # headings like "# VIII. DECISIÓN" never matched and the whole ruling
+        # was dumped into `consideraciones`. The sections list is the new
+        # source of truth; hechos/consideraciones/resuelve are derived from it.
+        sections = split_sections(md_text)
+        buckets = derive_legacy_buckets(sections)
+        hechos = buckets["hechos"]
+        consideraciones = buckets["consideraciones"]
+        resuelve = buckets["resuelve"]
 
-        # ── Split by CONSIDERACIONES ──────────────────────────────────────
-        consideraciones_match = re.split(
-            r"(?:^|\n)#*\s*(?:CONSIDERACIONES(?:\s+Y\s+FUNDAMENTOS)?|"
-            r"FUNDAMENTOS(?:\s+JUR[IÍ]DICOS)?|"
-            r"PROBLEMA\s+JUR[IÍ]DICO|"
-            r"AN[AÁ]LISIS\s+DE\s+LA\s+SALA)\s*(?:\n|$)",
-            body_before_resuelve, flags=re.IGNORECASE | re.MULTILINE,
-        )
-        if len(consideraciones_match) > 1:
-            consideraciones = consideraciones_match[-1].strip()
-            hechos = " ".join(consideraciones_match[:-1]).strip()
-        else:
-            # If we couldn't split, dump everything in consideraciones as fallback
-            consideraciones = body_before_resuelve
+        # Parse the operative part into typed orders (EXEQUIBLE / INEXEQUIBLE /
+        # …) with their controlled targets — drives typed graph edges & vigencia.
+        orders = [o.to_dict() for o in parse_operative_orders(resuelve)]
 
         # ── Extract citations using Regex NER Legal ────────────────────────
         structured_citations = extract_legal_citations(md_text)
@@ -416,6 +408,8 @@ class LegalMapper:
             hechos=hechos,
             consideraciones=consideraciones,
             resuelve=resuelve,
+            sections=[s.to_dict() for s in sections],
+            orders=orders,
             citaciones=citaciones_str,
             # El texto íntegro vive en hechos/consideraciones/resuelve; raw_text
             # es solo un respaldo. No lo recortamos a 5000 (eso hacía que el front

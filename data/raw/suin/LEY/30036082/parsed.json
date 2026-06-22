@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1947",
     "anio": "2019",
-    "fecha": "201901\r\nscript\r\nvar date = new Date(08/01/2019); document.write(date.getDate());\r\nscript",
+    "fecha": "201901\nscript\nvar date = new Date(08/01/2019); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL.  Año CLIV  No. 50.830, Enero, 08 de 2019. PAG.1.",
@@ -31,77 +31,74 @@
       "text": "Artículo 1°. Objeto. Declarar las manifestaciones y expresiones culturales y deportivas del juego al turmequé (tejo) como patrimonio cultural inmaterial de la nación.",
       "canonical_id": "co:ley:1947:2019:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "30180869",
-      "number": "Artículo 1°. Objeto",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1°. Objeto. Declarar las manifestaciones y expresiones culturales y deportivas del juego al turmequé (tejo) como patrimonio cultural inmaterial de la nación.",
-      "canonical_id": "co:ley:1947:2019:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30180870",
       "number": "Artículo 2°. Reconocimiento.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2°. Reconocimiento.Reconózcase al municipio de Turmequé (Boyacá) como cuna principal de la nación del juego al turmequé (tejo), así como gestor y garante del rescate de esta tradición cultural y deportiva.",
       "canonical_id": "co:ley:1947:2019:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180872",
+      "art_id": "30180870",
       "number": "Artículo 3°. Exhorto.",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3°. Exhorto.Exhórtese al Gobierno nacional a través del Ministerio de Cultura, para que el juego al turmequé (tejo) se incluya en la Lista Representativa de Patrimonio Cultural Inmaterial (LRPCI) del ámbito nacional y se apruebe el Plan Especial de Salvaguardia (PES).\n\nDe igual forma, autorícese al Gobierno nacional, a través del Ministerio de Cultura, incluir en el Banco de Proyectos del Ministerio de Cultura, el juego al turmequé (tejo).",
       "canonical_id": "co:ley:1947:2019:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180873",
+      "art_id": "30180872",
       "number": "Artículo 4°. Autorización presupuestal",
       "number_normalized": "4",
       "title": null,
       "text": "Artículo 4°. Autorización presupuestal. Autorícese al Gobierno nacional, departamental y municipal la destinación de las apropiaciones presupuestales necesarias para la ejecución de las siguientes acciones, obras e intervenciones de interés social y de utilidad pública:\n\n1. Garantizar la protección, rescate, promoción y difusión de la manifestación cultural y deportiva del juego al turmequé (tejo).\n\n2. Promocionar el juego al turmequé (tejo), para fortalecer el sentido de pertenencia, arraigo e identidad nacional en sus manifestaciones culturales y deportivas.\n\n3. Promover la investigación, historia, y el rescate y difusión de las tradiciones del juego al turmequé (tejo), para que perduren en el tiempo y se transmitan de generación en generación.\n\n4. Construir y dotar escenarios con infraestructura y espacios adecuados en cada uno de los departamentos que cuenten con liga registrada y vigente ante la Federación Colombiana de Tejo (Fedetejo) para realizar eventos y olimpiadas nacionales e internacionales del juego al turmequé (tejo).\n\n5. Apoyar el Festival Nacional del Juego al Turmequé (tejo), que se realiza en el municipio de Turmequé (Boyacá). 6. Apoyar el Reinado Nacional del Juego al Turmequé (tejo), que se realiza en el municipio de Turmequé (Boyacá).",
       "canonical_id": "co:ley:1947:2019:art:4",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180875",
+      "art_id": "30180873",
       "number": "Artículo 5°. Patrimonio inmaterial.",
       "number_normalized": "5",
       "title": null,
       "text": "Artículo 5°. Patrimonio inmaterial.La titularidad del Patrimonio Cultural Inmaterial del Juego al Turmequé, estará sometida a las reglas contenidas en la Ley 397 de 1997, el Decreto 2941 de 2009 y las demás normas concordantes.",
       "canonical_id": "co:ley:1947:2019:art:5",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180877",
+      "art_id": "30180875",
       "number": "Artículo 6°. Promoción al deporte",
       "number_normalized": "6",
       "title": null,
       "text": "Artículo 6°. Promoción al deporte. La Nación a través del Departamento Administrativo del Deporte, la Recreación, la Actividad Física y Aprovechamiento del Tiempo Libre (Coldeportes) y la Federación Colombiana de Tejo o la entidad que haga sus veces, apoyará las escuelas de formación para la práctica del juego al turmequé (tejo), impulsará campeonatos veredales, municipales, distritales, departamentales y nacionales, además la profesionalización de las personas que representarán a nuestro país en eventos nacionales e internacionales, teniendo en cuenta la Ley 613 del año 2000.",
       "canonical_id": "co:ley:1947:2019:art:6",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180878",
+      "art_id": "30180877",
       "number": "Artículo 7°. Vigencia.",
       "number_normalized": "7",
       "title": null,
       "text": "Artículo 7°. Vigencia.La presente ley rige a partir de su promulgación.",
       "canonical_id": "co:ley:1947:2019:art:7",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

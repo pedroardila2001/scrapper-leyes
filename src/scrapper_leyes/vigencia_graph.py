@@ -30,7 +30,13 @@ from scrapper_leyes.vigencia import (
     _parse_iso,
 )
 
-_SOURCES = ["suin", "jurisprudencia"]
+# Affectation edge provenance considered authoritative for vigencia:
+#   suin           — SUIN's recorded modifications (other norms → this one)
+#   jurisprudencia — SUIN's jurisprudence backlinks (control constitucional)
+#   resuelve       — parsed directly from a sentencia's parte resolutiva
+#                    (DECLARA_INEXEQUIBLE/…); same effect class as jurisprudencia.
+_SOURCES = ["suin", "jurisprudencia", "resuelve"]
+_JUR_SOURCES = {"jurisprudencia", "resuelve"}
 
 
 def _coerce_fecha(fecha: str | date | None) -> date | None:
@@ -57,7 +63,7 @@ def _split(rows: list[dict[str, Any]]) -> tuple[list[Afectacion], list[Afectacio
     afect, jur = [], []
     for r in rows:
         af = _row_to_afectacion(r)
-        if r.get("source") == "jurisprudencia":
+        if r.get("source") in _JUR_SOURCES:
             jur.append(af)
         else:
             afect.append(af)
@@ -91,14 +97,14 @@ def resolve_graph(
             art_rows = s.run(
                 "MATCH (src)-[r]->(a:Articulo {id: $id}) "
                 "WHERE r.source IN $srcs "
-                "RETURN type(r) AS tipo, r.source AS source, r.texto AS texto, "
+                "RETURN coalesce(r.tipo, type(r)) AS tipo, r.source AS source, r.texto AS texto, "
                 "       r.anio AS anio, r.articulo AS articulo",
                 id=art_cid, srcs=_SOURCES,
             ).data()
             norm_rows = s.run(
                 "MATCH (src)-[r]->(n:Norma {id: $id}) "
                 "WHERE r.source IN $srcs "
-                "RETURN type(r) AS tipo, r.source AS source, r.texto AS texto, "
+                "RETURN coalesce(r.tipo, type(r)) AS tipo, r.source AS source, r.texto AS texto, "
                 "       r.anio AS anio, r.articulo AS articulo",
                 id=norm_cid, srcs=_SOURCES,
             ).data()

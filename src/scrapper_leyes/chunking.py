@@ -113,6 +113,9 @@ class Chunk:
             "derogado": p.get("derogado"),
             "modificado": p.get("modificado"),
             "afectaciones": p.get("afectaciones", []),
+            # Sentencia structural/semantic metadata (absent for laws/decrees).
+            "normalized_section": p.get("normalized_section"),
+            "content_type": p.get("content_type"),
         }
 
 
@@ -458,7 +461,14 @@ def chunk_sentencia(
     max_chars: int = DEFAULT_MAX_CHARS,
     overlap: int = DEFAULT_OVERLAP_CHARS,
 ) -> list[Chunk]:
-    """Chunk a sentencia by section (hechos, consideraciones, resuelve)."""
+    """Chunk a sentencia by its normalized structural sections.
+
+    Prefers the rich ``sections`` list (heading-driven; one chunk group per
+    normalized section, carrying ``normalized_section`` / ``original_heading``
+    / ``content_type`` metadata). Falls back to the legacy three-bucket split
+    (hechos/consideraciones/resuelve) for parsed.json produced before the
+    sectionizer existed — re-run ``scrape reparse`` to upgrade them.
+    """
     numero = catalog.get("numero", "")
     anio = catalog.get("anio", "")
     corte = catalog.get("corte") or parsed.get("corte")
@@ -469,6 +479,10 @@ def chunk_sentencia(
     )
     label = _norm_label(catalog)
 
+    # A sentencia is operative as a whole; vigencia is not an article-level
+    # concept here. We carry the decision outcome at the order level (Fase 3),
+    # not a meaningless per-chunk estado_vigencia, so those law-only fields are
+    # intentionally absent from the sentencia payload.
     base_payload = {
         "tipo": "SENTENCIA",
         "numero": numero,
@@ -479,20 +493,103 @@ def chunk_sentencia(
         "suin_id": catalog.get("suin_id") or parsed.get("suin_id"),
         "norm_canonical_id": norm_cid,
         "norm_vigencia": catalog.get("suin_vigencia") or catalog.get("vigencia"),
-        "estado_vigencia": "vigente",
-        "derogado": False,
-        "modificado": False,
-        "afectaciones": [],
     }
 
+    sections = parsed.get("sections")
+    if sections:
+        return _chunk_sentencia_sections(
+            sections, base_payload, norm_cid, label, max_chars=max_chars, overlap=overlap
+        )
+    return _chunk_sentencia_legacy(
+        parsed, base_payload, norm_cid, label, max_chars=max_chars, overlap=overlap
+    )
+
+
+def _chunk_sentencia_sections(
+    sections: list[dict[str, Any]],
+    base_payload: dict[str, Any],
+    norm_cid: str,
+    label: str,
+    *,
+    max_chars: int,
+    overlap: int,
+) -> list[Chunk]:
+    """Chunk from the heading-driven ``sections`` list (the new source of truth)."""
+    # Lazy import to keep chunking importable without the sectionizer at hand.
+    from scrapper_leyes.sentencia_sections import content_type_for
+
+    chunks: list[Chunk] = []
+    for sec in sections:
+        body = strip_suin_ui_noise((sec.get("text") or "").strip())
+        if not body:
+            continue
+        seq = sec.get("seq", 0)
+        norm_section = sec.get("normalized_section") or "OTRO"
+        original_heading = (sec.get("original_heading") or "").strip()
+        content_type = content_type_for(norm_section)
+        # Display label: the court's own heading when present, else the enum.
+        nice = original_heading or norm_section.replace("_", " ").title()
+        # Stable id keyed by sequence + normalized type (survives re-export;
+        # changes only if the document's heading structure changes).
+        sec_cid = f"{norm_cid}:sec:{seq}:{norm_section.lower()}"
+
+        pieces = split_text(body, max_chars=max_chars, overlap=overlap)
+        n = len(pieces)
+        for i, piece in enumerate(pieces):
+            section = nice + (f" ({i + 1}/{n})" if n > 1 else "")
+            header = f"{label} · {section}:"
+            payload = {
+                **base_payload,
+                "canonical_id": sec_cid,
+                "titulo": nice,
+                "section": section,
+                "normalized_section": norm_section,
+                "original_heading": original_heading,
+                "content_type": content_type,
+                "seccion_seq": seq,
+                "seccion_nivel": sec.get("level"),
+                "text": piece,
+            }
+            chunks.append(
+                Chunk(
+                    uid=_uid(sec_cid, i),
+                    canonical_id=sec_cid,
+                    norm_canonical_id=norm_cid,
+                    section=section,
+                    title=nice,
+                    text=f"{header}\n\n{piece}",
+                    body=piece,
+                    chunk_index=i,
+                    n_chunks=n,
+                    payload=payload,
+                )
+            )
+    return chunks
+
+
+def _chunk_sentencia_legacy(
+    parsed: dict[str, Any],
+    base_payload: dict[str, Any],
+    norm_cid: str,
+    label: str,
+    *,
+    max_chars: int,
+    overlap: int,
+) -> list[Chunk]:
+    """Fallback for parsed.json without a ``sections`` list (pre-sectionizer)."""
     section_labels = {
-        "hechos": "Hechos",
-        "consideraciones": "Consideraciones",
-        "resuelve": "Resuelve",
+        "hechos": ("Hechos", "ANTECEDENTES"),
+        "consideraciones": ("Consideraciones", "CONSIDERACIONES"),
+        "resuelve": ("Resuelve", "PARTE_RESOLUTIVA"),
+    }
+    content_type_by_key = {
+        "hechos": "NARRATIVE",
+        "consideraciones": "REASONING",
+        "resuelve": "OPERATIVE_ORDERS",
     }
 
     chunks: list[Chunk] = []
-    for key, nice in section_labels.items():
+    for key, (nice, norm_section) in section_labels.items():
         body = strip_suin_ui_noise((parsed.get(key) or "").strip())
         if not body:
             continue
@@ -507,6 +604,9 @@ def chunk_sentencia(
                 "canonical_id": sec_cid,
                 "titulo": nice,
                 "section": section,
+                "normalized_section": norm_section,
+                "original_heading": "",
+                "content_type": content_type_by_key[key],
                 "text": piece,
             }
             chunks.append(

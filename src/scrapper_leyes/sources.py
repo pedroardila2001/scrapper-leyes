@@ -79,12 +79,15 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="diario_oficial", nombre="Diario Oficial (Imprenta Nacional)",
-        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="media",
         tipos=("ley", "decreto", "resolucion"),
         rama="Rama Ejecutiva", cabeza="Imprenta Nacional",
         base_url="https://www.imprenta.gov.co",
-        spike="Localizar patrón de PDF por edición/fecha; usar como fuente PRIMARIA de "
-              "fecha de promulgación (clave para vigencia).",
+        spike="Discoverer escrito (DiarioOficialDiscoverer). App JSF/PrimeFaces sin API: "
+              "la edición es la unidad (la nº 53.526 al 2026-06-18). El PDF es session-bound "
+              "(submit JSF → detallesPdf.xhtml), no enumerable por URL estática → el scraper "
+              "debe replicar el flujo JSF con cookie jar. Fecha de promulgación en extra.fecha "
+              "(dato PRIMARIO para vigencia).",
     ),
 
     # ── Capa B — Jurisprudencia ─────────────────────────────────────────────
@@ -118,11 +121,17 @@ _SPECS: list[SourceSpec] = [
               "pipeline aparte. Texto por FileReferenceServlet?corp=ce. Secciones 1-5 + Consulta.",
     ),
     SourceSpec(
-        key="jep", nombre="Jurisdicción Especial para la Paz", capa=CAPA_JURISPRUDENCIA,
-        modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media-baja",
-        tipos=("sentencia", "auto"), corte="jep", rama="Rama Judicial", cabeza="Rama Judicial",
-        base_url="https://www.jep.gov.co",
-        spike="Portal JEP: localizar repositorio de decisiones/autos (justicia transicional, 2018+).",
+        key="jep", nombre="Jurisdicción Especial para la Paz (Jurinfo)", capa=CAPA_JURISPRUDENCIA,
+        modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media-baja",
+        tipos=("sentencia", "auto", "acuerdo", "resolucion"), corte="jep",
+        rama="Rama Judicial", cabeza="Rama Judicial",
+        base_url="https://jurinfo.jep.gov.co/normograma",
+        spike="VERIFICADO en vivo: Jurinfo corre el motor Avance Jurídico con API Buscar.ashx "
+              "(buscador/Buscar.ashx?texto=<q>, JSON con nombre/tipo/numero/year/link). "
+              "JEPDiscoverer barre consultas semilla y dedup; emite SOLO documentos de origen "
+              "JEP (omite espejos de CC/CSJ/CE que ya tienen su fuente). Texto en "
+              "compilacion/docs/<link>.htm. La relatoría por expediente vive además en la SPA "
+              "relatoria.jep.gov.co (fase 2).",
     ),
 
     # ── Fuentes que faltaban (tabla del usuario) ────────────────────────────
@@ -140,15 +149,17 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="corte_idh", nombre="Corte Interamericana de DD.HH.",
-        capa=CAPA_JURISPRUDENCIA, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="alta",
+        capa=CAPA_JURISPRUDENCIA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
         tipos=("sentencia", "opinion_consultiva"), corte="idh",
         rama="Internacional", cabeza="Sistema Interamericano",
         base_url="https://www.corteidh.or.cr",
-        spike="VERIFICADO acceso: PDF Serie C determinístico "
-              "`/docs/casos/articulos/seriec_<N>_esp.pdf` (200/PDF) + fichas "
-              "`ver_ficha_tecnica.cfm?nId_Ficha=<N>`. Crawl: iterar fichas (filtrar país=Colombia) "
-              "→ bajar PDF Serie C. ~500-600 sentencias. Modelar CONTROL_CONVENCIONALIDAD en grafo.",
-        notas="🔴 Jurisprudencia vinculante hoy invisible.",
+        spike="VERIFICADO Y FUNCIONANDO en vivo: el listado útil es "
+              "`casos_en_supervision_por_pais.cfm` (172 fichas con nId_Ficha; "
+              "`casos_sentencias.cfm` es JS y da 0). La ficha lista el Nº de Serie C POR FASE "
+              "('Sentencia de Fondo: 55', 'Excepciones Preliminares: 18') → una seed por fase, "
+              "PDF `seriec_<N>_esp.pdf` (206/PDF). Filtra país=Colombia en la ficha. ~25 casos × "
+              "~2-3 fases ≈ 60 sentencias. Pendiente: completar casos archivados (no en supervisión).",
+        notas="🔴 Jurisprudencia vinculante; modelar CONTROL_CONVENCIONALIDAD en el grafo.",
     ),
     # Comisiones de Regulación — mismo motor Normograma que SUIN (discoverer hecho).
     SourceSpec(
@@ -178,38 +189,48 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="banco_republica", nombre="Banco de la República — Junta Directiva",
-        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media",
         tipos=("resolucion", "circular"),
         rama="Órgano Autónomo", cabeza="Banco de la República",
         base_url="https://www.banrep.gov.co",
-        spike="Resoluciones externas de la Junta (monetario/cambiario/crediticio). "
-              "Localizar compilación normativa (DCIN, circular reglamentaria externa).",
+        spike="Discoverer escrito (BancoRepublicaDiscoverer) sobre el índice Drupal Views "
+              "/es/reglamentacion-temas/<tema>?page=N (tema 2153 cambiario/monetario). "
+              "Tipo+número+año salen del TEXTO del ancla ('Resolución Externa No. 10 de 2014'), "
+              "no del href; el PDF (bjd_<n>_<año>.pdf) codifica el boletín → en extra.boletin. "
+              "Falta extender a otros temas/<id>.",
     ),
     SourceSpec(
         key="organos_control", nombre="Órganos de Control (Procuraduría, Contraloría, CNDJ)",
-        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media",
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media",
         tipos=("concepto", "fallo_disciplinario", "circular"),
         rama="Organismos de Control", cabeza="Organismos de Control",
         base_url="https://www.procuraduria.gov.co",
-        spike="Procuraduría (conceptos + fallos disciplinarios), Contraloría (responsabilidad "
-              "fiscal), Comisión Nacional de Disciplina Judicial. Tres portales distintos.",
+        spike="OrganosControlDiscoverer cubre tres portales: Contraloría descubre por patrón "
+              "determinístico de Azure Blob (CGR-OJ-<NNN>-<AAAA>.pdf); Procuraduría (SIREL, "
+              "first_result/max_results, ~26.835) y CNDJ (docs_relatoria/<rad>ADJUNTA<ts>.pdf) "
+              "tienen parser verificado pero falta confirmar el endpoint del buscador en vivo.",
     ),
     SourceSpec(
         key="cne", nombre="Consejo Nacional Electoral", capa=CAPA_JURISPRUDENCIA,
-        modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media-baja",
+        modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media-baja",
         tipos=("resolucion", "concepto"),
         rama="Órgano Electoral", cabeza="Organización Electoral",
         base_url="https://www.cne.gov.co",
-        spike="Resoluciones y conceptos electorales; localizar repositorio normativo del CNE.",
+        spike="VERIFICADO Y FUNCIONANDO: la URL real es `/index.php/resoluciones-cne-<año>` "
+              "(el /index.php/ es obligatorio; sin él da 404). Los PDFs viven en SharePoint y el "
+              "ancla dice 'Documento' → el número/año se extraen del NOMBRE DE ARCHIVO de la URL "
+              "('Res. 06772 de 2024.pdf'). Pendiente: paginación dentro de cada año (la página "
+              "muestra un subconjunto) y resolver el token efímero de SharePoint al descargar.",
     ),
     SourceSpec(
         key="can", nombre="Comunidad Andina (Decisiones + Tribunal de Justicia)",
-        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media-baja",
+        capa=CAPA_LEGISLACION, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media-baja",
         tipos=("decision_can", "sentencia"), corte="can",
         rama="Internacional", cabeza="Comunidad Andina",
         base_url="https://www.comunidadandina.org",
-        spike="Decisiones de la CAN (aplicación directa) + jurisprudencia del Tribunal de "
-              "Justicia de la CAN. Gaceta Oficial del Acuerdo de Cartagena.",
+        spike="CANDiscoverer: cosecha el listado WordPress + fallback DETERMINÍSTICO por patrón "
+              "DECISION<N>.pdf (N=1..922) tras muestreo cortés. TJCAN por Procesos/<cod>.pdf. "
+              "Algunas Decisiones antiguas son .doc (docling ya está en la imagen).",
     ),
 
     # ── Capa C — Doctrina administrativa ────────────────────────────────────
@@ -226,37 +247,53 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="superintendencias", nombre="Superintendencias (Financiera, Sociedades, SIC, Salud, SSPD)",
-        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media",
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="media",
         tipos=("circular_externa", "concepto"),
         rama="Rama Ejecutiva", cabeza="Superintendencias",
-        spike="Un normograma por super; empezar por Financiera (circulares externas) y SIC.",
+        spike="ANDAMIAJE (la genuinamente difícil). Recon en vivo 2026-06-19: SIC "
+              "(repositorio-de-normatividad) es Drupal con Views por AJAX → los documentos NO "
+              "están en el HTML estático (un GET da solo la landing); hay que llamar al endpoint "
+              "Views/facetas (field_tipo_de_norma_value). Superfinanciera (loader.jsf) responde "
+              "302/redirección de sesión + WAF en rutas de documento → requiere Playwright con "
+              "sesión. Los parsers _parse_sic/_parse_financiera están listos para el fragmento "
+              "correcto; falta el acceso al endpoint real. Prioridad media (circulares externas).",
     ),
     SourceSpec(
         key="funcion_publica", nombre="Función Pública — Gestor Normativo (EVA)",
-        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media",
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media",
         tipos=("concepto", "decreto"),
         rama="Rama Ejecutiva", cabeza="Sector Función Pública",
         base_url="https://www.funcionpublica.gov.co/eva/gestornormativo",
-        spike="Crawl by-id: norma.php?i=ID; barrer rango de ids; normas + conceptos.",
+        spike="VERIFICADO Y FUNCIONANDO: normasfp.php trae ~108 enlaces `norma.php?i=<ID>` con "
+              "`<h4>Ley 1474 de 2011</h4>` → EVADiscoverer extrae 101 seeds reales con tipo/num/"
+              "año/canonical_id. Texto en PDF `norma_pdf.php?i=<ID>` (docling). LIMITACIÓN: "
+              "normasfp.php es solo los más consultados; el corpus completo (miles) requiere "
+              "crawl-by-id (IDs no secuenciales, con huecos) — modo opcional a habilitar.",
     ),
 
     # ── Capa D — Territorial + antecedentes ─────────────────────────────────
     SourceSpec(
         key="regimen_bogota", nombre="Régimen Legal de Bogotá (sisjur)", capa=CAPA_TERRITORIAL,
-        modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media-baja",
+        modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media-baja",
         tipos=("decreto", "acuerdo", "resolucion"),
         rama="Rama Ejecutiva", cabeza="Distrito Capital",
         base_url="https://www.alcaldiabogota.gov.co/sisjur",
-        spike="Normativa distrital consolidada (consulta avanzada). Modelo replicable a "
-              "otras gobernaciones/alcaldías (ordenanzas, acuerdos).",
+        spike="RegimenBogotaDiscoverer: barrido por id sobre Norma1.jsp?i=<ID> (portal Oracle, "
+              "IDs densos/secuenciales; ficha en Windows-1252) con _parse_ficha verificado. "
+              "La consulta avanzada PL/SQL no se replicó → se enumera por id. Modelo replicable "
+              "a otras alcaldías/gobernaciones.",
     ),
     SourceSpec(
         key="gaceta_congreso", nombre="Gaceta del Congreso", capa=CAPA_TERRITORIAL,
-        modo=MODO_CRAWL, estado=EST_PENDIENTE, prioridad="media-baja",
+        modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="media-baja",
         tipos=("proyecto_ley", "exposicion_motivos"),
         rama="Rama Legislativa", cabeza="Congreso de la República",
         base_url="https://svrpubindc.imprenta.gov.co",
-        spike="Proyectos de ley, exposiciones de motivos, antecedentes (trazabilidad legislativa).",
+        spike="ANDAMIAJE. Recon 2026-06-19: la descarga `index2.xhtml?ent=Senado|Camara&"
+              "fec=<D-M-AAAA>&num=<N>` responde 200 PERO requiere la FECHA, que no es derivable "
+              "del número → la enumeración pura no sirve; hay que capturar el POST del buscador "
+              "JSF/PrimeFaces (como WebRelatoria) para obtener el mapeo num→fecha. El parser de "
+              "resultados y la siembra directa filtro={'gacetas':[{ent,fec,num}]} ya están.",
     ),
 ]
 
@@ -293,8 +330,9 @@ CAPA_LABEL = {
     CAPA_TERRITORIAL: "D · Territorial + antecedentes",
 }
 
-# Volumen de documentos disponible por fuente, MEDIDO en los spikes (no es lo
-# ingerido — es lo que existe para descubrir). None = aún sin medir.
+# Volumen de documentos disponible por fuente, MEDIDO contando contra la fuente
+# real (catálogo Socrata, API Buscar.ashx, total JSF, BFS). No es lo ingerido:
+# es lo que existe para descubrir. None = aún sin medir.
 VOLUMEN_MEDIDO: dict[str, int] = {
     "suin": 15715,             # catálogo SUIN sembrado
     "corte_constitucional": 29310,  # catálogo Socrata v2k4-2t8s
@@ -307,6 +345,37 @@ VOLUMEN_MEDIDO: dict[str, int] = {
     "crc": 2170,
 }
 
+# Volumen ESTIMADO por fuente cuyo discoverer existe pero aún no se ha corrido un
+# conteo completo (estado parcial/andamiaje). Cifras del spike (docs/SPIKE_FUENTES.md)
+# o de muestreo en vivo — orden de magnitud, NO conteo definitivo. Sirve para que el
+# dashboard refleje el "universo mapeado" completo, marcado como estimado.
+VOLUMEN_ESTIMADO: dict[str, int] = {
+    "jep": 5000,               # Jurinfo Buscar.ashx (origen JEP, multi-consulta)
+    "corte_idh": 60,           # casos contenciosos de Colombia + opiniones consultivas
+    "can": 1200,               # ~922 Decisiones + TJCAN
+    "funcion_publica": 8000,   # EVA normas + conceptos
+    "cne": 3000,               # resoluciones/conceptos electorales por año
+    "organos_control": 31835,  # Procuraduría 26.835 + Contraloría ~3.500 + CNDJ ~1.500
+    "banco_republica": 1500,   # Junta Directiva (resoluciones + circulares)
+    "diario_oficial": 53526,   # ediciones (unidad = edición; la nº 53.526 al 2026-06)
+    "regimen_bogota": 30000,   # normativa distrital consolidada (orden de magnitud)
+    "gaceta_congreso": 8000,   # gacetas/proyectos por legislatura
+    "superintendencias": 10000,  # circulares + conceptos por super
+}
+
 
 def volumen_de(key: str) -> int | None:
+    """Volumen medido (o None). Para medido+estimado usar :func:`volumen_total_de`."""
     return VOLUMEN_MEDIDO.get(key)
+
+
+def volumen_total_de(key: str) -> tuple[int | None, str]:
+    """Devuelve (volumen, calidad) donde calidad ∈ {'medido','estimado','sin_medir'}.
+
+    Prioriza el conteo medido sobre el estimado para una misma fuente.
+    """
+    if key in VOLUMEN_MEDIDO:
+        return VOLUMEN_MEDIDO[key], "medido"
+    if key in VOLUMEN_ESTIMADO:
+        return VOLUMEN_ESTIMADO[key], "estimado"
+    return None, "sin_medir"

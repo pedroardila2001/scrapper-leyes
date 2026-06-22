@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1946",
     "anio": "2019",
-    "fecha": "201901\r\nscript\r\nvar date = new Date(04/01/2019); document.write(date.getDate());\r\nscript",
+    "fecha": "201901\nscript\nvar date = new Date(04/01/2019); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL.  Año CLIV  No. 50.826, Enero, 04 de 2019. PAG.1.",
@@ -31,127 +31,139 @@
       "text": "Artículo 1°.Objeto.La presente ley tiene por objeto reestructurar el Sistema Paralímpico Colombiano, armonizándolo con las normas inter­nacionales vigentes.",
       "canonical_id": "co:ley:1946:2019:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "30180839",
-      "number": "Artículo 1°.Objeto.",
-      "number_normalized": "1",
-      "title": "Objeto",
-      "text": "Artículo 1°.Objeto.La presente ley tiene por objeto reestructurar el Sistema Paralímpico Colombiano, armonizándolo con las normas inter­nacionales vigentes.",
-      "canonical_id": "co:ley:1946:2019:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30180840",
       "number": "Artículo 2°.Definiciones",
       "number_normalized": "2d",
       "title": "Definiciones",
       "text": "Artículo 2°.Definiciones. Para efectos de la presente ley, se definen los siguientes conceptos:\n\n1. Deporte asociado de personas con y/o en situación de discapa­cidad: se refiere al desarrollo de un conjunto de actividades que tienen como finalidad contribuir a la inclusión de las personas con y/o en situa­ción de discapacidad por medio del deporte ejecutadas por entidades de carácter privado, organizadas jerárquicamente con el fin de promover y desarrollar programas y actividades de naturaleza deportiva para las personas con y/o en situación de discapacidad, con fines competitivos, educativos, terapéuticos o recreativos.\n\n2. Comité Paralímpico Colombiano: es un organismo deportivo autónomo de derecho privado sin ánimo de lucro, de duración inde­finida, de integración y jurisdicción nacional, cuya conformación y funciones se rigen por la normatividad paralímpica internacional, con sujeción a las disposiciones constitucionales, estatutarias y legales vi­gentes.\n\nIgualmente, será parte del Sistema Nacional de Deporte y miembro del Consejo Nacional Asesor de Coldeportes y sujeto a la inspección, vigilancia y control por parte de Coldeportes.",
       "canonical_id": "co:ley:1946:2019:art:2d",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180842",
+      "art_id": "30180840",
       "number": "Artículo 3°. Ámbito deaplicación.",
       "number_normalized": "3",
       "title": "aplicación",
       "text": "Artículo 3°. Ámbito deaplicación.El Comité Paralímpico Colom­biano actuará como coordinador de los organismos deportivos asocia­dos del deporte para personas con y/o en situación de discapacidad, y cumplirá con las funciones establecidas en sus estatutos, siendo estas, de interés público y social en todos los deportes, tanto en el ámbito nacional como internacional a través de las Federaciones Nacionales Deportivas que gobiernen deportes para personas con y/o en situación de discapacidad de acuerdo a los lineamientos internacionales de gober­nanza de cada deporte.\n\nParágrafo. El Comité Paralímpico Colombiano, en coordinación con las Federaciones Deportivas Nacionales, tendrá un término de dos (2) años a partir de la promulgación de la presente ley, para la implementa­ción de lo dispuesto en este artículo. La composición y funcionamiento de los diferentes organismos deportivos para personas con y/o en situa­ción de discapacidad serán organizados de conformidad con los linea­mientos del Comité Paralímpico Internacional.",
       "canonical_id": "co:ley:1946:2019:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180843",
+      "art_id": "30180842",
       "number": "Artículo 4°.Objetivo del Comité Paralímpico Colombiano.",
       "number_normalized": "4",
       "title": "Objetivo del Comité Paralímpico Colombiano",
       "text": "Artículo 4°.Objetivo del Comité Paralímpico Colombiano.El Co­mité Paralímpico Colombiano tiene como objetivo contribuir al desa­rrollo deportivo del país, así como, integrar, coordinar y ejecutar las políticas, planes, programas y proyectos fijados por Coldeportes, con sujeción a lo dispuesto en sus estatutos, por la Carta Paralímpica, regla­mentos y lineamientos internacionales que regulen la materia.",
       "canonical_id": "co:ley:1946:2019:art:4",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180844",
+      "art_id": "30180843",
       "number": "Artículo 5°.Funciones del Comité Paralímpico Colombiano",
       "number_normalized": "5f",
       "title": "Funciones del Comité Paralímpico Colombiano",
       "text": "Artículo 5°.Funciones del Comité Paralímpico Colombiano. El Co­mité Paralímpico Colombiano como coordinador del deporte asociado de personas con y/o en situación de discapacidad cumplirá con las si­guientes funciones:\n\n1.Generar acciones tendientes a la cualificación del recurso huma­no propio del sector;\n\n2. Contribuir a la construcción y ejecución del Plan Nacional de Desarrollo;\n\n3. Afiliar a las federaciones deportivas, conforme a la normativi­dad paralímpica internacional, con sujeción a las disposiciones consti­tucionales y legales vigentes;\n\n4. Elaborar en coordinación con las federaciones deportivas afilia­das, el calendario único nacional y vigilar su adecuado cumplimiento;\n\n5. Coordinar con las federaciones deportivas afiliadas, el cumpli­miento oportuno de los compromisos y requerimientos que exige el Co­mité Paralímpico Internacional y demás organismos deportivos interna­cionales;\n\n6. Elaborar y desarrollar conjuntamente con las federaciones de­portivas afiliadas, o directamente según sea el caso, los planes de pre­paración de los atletas y delegaciones nacionales;\n\n7. Garantizar la participación deportiva del país en los Juegos Pa­ralímpicos y en las demás manifestaciones competitivas;\n\n8. Coordinar la financiación y organización de competiciones y certámenes con participación nacional e internacional con sede en Co­lombia, de conformidad con las disposiciones y reglamentos, previo concepto favorable de Coldeportes;\n\n9. Asesorar al Gobierno nacional en la formulación de las políti­cas, planes, programas y proyectos de deporte recreativo y terapéutico;\n\n10. Coordinar la participación oficial de delegaciones nacionales en competencias multideportivas regionales, continentales y mundiales, de conformidad con las disposiciones y reglamentos vigentes sobre la materia;\n\n11. Llevar un registro actualizado de los atletas nacionales en coor­dinación con las federaciones deportivas nacionales que permita esta­blecer su nivel y posible participación en eventos de carácter interna­cional;\n\n12. Coordinar el deporte asociado de las personas con discapacidad;\n\n13. Otorgar aval para efectos de vinculación de nuevos deportes al Sistema Nacional del Deporte, siempre y cuando se trate de un deporte reconocido por el Comité Paralímpico Internacional;\n\n14. Adoptar y aplicar el Código Mundial Antidopaje.",
       "canonical_id": "co:ley:1946:2019:art:5f",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180845",
+      "art_id": "30180844",
       "number": "Artículo 6°.Organización de los organismos deportivos para perso­nas con y/o en condición de discapacidad.",
       "number_normalized": "6",
       "title": "Organización de los organismos deportivos para perso­nas con y/o en condición de discapacidad",
       "text": "Artículo 6°.Organización de los organismos deportivos para perso­nas con y/o en condición de discapacidad.Los organismos deportivos para personas con y/o en condición de discapacidad se organizarán por deporte, de acuerdo a los siguientes lineamientos del Comité Paralím­pico Internacional:\n\n1. En aquellos deportes donde la Federación Deportiva Internacio­nal y el Comité Paralímpico Internacional hayan integrado el deporte para personas con y/o en condición de discapacidad al deporte conven­cional, los organismos deportivos de todos los niveles deberán proceder de conformidad con dicha obligación;\n\n2. Los deportes en los cuales el Comité Paralímpico Internacio­nal y la Federación Deportiva Internacional de Deporte Convencional no haya integrado el deporte para personas con y/o en condición de discapacidad, tendrán la gobernanza directa en el Comité Paralímpico Colombiano, manteniéndose y/o conformándose según corresponda, los organismos deportivos de niveles departamental y municipal por deporte;\n\n3. Los deportes gobernados internacionalmente por las “Organiza­ciones internacionales de deporte para personas en condición de disca­pacidad” (IOSDs) seguirán siendo manejados en el país por las Federa­ciones Deportivas por discapacidad, y se mantendrán y/o conformarán según corresponda, los organismos deportivos de esas discapacidades en todos los niveles.\n\n4. En aquellos deportes exclusivos para personas con y/o en con­dición de discapacidad, se constituirán los respectivos organismos de­portivos por deporte.\n\nParágrafo 1°.En el evento en el que, con posterioridad a la entrada en vigencia de la presente ley, la Federación Deportiva Internacional y el Comité Paralímpico Internacional según el caso, determinen un cam­bio en la gobernanza de los deportes a nivel internacional, dicho cambio deberá ser acogido en el país de la misma manera en un plazo máximo de dos (2) años.\n\nParágrafo 2°.Solo podrá existir por deporte, una (1) Liga Deportiva y una (1) Federación Deportiva de deporte convencional que integre el deporte de personas con discapacidad, y una (1) Liga Deportiva y una (1) Federación Deportiva de deporte para personas con y/o en condi­ción de discapacidad.",
       "canonical_id": "co:ley:1946:2019:art:6",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180846",
+      "art_id": "30180845",
       "number": "Artículo 7°.Organismos deportivos con comisiones o divisiones es­pecializadas para personas con y/o en condición de discapacidad y aval del Comité Paralímpico Colombiano",
       "number_normalized": "7",
       "title": "Organismos deportivos con comisiones o divisiones es­pecializadas para personas con y/o en condición de discapacidad y aval del Comité Paralímpico Colombiano",
       "text": "Artículo 7°.Organismos deportivos con comisiones o divisiones es­pecializadas para personas con y/o en condición de discapacidad y aval del Comité Paralímpico Colombiano. Los organismos deportivos que integren el deporte para personas con y/o en condición de discapa­cidad deberán ajustar sus estatutos disponiendo la creación de comisio­nes o divisiones especializadas para personas con y/o en condición de discapacidad en su estructura interna, así como su presupuesto, finan ciación y demás asuntos relacionados, con el fin de armonizar dicha integración.",
       "canonical_id": "co:ley:1946:2019:art:7",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180848",
+      "art_id": "30180846",
       "number": "Artículo 8°.Federación Colombiana de Deporte para Sordos.",
       "number_normalized": "8f",
       "title": "Federación Colombiana de Deporte para Sordos",
       "text": "Artículo 8°.Federación Colombiana de Deporte para Sordos.La Federación Colombiana de Deporte para Sordos es un organismo de­portivo de nivel nacional con personería jurídica y reconocimiento de­portivo, de naturaleza privada, cuya organización y reglamentación se realizará conforme a los lineamientos que fije el Comité Internacional de Deportes para Sordos y con sujeción a lo establecido en la Constitu­ción Política y la normatividad vigente.",
       "canonical_id": "co:ley:1946:2019:art:8f",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180849",
+      "art_id": "30180848",
       "number": "Artículo 9°.Funciones de la Federación Colombiana de Deporte para Sordos.",
       "number_normalized": "9f",
       "title": "Funciones de la Federación Colombiana de Deporte para Sordos",
       "text": "Artículo 9°.Funciones de la Federación Colombiana de Deporte para Sordos.La Federación Colombiana de Deporte para Sordos, cum­plirá las siguientes funciones, además de las que contemplen sus pro­pios estatutos:\n\n1. Definir anualmente el calendario deportivo nacional con suje­ción a calendario internacional.\n\n2. Llevar un registro actualizado de sus atletas.\n\n3. Elaborar el plan anual de desarrollo que incluya objetivos, me­tas, presupuestos, actividades e indicadores, de conformidad con las políticas públicas fijadas por Coldeportes.\n\n4. Adoptar el reglamento antidopaje que atienda las disposiciones de la Agencia Mundial Antidopaje, el Comité Internacional de Deportes para Sordos y las normas nacionales que regulan la materia.\n\n5. Inscribirse en el Registro Único del Deporte y de la Recreación de la Cámara de Comercio de su domicilio.\n\n6. Registrar en el Registro Único del Deporte y de la Recreación de la Cámara de Comercio de su domicilio, los libros de actas, en donde consten las decisiones de los órganos de dirección y administración.\n\n7. Inscribir en el Registro Único del Deporte y de la Recreación de la Cámara de Comercio de su domicilio, las reformas, estatuarias.\n\n8. Inscribir ante el Registro Único del Deporte y de la Recreación de la Cámara de Comercio, de su domicilio, de manera anual, el listado de sus afiliados en los términos, requisitos y forma establecidos por el Gobierno nacional para tal registro.\n\n9. Mantener actualizada la inscripción de los miembros del órgano de administración, control y disciplina y/o representantes en el Registro Único del Deporte y la recreación, en las condiciones señaladas por la Cámara de Comercio de su jurisdicción.\n\n10. Inscripción del reconocimiento deportivo en el Registro Único del Deporte y de la Recreación de la Cámara de Comercio con jurisdic­ción en el domicilio principal.\n\n11. Elaborar los programas de preparación y participación de las delegaciones deportivas en eventos propios internacionales.\n\n12. Desarrollar programas de capacitación y actualización para sus entrenadores, autoridades de juzgamientos y dirigentes deportivos.\n\n13. Cumplir oportunamente los compromisos y los requerimientos que exijan los organismos deportivos internacionales a los que estén afiliados.\n\n14. Prestar asistencia técnica para la realización de los diferentes eventos deportivos realizados en el país.\n\n15. Desarrollar progresivamente sus deportes.\n\n16. Cumplir con el manual de buenas prácticas deportivas, promo­vido y elaborado por la federación, para regular las relaciones de la en­tidad deportiva con los atletas individualmente considerados, particu­larmente en los asuntos relacionados con antidopaje y apuestas ilegales.\n\n17. Las demás que determine la ley.\n\nParágrafo.Las funciones de la Federación Colombiana de Sordos al igual que de los demás organismos deportivos del Sistema Nacional del Deporte, atinentes a la realización de actos en el Registro Único del Deporte y de la Recreación de la Cámara de Comercio con jurisdicción en el domicilio principal, quedarán supeditados a la expresa creación legal de este último y a su entrada en vigencia.",
       "canonical_id": "co:ley:1946:2019:art:9f",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180851",
+      "art_id": "30180849",
       "number": "Artículo 10.Comisión Médica y de Clasificación Funcional",
       "number_normalized": "10",
       "title": "Comisión Médica y de Clasificación Funcional",
       "text": "Artículo 10.Comisión Médica y de Clasificación Funcional. Las Fe­deraciones que incluyan en su estructura un deporte para personas con y/o en condición de discapacidad, el Comité Paralímpico Colombiano y la Federación Colombiana de Deportes para Sordos deberán tener en su estructura una Comisión Médica y de Clasificación Funcional que cumplirá las siguientes funciones:\n\n1. Acoger y acatar las disposiciones y reglamentos de clasificación funcional de su correspondiente organismo deportivo internacional.\n\n2. Seleccionar y/o avalar la idoneidad de los clasificadores funcio­nales en los campeonatos oficiales con fundamento en las reglas esta­blecidas por su organismo deportivo internacional.\n\n3. Verificar y avalar la idoneidad del equipo biomédico que acom­pañe las delegaciones nacionales del deporte en eventos internaciona­les.\n\n4. Promocionar y realizar seminarios, conferencias y publicacio­nes, destinados a divulgar los reglamentos de clasificación funcional y elegibilidad, para el o los deportes de su gobernanza.\n\n5. Evaluar el desempeño de los clasificadores funcionales, y crear un escalafón de los mismos conforme a las disposiciones y lineamien­tos de su organismo deportivo internacional.\n\n6. Mantener una base de datos actualizada de la clasificación fun­cional y la historia médica deportiva de los deportistas pertenecientes a su organismo deportivo.",
       "canonical_id": "co:ley:1946:2019:art:10",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180853",
+      "art_id": "30180851",
       "number": "Artículo 11.Juegos Paranacionales.",
       "number_normalized": "11",
       "title": "Juegos Paranacionales",
       "text": "Artículo 11.Juegos Paranacionales.Los Juegos Paranacionales tie­nen un ciclo de cuatro (4) años, se realizarán inmediatamente después y en la misma sede de los Juegos Deportivos Nacionales, con la misma estructura y logística empleada en los Juegos Deportivos Nacionales.",
       "canonical_id": "co:ley:1946:2019:art:11",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30180854",
+      "art_id": "30180853",
       "number": "Artículo 12.Vigencias y derogatorias",
       "number_normalized": "12",
       "title": "Vigencias y derogatorias",
-      "text": "Artículo 12.Vigencias y derogatorias. La presente ley regirá a partir del momento de su promulgación y deroga la Ley 582 de 2000 y demás normas que le sean contrarias.\n\nAfecta la vigencia de:[Mostrar]",
+      "text": "Artículo 12.Vigencias y derogatorias. La presente ley regirá a partir del momento de su promulgación y deroga la Ley 582 de 2000 y demás normas que le sean contrarias.",
       "canonical_id": "co:ley:1946:2019:art:12",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": [
+        {
+          "normalized_type": "DEROGA_TOTAL",
+          "raw_type": "Deroga",
+          "mapped": true,
+          "target_text": "LEY 582 de 2000",
+          "target_suin_id": "1662973",
+          "target_anchor": null,
+          "context": null
+        }
+      ]
     }
   ],
   "modifications": [],

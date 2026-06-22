@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "983",
     "anio": "2005",
-    "fecha": "200508\r\nscript\r\nvar date = new Date(12/08/2005); document.write(date.getDate());\r\nscript",
+    "fecha": "200508\nscript\nvar date = new Date(12/08/2005); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLI. N.46002. 16, AGOSTO, 2005. PÁG. 1.",

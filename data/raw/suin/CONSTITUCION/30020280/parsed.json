@@ -4,7 +4,7 @@
     "tipo": "CONSTITUCION POLITICA",
     "numero": "CP 1810",
     "anio": "1810",
-    "fecha": "181008\r\nscript\r\nvar date = new Date(15/08/1810); document.write(date.getDate());\r\nscript",
+    "fecha": "181008\nscript\nvar date = new Date(15/08/1810); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL número",

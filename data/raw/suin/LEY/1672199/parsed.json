@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "982",
     "anio": "2005",
-    "fecha": "200508\r\nscript\r\nvar date = new Date(02/08/2005); document.write(date.getDate());\r\nscript",
+    "fecha": "200508\nscript\nvar date = new Date(02/08/2005); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLI. N. 45995. 9, AGOSTO, 2005. PÁG. 1.",
@@ -30,575 +30,522 @@
       "number": "Artículo 1º.",
       "number_normalized": "1",
       "title": null,
-      "text": "Artículo 1º.Para efectos de la presente ley, los siguientes términos tendrán el alcance indicado a continuación de cada uno de ellos.\n\n1.\"Hipoacusia\".Disminución de la capacidad auditiva de algunas personas, la que puede clasificarse en leve, mediana y profunda.\n\nLeve. La que fluctúa aproximadamente entre 20 y 40 decibeles.\n\nMediana. La que oscila entre 40 y 70 decibeles.\n\nProfunda. La que se ubica por encima de los 80 decibeles y especialmente con curvas auditivas inclinadas.\n\n2.\"Hipoacúsico\".Quienes sufren de hipoacusia.\n\n3.\"Comunidad de sordos\".Es el grupo social de personas que se identifican a través de la vivencia de la sordera y el mantenimiento de ciertos valores e intereses comunes y se produce entre ellos un permanente proceso de intercambio mutuo y de solidaridad. Forman parte del patrimonio pluricultural de la Nación y que, en tal sentido, son equiparables a los pueblos y comunidades indígenas y deben poseer los derechos conducentes.\n\n4.\"Sordo\".Es todo aquel que no posee la audición suficiente y que en algunos casos no puede sostener una comunicación y socialización natural y fluida en lengua oral alguna, independientemente de cualquier evaluación audiométrica que se le pueda practicar.\n\n5.\"Sordo señante\".Es todo aquel cuya forma prioritaria de comunicación e identidad social se define en torno al uso de Lengua de Señas Colombiana y de los valores comunitarios y culturales de la comunidad de sordos.\n\n6.\"Sordo hablante\".Es todo aquel que adquirió una primera lengua oral. Esa persona sigue utilizando el español o la lengua nativa, puede presentar restricciones para comunicarse satisfactoriamente y puede hacer uso de ayudas auditivas.\n\n7.\"Sordo semilingüe\".Es todo aquel que no ha desarrollado a plenitud ninguna lengua, debido a que quedó sordo antes de desarrollar una primera lengua oral y a que tampoco tuvo acceso a una Lengua de Señas.\n\n8.\"Sordo monolingüe\".Es todo aquel que utiliza y es competente lingüística comunicativamente en la lengua oral o en la Lengua de Señas.\n\n9.\"Sordo bilingüe\".Es todo aquel que vive una situación bilingüe en Lengua de Señas Colombiana y castellano escrito u oral según el caso, por lo cual utiliza dos (dos) lenguas para establecer comunicación tanto con la comunidad sorda que utiliza la Lengua de Señas, como con la comunidad oyente que usa castellano.\n\n10.\"Lengua de señas\".Es la lengua natural de una comunidad de sordos, la cual forma parte de su patrimonio cultural y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral.\n\nLa Lengua de Señas se caracteriza por ser visual, gestual y espacial. Como cualquiera otra lengua tiene su propio vocabulario, expresiones idiomáticas, gramáticas, sintaxis diferentes del español. Los elementos de esta lengua (las señas individuales) son la configuración, la posición y la orientación de las manos en relación con el cuerpo y con el individuo, la lengua también utiliza el espacio, dirección y velocidad de movimientos, así como la expresión facial para ayudar a transmitir el significado del mensaje, esta es una lengua visogestual. Como cualquier otra lengua, puede ser utilizada por oyentes como una lengua adicional.\n\n11.\"Integración escolar\".Es un proceso complejo e inherente a toda propuesta educativa, en tanto reconozca las diferencias, así como los valores básicos compartidos entre las personas y posibilite un espacio de participación y desarrollo.\n\n12.\"Educación bilingüe para sordos\".Es la que reconoce que hay sordos que viven una situación bilingüe en Lengua de Señas Colombiana y Castellano, por lo tanto su educación debe ser vehiculizada a través de la Lengua de Señas Colombiana y se debe facilitar el Castellano como segundo idioma en su modalidad escrita primordialmente u oral en los casos en que esto sea posible.\n\n13.\"Integración con intérprete al aula regular\".Es una alternativa educativa para sordos que usan la Lengua de Señas Colombiana. Los educandos sordos se integran en colegios de oyentes, a la básica secundaria y media contando con el servicio de intérprete y las condiciones que responden a sus particularidades lingüísticas y comunicativas.\n\n14.\"Integración al aula regular con ayudas auditivas\".Es una alternativa educativa para estudiantes con algún grado de limitación auditiva que ingresan a una institución regular. Los estudiantes usan el castellano o español oral con ayudas auditivas. Se integran con oyentes, en la básica primaria, secundaria y media, contando con las ayudas auditivas y las condiciones para su participación y desarrollo.\n\n15.\"Comunicación\".Es todo acto por el cual una persona da o recibe de otra información acerca de las necesidades personales, deseos, percepciones, conocimiento o estados afectivos. Es la base y requisito obligatorio de toda agrupación humana ya que hace posible la constitución, organización y preservación de la colectividad.\n\nEs un proceso social, para que la comunicación se produzca es necesario que exista entre los interlocutores motivación para transmitir y recibir.\n\nEs preciso que haya intervenido explícita o implícita, un acuerdo entre los interlocutores respecto de la utilización de un código que permita la organización de los mensajes transmitidos tomando un medio o canal de comunicación determinado.\n\n16.\"Sordoceguera\".Es una limitación única caracterizada por una deficiencia auditiva y visual ya sea parcial o total; trae como consecuencia dificultades en la comunicación, orientación, movilidad y el acceso a la información.\n\n17.\"Sordociego(a)\".Es aquella persona que en cualquier momento de la vida puede presentar una deficiencia auditiva y visual tal que le ocasiona serios problemas en la comunicación, acceso a información, orientación y movilidad. Requiere de servicios especializados para su desarrollo e integración social.\n\n18.\"Sordoceguera congénita\".Se denomina congénita cuando la persona nace con sordoceguera, es decir, cuando la adquiere en alguna de las etapas de gestación en el vientre de la madre o cuando se adquiriere antes de la adquisición de la lengua materna.\n\n19.\"Sordoceguera adquirida\".Se denomina así cuando la persona adquiera la sordoceguera en el transcurso de la vida, posterior a la adquisición del lenguaje.\n\n20.\"Sordera congénita con ceguera adquirida\".Los individuos pertenecientes a este grupo nacen sordos y adquieren posteriormente la ceguera. En este grupo se incluye a las personas Sordociegas por Síndrome de Usher, que es una enfermedad congénita, hereditaria y recesiva, es decir, se nace con ella pero los problemas aparecen más tarde.\n\n21.\"Ceguera congénita con sordera adquirida\".La ceguera se produce durante la gestación y la sordera la adquiere posteriormente.\n\n22.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual, comunicación y guía en la movilidad de la persona sordociega, con amplio conocimiento del Castellano, la Lengua de Señas, táctil, en campo visual reducida y demás sistemas de comunicación que requieren las personas sordociegas usuarias de castellano y/o Lengua de Señas.\n\n23.\"Prevención\".Se entiende como la adopción de medidas encaminadas a impedir que se produzca un deterioro físico, intelectual, psiquiátrico o sensorial (prevención primaria) o a impedir que ese deterioro cause una discapacidad o limitación funcional permanente (prevención secundaria) La prevención puede incluir diferentes tipos de acciones, tales como: atención primaria de la salud, puericultura prenatal y posnatal, educación en materia de nutrición, campañas de vacunación contra enfermedades transmisibles, medidas de lucha contra las enfermedades endémicas, normas y programas de seguridad, prevención de accidentes en diferentes entornos, incluidas la adaptación de los lugares de trabajo para evitar discapacidades y enfermedades profesionales y prevención de la discapacidad resultante de la contaminación del medio ambiente u ocasionada por los conflictos armados.\n\n24.\"Rehabilitación\".La rehabilitación es un proceso encaminado a lograr que las personas con discapacidad estén en condiciones de alcanzar y mantener un estado funcional óptimo, desde el punto de vista físico, sensorial, intelectual, psíquico o social, de manera que cuenten con medios para modificar su propia vida y ser más independientes. La rehabilitación puede abarcar medidas para proporcionar o restablecer funciones o para compensar la pérdida o la falta de una función o una limitación funcional. El proceso de rehabilitación no supone la prestación de atención médica preliminar.\n\nAbarca una amplia variedad de medidas y actividades, como: Rehabilitación básica y general, actividades de orientación específica, y otras que tengan como objetivo la rehabilitación profesional.\n\n25.\"Intérprete para sordos\".Personas con amplios conocimientos de la Lengua de Señas Colombiana que puede realizar interpretación simultánea del español hablado en la Lengua de Señas y viceversa.\n\nTambién son intérpretes para sordos aquellas personas que realicen la interpretación simultánea del castellano hablado a otras formas de comunicación de la población sorda, distintas a la Lengua de Señas, y viceversa.\n\n26.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual adaptada, auditiva o táctil, descripción visual del ambiente en donde se encuentre y guía en la movilidad de la persona sordociega, con amplio conocimiento de los sistemas de comunicación que requieren las personas sordociegas.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 1º.Para efectos de la presente ley, los siguientes términos tendrán el alcance indicado a continuación de cada uno de ellos.\n\n1.\"Hipoacusia\".Disminución de la capacidad auditiva de algunas personas, la que puede clasificarse en leve, mediana y profunda.\n\nLeve. La que fluctúa aproximadamente entre 20 y 40 decibeles.\n\nMediana. La que oscila entre 40 y 70 decibeles.\n\nProfunda. La que se ubica por encima de los 80 decibeles y especialmente con curvas auditivas inclinadas.\n\n2.\"Hipoacúsico\".Quienes sufren de hipoacusia.\n\n3.\"Comunidad de sordos\".Es el grupo social de personas que se identifican a través de la vivencia de la sordera y el mantenimiento de ciertos valores e intereses comunes y se produce entre ellos un permanente proceso de intercambio mutuo y de solidaridad. Forman parte del patrimonio pluricultural de la Nación y que, en tal sentido, son equiparables a los pueblos y comunidades indígenas y deben poseer los derechos conducentes.\n\n4.\"Sordo\".Es todo aquel que no posee la audición suficiente y que en algunos casos no puede sostener una comunicación y socialización natural y fluida en lengua oral alguna, independientemente de cualquier evaluación audiométrica que se le pueda practicar.\n\n5.\"Sordo señante\".Es todo aquel cuya forma prioritaria de comunicación e identidad social se define en torno al uso de Lengua de Señas Colombiana y de los valores comunitarios y culturales de la comunidad de sordos.\n\n6.\"Sordo hablante\".Es todo aquel que adquirió una primera lengua oral. Esa persona sigue utilizando el español o la lengua nativa, puede presentar restricciones para comunicarse satisfactoriamente y puede hacer uso de ayudas auditivas.\n\n7.\"Sordo semilingüe\".Es todo aquel que no ha desarrollado a plenitud ninguna lengua, debido a que quedó sordo antes de desarrollar una primera lengua oral y a que tampoco tuvo acceso a una Lengua de Señas.\n\n8.\"Sordo monolingüe\".Es todo aquel que utiliza y es competente lingüística comunicativamente en la lengua oral o en la Lengua de Señas.\n\n9.\"Sordo bilingüe\".Es todo aquel que vive una situación bilingüe en Lengua de Señas Colombiana y castellano escrito u oral según el caso, por lo cual utiliza dos (dos) lenguas para establecer comunicación tanto con la comunidad sorda que utiliza la Lengua de Señas, como con la comunidad oyente que usa castellano.\n\n10.\"Lengua de señas\".Es la lengua natural de una comunidad de sordos, la cual forma parte de su patrimonio cultural y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral.\n\nLa Lengua de Señas se caracteriza por ser visual, gestual y espacial. Como cualquiera otra lengua tiene su propio vocabulario, expresiones idiomáticas, gramáticas, sintaxis diferentes del español. Los elementos de esta lengua (las señas individuales) son la configuración, la posición y la orientación de las manos en relación con el cuerpo y con el individuo, la lengua también utiliza el espacio, dirección y velocidad de movimientos, así como la expresión facial para ayudar a transmitir el significado del mensaje, esta es una lengua visogestual. Como cualquier otra lengua, puede ser utilizada por oyentes como una lengua adicional.\n\n11.\"Integración escolar\".Es un proceso complejo e inherente a toda propuesta educativa, en tanto reconozca las diferencias, así como los valores básicos compartidos entre las personas y posibilite un espacio de participación y desarrollo.\n\n12.\"Educación bilingüe para sordos\".Es la que reconoce que hay sordos que viven una situación bilingüe en Lengua de Señas Colombiana y Castellano, por lo tanto su educación debe ser vehiculizada a través de la Lengua de Señas Colombiana y se debe facilitar el Castellano como segundo idioma en su modalidad escrita primordialmente u oral en los casos en que esto sea posible.\n\n13.\"Integración con intérprete al aula regular\".Es una alternativa educativa para sordos que usan la Lengua de Señas Colombiana. Los educandos sordos se integran en colegios de oyentes, a la básica secundaria y media contando con el servicio de intérprete y las condiciones que responden a sus particularidades lingüísticas y comunicativas.\n\n14.\"Integración al aula regular con ayudas auditivas\".Es una alternativa educativa para estudiantes con algún grado de limitación auditiva que ingresan a una institución regular. Los estudiantes usan el castellano o español oral con ayudas auditivas. Se integran con oyentes, en la básica primaria, secundaria y media, contando con las ayudas auditivas y las condiciones para su participación y desarrollo.\n\n15.\"Comunicación\".Es todo acto por el cual una persona da o recibe de otra información acerca de las necesidades personales, deseos, percepciones, conocimiento o estados afectivos. Es la base y requisito obligatorio de toda agrupación humana ya que hace posible la constitución, organización y preservación de la colectividad.\n\nEs un proceso social, para que la comunicación se produzca es necesario que exista entre los interlocutores motivación para transmitir y recibir.\n\nEs preciso que haya intervenido explícita o implícita, un acuerdo entre los interlocutores respecto de la utilización de un código que permita la organización de los mensajes transmitidos tomando un medio o canal de comunicación determinado.\n\n16.\"Sordoceguera\".Es una limitación única caracterizada por una deficiencia auditiva y visual ya sea parcial o total; trae como consecuencia dificultades en la comunicación, orientación, movilidad y el acceso a la información.\n\n17.\"Sordociego(a)\".Es aquella persona que en cualquier momento de la vida puede presentar una deficiencia auditiva y visual tal que le ocasiona serios problemas en la comunicación, acceso a información, orientación y movilidad. Requiere de servicios especializados para su desarrollo e integración social.\n\n18.\"Sordoceguera congénita\".Se denomina congénita cuando la persona nace con sordoceguera, es decir, cuando la adquiere en alguna de las etapas de gestación en el vientre de la madre o cuando se adquiriere antes de la adquisición de la lengua materna.\n\n19.\"Sordoceguera adquirida\".Se denomina así cuando la persona adquiera la sordoceguera en el transcurso de la vida, posterior a la adquisición del lenguaje.\n\n20.\"Sordera congénita con ceguera adquirida\".Los individuos pertenecientes a este grupo nacen sordos y adquieren posteriormente la ceguera. En este grupo se incluye a las personas Sordociegas por Síndrome de Usher, que es una enfermedad congénita, hereditaria y recesiva, es decir, se nace con ella pero los problemas aparecen más tarde.\n\n21.\"Ceguera congénita con sordera adquirida\".La ceguera se produce durante la gestación y la sordera la adquiere posteriormente.\n\n22.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual, comunicación y guía en la movilidad de la persona sordociega, con amplio conocimiento del Castellano, la Lengua de Señas, táctil, en campo visual reducida y demás sistemas de comunicación que requieren las personas sordociegas usuarias de castellano y/o Lengua de Señas.\n\n23.\"Prevención\".Se entiende como la adopción de medidas encaminadas a impedir que se produzca un deterioro físico, intelectual, psiquiátrico o sensorial (prevención primaria) o a impedir que ese deterioro cause una discapacidad o limitación funcional permanente (prevención secundaria) La prevención puede incluir diferentes tipos de acciones, tales como: atención primaria de la salud, puericultura prenatal y posnatal, educación en materia de nutrición, campañas de vacunación contra enfermedades transmisibles, medidas de lucha contra las enfermedades endémicas, normas y programas de seguridad, prevención de accidentes en diferentes entornos, incluidas la adaptación de los lugares de trabajo para evitar discapacidades y enfermedades profesionales y prevención de la discapacidad resultante de la contaminación del medio ambiente u ocasionada por los conflictos armados.\n\n24.\"Rehabilitación\".La rehabilitación es un proceso encaminado a lograr que las personas con discapacidad estén en condiciones de alcanzar y mantener un estado funcional óptimo, desde el punto de vista físico, sensorial, intelectual, psíquico o social, de manera que cuenten con medios para modificar su propia vida y ser más independientes. La rehabilitación puede abarcar medidas para proporcionar o restablecer funciones o para compensar la pérdida o la falta de una función o una limitación funcional. El proceso de rehabilitación no supone la prestación de atención médica preliminar.\n\nAbarca una amplia variedad de medidas y actividades, como: Rehabilitación básica y general, actividades de orientación específica, y otras que tengan como objetivo la rehabilitación profesional.\n\n25.\"Intérprete para sordos\".Personas con amplios conocimientos de la Lengua de Señas Colombiana que puede realizar interpretación simultánea del español hablado en la Lengua de Señas y viceversa.\n\nTambién son intérpretes para sordos aquellas personas que realicen la interpretación simultánea del castellano hablado a otras formas de comunicación de la población sorda, distintas a la Lengua de Señas, y viceversa.\n\n26.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual adaptada, auditiva o táctil, descripción visual del ambiente en donde se encuentre y guía en la movilidad de la persona sordociega, con amplio conocimiento de los sistemas de comunicación que requieren las personas sordociegas.",
       "canonical_id": "co:ley:982:2005:art:1",
       "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30028274",
-      "number": "Artículo 1º.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1º.Para efectos de la presente ley, los siguientes términos tendrán el alcance indicado a continuación de cada uno de ellos.\n\n1.\"Hipoacusia\".Disminución de la capacidad auditiva de algunas personas, la que puede clasificarse en leve, mediana y profunda.\n\nLeve. La que fluctúa aproximadamente entre 20 y 40 decibeles.\n\nMediana. La que oscila entre 40 y 70 decibeles.\n\nProfunda. La que se ubica por encima de los 80 decibeles y especialmente con curvas auditivas inclinadas.\n\n2.\"Hipoacúsico\".Quienes sufren de hipoacusia.\n\n3.\"Comunidad de sordos\".Es el grupo social de personas que se identifican a través de la vivencia de la sordera y el mantenimiento de ciertos valores e intereses comunes y se produce entre ellos un permanente proceso de intercambio mutuo y de solidaridad. Forman parte del patrimonio pluricultural de la Nación y que, en tal sentido, son equiparables a los pueblos y comunidades indígenas y deben poseer los derechos conducentes.\n\n4.\"Sordo\".Es todo aquel que no posee la audición suficiente y que en algunos casos no puede sostener una comunicación y socialización natural y fluida en lengua oral alguna, independientemente de cualquier evaluación audiométrica que se le pueda practicar.\n\n5.\"Sordo señante\".Es todo aquel cuya forma prioritaria de comunicación e identidad social se define en torno al uso de Lengua de Señas Colombiana y de los valores comunitarios y culturales de la comunidad de sordos.\n\n6.\"Sordo hablante\".Es todo aquel que adquirió una primera lengua oral. Esa persona sigue utilizando el español o la lengua nativa, puede presentar restricciones para comunicarse satisfactoriamente y puede hacer uso de ayudas auditivas.\n\n7.\"Sordo semilingüe\".Es todo aquel que no ha desarrollado a plenitud ninguna lengua, debido a que quedó sordo antes de desarrollar una primera lengua oral y a que tampoco tuvo acceso a una Lengua de Señas.\n\n8.\"Sordo monolingüe\".Es todo aquel que utiliza y es competente lingüística comunicativamente en la lengua oral o en la Lengua de Señas.\n\n9.\"Sordo bilingüe\".Es todo aquel que vive una situación bilingüe en Lengua de Señas Colombiana y castellano escrito u oral según el caso, por lo cual utiliza dos (dos) lenguas para establecer comunicación tanto con la comunidad sorda que utiliza la Lengua de Señas, como con la comunidad oyente que usa castellano.\n\n10.\"Lengua de señas\".Es la lengua natural de una comunidad de sordos, la cual forma parte de su patrimonio cultural y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral.\n\nLa Lengua de Señas se caracteriza por ser visual, gestual y espacial. Como cualquiera otra lengua tiene su propio vocabulario, expresiones idiomáticas, gramáticas, sintaxis diferentes del español. Los elementos de esta lengua (las señas individuales) son la configuración, la posición y la orientación de las manos en relación con el cuerpo y con el individuo, la lengua también utiliza el espacio, dirección y velocidad de movimientos, así como la expresión facial para ayudar a transmitir el significado del mensaje, esta es una lengua visogestual. Como cualquier otra lengua, puede ser utilizada por oyentes como una lengua adicional.\n\n11.\"Integración escolar\".Es un proceso complejo e inherente a toda propuesta educativa, en tanto reconozca las diferencias, así como los valores básicos compartidos entre las personas y posibilite un espacio de participación y desarrollo.\n\n12.\"Educación bilingüe para sordos\".Es la que reconoce que hay sordos que viven una situación bilingüe en Lengua de Señas Colombiana y Castellano, por lo tanto su educación debe ser vehiculizada a través de la Lengua de Señas Colombiana y se debe facilitar el Castellano como segundo idioma en su modalidad escrita primordialmente u oral en los casos en que esto sea posible.\n\n13.\"Integración con intérprete al aula regular\".Es una alternativa educativa para sordos que usan la Lengua de Señas Colombiana. Los educandos sordos se integran en colegios de oyentes, a la básica secundaria y media contando con el servicio de intérprete y las condiciones que responden a sus particularidades lingüísticas y comunicativas.\n\n14.\"Integración al aula regular con ayudas auditivas\".Es una alternativa educativa para estudiantes con algún grado de limitación auditiva que ingresan a una institución regular. Los estudiantes usan el castellano o español oral con ayudas auditivas. Se integran con oyentes, en la básica primaria, secundaria y media, contando con las ayudas auditivas y las condiciones para su participación y desarrollo.\n\n15.\"Comunicación\".Es todo acto por el cual una persona da o recibe de otra información acerca de las necesidades personales, deseos, percepciones, conocimiento o estados afectivos. Es la base y requisito obligatorio de toda agrupación humana ya que hace posible la constitución, organización y preservación de la colectividad.\n\nEs un proceso social, para que la comunicación se produzca es necesario que exista entre los interlocutores motivación para transmitir y recibir.\n\nEs preciso que haya intervenido explícita o implícita, un acuerdo entre los interlocutores respecto de la utilización de un código que permita la organización de los mensajes transmitidos tomando un medio o canal de comunicación determinado.\n\n16.\"Sordoceguera\".Es una limitación única caracterizada por una deficiencia auditiva y visual ya sea parcial o total; trae como consecuencia dificultades en la comunicación, orientación, movilidad y el acceso a la información.\n\n17.\"Sordociego(a)\".Es aquella persona que en cualquier momento de la vida puede presentar una deficiencia auditiva y visual tal que le ocasiona serios problemas en la comunicación, acceso a información, orientación y movilidad. Requiere de servicios especializados para su desarrollo e integración social.\n\n18.\"Sordoceguera congénita\".Se denomina congénita cuando la persona nace con sordoceguera, es decir, cuando la adquiere en alguna de las etapas de gestación en el vientre de la madre o cuando se adquiriere antes de la adquisición de la lengua materna.\n\n19.\"Sordoceguera adquirida\".Se denomina así cuando la persona adquiera la sordoceguera en el transcurso de la vida, posterior a la adquisición del lenguaje.\n\n20.\"Sordera congénita con ceguera adquirida\".Los individuos pertenecientes a este grupo nacen sordos y adquieren posteriormente la ceguera. En este grupo se incluye a las personas Sordociegas por Síndrome de Usher, que es una enfermedad congénita, hereditaria y recesiva, es decir, se nace con ella pero los problemas aparecen más tarde.\n\n21.\"Ceguera congénita con sordera adquirida\".La ceguera se produce durante la gestación y la sordera la adquiere posteriormente.\n\n22.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual, comunicación y guía en la movilidad de la persona sordociega, con amplio conocimiento del Castellano, la Lengua de Señas, táctil, en campo visual reducida y demás sistemas de comunicación que requieren las personas sordociegas usuarias de castellano y/o Lengua de Señas.\n\n23.\"Prevención\".Se entiende como la adopción de medidas encaminadas a impedir que se produzca un deterioro físico, intelectual, psiquiátrico o sensorial (prevención primaria) o a impedir que ese deterioro cause una discapacidad o limitación funcional permanente (prevención secundaria) La prevención puede incluir diferentes tipos de acciones, tales como: atención primaria de la salud, puericultura prenatal y posnatal, educación en materia de nutrición, campañas de vacunación contra enfermedades transmisibles, medidas de lucha contra las enfermedades endémicas, normas y programas de seguridad, prevención de accidentes en diferentes entornos, incluidas la adaptación de los lugares de trabajo para evitar discapacidades y enfermedades profesionales y prevención de la discapacidad resultante de la contaminación del medio ambiente u ocasionada por los conflictos armados.\n\n24.\"Rehabilitación\".La rehabilitación es un proceso encaminado a lograr que las personas con discapacidad estén en condiciones de alcanzar y mantener un estado funcional óptimo, desde el punto de vista físico, sensorial, intelectual, psíquico o social, de manera que cuenten con medios para modificar su propia vida y ser más independientes. La rehabilitación puede abarcar medidas para proporcionar o restablecer funciones o para compensar la pérdida o la falta de una función o una limitación funcional. El proceso de rehabilitación no supone la prestación de atención médica preliminar.\n\nAbarca una amplia variedad de medidas y actividades, como: Rehabilitación básica y general, actividades de orientación específica, y otras que tengan como objetivo la rehabilitación profesional.\n\n25.\"Intérprete para sordos\".Personas con amplios conocimientos de la Lengua de Señas Colombiana que puede realizar interpretación simultánea del español hablado en la Lengua de Señas y viceversa.\n\nTambién son intérpretes para sordos aquellas personas que realicen la interpretación simultánea del castellano hablado a otras formas de comunicación de la población sorda, distintas a la Lengua de Señas, y viceversa.\n\n26.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual adaptada, auditiva o táctil, descripción visual del ambiente en donde se encuentre y guía en la movilidad de la persona sordociega, con amplio conocimiento de los sistemas de comunicación que requieren las personas sordociegas.\n\nJURISPRUDENCIA[Mostrar]",
-      "canonical_id": "co:ley:982:2005:art:1",
-      "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672202",
-      "number": "Artículo 1º.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1º.Para efectos de la presente ley, los siguientes términos tendrán el alcance indicado a continuación de cada uno de ellos.\n\n1.\"Hipoacusia\".Disminución de la capacidad auditiva de algunas personas, la que puede clasificarse en leve, mediana y profunda.\n\nLeve. La que fluctúa aproximadamente entre 20 y 40 decibeles.\n\nMediana. La que oscila entre 40 y 70 decibeles.\n\nProfunda. La que se ubica por encima de los 80 decibeles y especialmente con curvas auditivas inclinadas.\n\n2.\"Hipoacúsico\".Quienes sufren de hipoacusia.\n\n3.\"Comunidad de sordos\".Es el grupo social de personas que se identifican a través de la vivencia de la sordera y el mantenimiento de ciertos valores e intereses comunes y se produce entre ellos un permanente proceso de intercambio mutuo y de solidaridad. Forman parte del patrimonio pluricultural de la Nación y que, en tal sentido, son equiparables a los pueblos y comunidades indígenas y deben poseer los derechos conducentes.\n\n4.\"Sordo\".Es todo aquel que no posee la audición suficiente y que en algunos casos no puede sostener una comunicación y socialización natural y fluida en lengua oral alguna, independientemente de cualquier evaluación audiométrica que se le pueda practicar.\n\n5.\"Sordo señante\".Es todo aquel cuya forma prioritaria de comunicación e identidad social se define en torno al uso de Lengua de Señas Colombiana y de los valores comunitarios y culturales de la comunidad de sordos.\n\n6.\"Sordo hablante\".Es todo aquel que adquirió una primera lengua oral. Esa persona sigue utilizando el español o la lengua nativa, puede presentar restricciones para comunicarse satisfactoriamente y puede hacer uso de ayudas auditivas.\n\n7.\"Sordo semilingüe\".Es todo aquel que no ha desarrollado a plenitud ninguna lengua, debido a que quedó sordo antes de desarrollar una primera lengua oral y a que tampoco tuvo acceso a una Lengua de Señas.\n\n8.\"Sordo monolingüe\".Es todo aquel que utiliza y es competente lingüística comunicativamente en la lengua oral o en la Lengua de Señas.\n\n9.\"Sordo bilingüe\".Es todo aquel que vive una situación bilingüe en Lengua de Señas Colombiana y castellano escrito u oral según el caso, por lo cual utiliza dos (dos) lenguas para establecer comunicación tanto con la comunidad sorda que utiliza la Lengua de Señas, como con la comunidad oyente que usa castellano.\n\n10.\"Lengua de señas\".Es la lengua natural de una comunidad de sordos, la cual forma parte de su patrimonio cultural y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral.\n\nLa Lengua de Señas se caracteriza por ser visual, gestual y espacial. Como cualquiera otra lengua tiene su propio vocabulario, expresiones idiomáticas, gramáticas, sintaxis diferentes del español. Los elementos de esta lengua (las señas individuales) son la configuración, la posición y la orientación de las manos en relación con el cuerpo y con el individuo, la lengua también utiliza el espacio, dirección y velocidad de movimientos, así como la expresión facial para ayudar a transmitir el significado del mensaje, esta es una lengua visogestual. Como cualquier otra lengua, puede ser utilizada por oyentes como una lengua adicional.\n\n11.\"Integración escolar\".Es un proceso complejo e inherente a toda propuesta educativa, en tanto reconozca las diferencias, así como los valores básicos compartidos entre las personas y posibilite un espacio de participación y desarrollo.\n\n12.\"Educación bilingüe para sordos\".Es la que reconoce que hay sordos que viven una situación bilingüe en Lengua de Señas Colombiana y Castellano, por lo tanto su educación debe ser vehiculizada a través de la Lengua de Señas Colombiana y se debe facilitar el Castellano como segundo idioma en su modalidad escrita primordialmente u oral en los casos en que esto sea posible.\n\n13.\"Integración con intérprete al aula regular\".Es una alternativa educativa para sordos que usan la Lengua de Señas Colombiana. Los educandos sordos se integran en colegios de oyentes, a la básica secundaria y media contando con el servicio de intérprete y las condiciones que responden a sus particularidades lingüísticas y comunicativas.\n\n14.\"Integración al aula regular con ayudas auditivas\".Es una alternativa educativa para estudiantes con algún grado de limitación auditiva que ingresan a una institución regular. Los estudiantes usan el castellano o español oral con ayudas auditivas. Se integran con oyentes, en la básica primaria, secundaria y media, contando con las ayudas auditivas y las condiciones para su participación y desarrollo.\n\n15.\"Comunicación\".Es todo acto por el cual una persona da o recibe de otra información acerca de las necesidades personales, deseos, percepciones, conocimiento o estados afectivos. Es la base y requisito obligatorio de toda agrupación humana ya que hace posible la constitución, organización y preservación de la colectividad.\n\nEs un proceso social, para que la comunicación se produzca es necesario que exista entre los interlocutores motivación para transmitir y recibir.\n\nEs preciso que haya intervenido explícita o implícita, un acuerdo entre los interlocutores respecto de la utilización de un código que permita la organización de los mensajes transmitidos tomando un medio o canal de comunicación determinado.\n\n16.\"Sordoceguera\".Es una limitación única caracterizada por una deficiencia auditiva y visual ya sea parcial o total; trae como consecuencia dificultades en la comunicación, orientación, movilidad y el acceso a la información.\n\n17.\"Sordociego(a)\".Es aquella persona que en cualquier momento de la vida puede presentar una deficiencia auditiva y visual tal que le ocasiona serios problemas en la comunicación, acceso a información, orientación y movilidad. Requiere de servicios especializados para su desarrollo e integración social.\n\n18.\"Sordoceguera congénita\".Se denomina congénita cuando la persona nace con sordoceguera, es decir, cuando la adquiere en alguna de las etapas de gestación en el vientre de la madre o cuando se adquiriere antes de la adquisición de la lengua materna.\n\n19.\"Sordoceguera adquirida\".Se denomina así cuando la persona adquiera la sordoceguera en el transcurso de la vida, posterior a la adquisición del lenguaje.\n\n20.\"Sordera congénita con ceguera adquirida\".Los individuos pertenecientes a este grupo nacen sordos y adquieren posteriormente la ceguera. En este grupo se incluye a las personas Sordociegas por Síndrome de Usher, que es una enfermedad congénita, hereditaria y recesiva, es decir, se nace con ella pero los problemas aparecen más tarde.\n\n21.\"Ceguera congénita con sordera adquirida\".La ceguera se produce durante la gestación y la sordera la adquiere posteriormente.\n\n22.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual, comunicación y guía en la movilidad de la persona sordociega, con amplio conocimiento del Castellano, la Lengua de Señas, táctil, en campo visual reducida y demás sistemas de comunicación que requieren las personas sordociegas usuarias de castellano y/o Lengua de Señas.\n\n23.\"Prevención\".Se entiende como la adopción de medidas encaminadas a impedir que se produzca un deterioro físico, intelectual, psiquiátrico o sensorial (prevención primaria) o a impedir que ese deterioro cause una discapacidad o limitación funcional permanente (prevención secundaria) La prevención puede incluir diferentes tipos de acciones, tales como: atención primaria de la salud, puericultura prenatal y posnatal, educación en materia de nutrición, campañas de vacunación contra enfermedades transmisibles, medidas de lucha contra las enfermedades endémicas, normas y programas de seguridad, prevención de accidentes en diferentes entornos, incluidas la adaptación de los lugares de trabajo para evitar discapacidades y enfermedades profesionales y prevención de la discapacidad resultante de la contaminación del medio ambiente u ocasionada por los conflictos armados.\n\n24.\"Rehabilitación\".La rehabilitación es un proceso encaminado a lograr que las personas con discapacidad estén en condiciones de alcanzar y mantener un estado funcional óptimo, desde el punto de vista físico, sensorial, intelectual, psíquico o social, de manera que cuenten con medios para modificar su propia vida y ser más independientes. La rehabilitación puede abarcar medidas para proporcionar o restablecer funciones o para compensar la pérdida o la falta de una función o una limitación funcional. El proceso de rehabilitación no supone la prestación de atención médica preliminar.\n\nAbarca una amplia variedad de medidas y actividades, como: Rehabilitación básica y general, actividades de orientación específica, y otras que tengan como objetivo la rehabilitación profesional.\n\n25.\"Intérprete para sordos\".Personas con amplios conocimientos de la Lengua de Señas Colombiana que puede realizar interpretación simultánea del español hablado en la Lengua de Señas y viceversa.\n\nTambién son intérpretes para sordos aquellas personas que realicen la interpretación simultánea del castellano hablado a otras formas de comunicación de la población sorda, distintas a la Lengua de Señas, y viceversa.\n\n26.\"Guía intérprete\".Persona que realiza una labor de transmisión de información visual adaptada, auditiva o táctil, descripción visual del ambiente en donde se encuentre y guía en la movilidad de la persona sordociega, con amplio conocimiento de los sistemas de comunicación que requieren las personas sordociegas.\n\nJURISPRUDENCIA[Mostrar]",
-      "canonical_id": "co:ley:982:2005:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672203",
       "number": "Artículo 2º.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2º.La Lengua de Señas en Colombia que necesariamente la utilizan quienes no pueden desarrollar lenguaje oral, se entiende y se acepta como idioma necesario de comunicación de las personas con pérdidas profundas de audición y, las sordociegas, que no pueden consiguientemente por la gravedad de la lesión desarrollar lenguaje oral, necesarios para el desarrollo del pensamiento y de la inteligencia de la persona, por lo que debe ser reconocida por el Estado y fortalecida por la lectura y la escritura del castellano, convirtiéndolos propositivamente en bilinguales.",
       "canonical_id": "co:ley:982:2005:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028275",
+      "art_id": "1672203",
       "number": "Artículo 3º.",
       "number_normalized": "3",
       "title": null,
-      "text": "Artículo 3º.El Estado apoyará las actividades de investigación, enseñanza y difusión de la Lengua de Señas en Colombia al igual que otras formas de comunicación de la población sorda y sordociega, para tal efecto promoverá la creación de escuelas de formación de intérpretes para sordos y sordociegos y la incorporación de la enseñanza de la Lengua de Señas en Colombia en los programas de formación docente especializada en sordos y sordociegos.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 3º.El Estado apoyará las actividades de investigación, enseñanza y difusión de la Lengua de Señas en Colombia al igual que otras formas de comunicación de la población sorda y sordociega, para tal efecto promoverá la creación de escuelas de formación de intérpretes para sordos y sordociegos y la incorporación de la enseñanza de la Lengua de Señas en Colombia en los programas de formación docente especializada en sordos y sordociegos.",
       "canonical_id": "co:ley:982:2005:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672204",
-      "number": "Artículo 3º.",
-      "number_normalized": "3",
-      "title": null,
-      "text": "Artículo 3º.El Estado apoyará las actividades de investigación, enseñanza y difusión de la Lengua de Señas en Colombia al igual que otras formas de comunicación de la población sorda y sordociega, para tal efecto promoverá la creación de escuelas de formación de intérpretes para sordos y sordociegos y la incorporación de la enseñanza de la Lengua de Señas en Colombia en los programas de formación docente especializada en sordos y sordociegos.\n\nJURISPRUDENCIA[Mostrar]",
-      "canonical_id": "co:ley:982:2005:art:3",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672205",
       "number": "Artículo 4º.",
       "number_normalized": "4",
       "title": null,
       "text": "Artículo 4º.El Estado garantizará y proveerá la ayuda de intérpretes y guías intérprete idóneos para que sea este un medio a través del cual las personas sordas y sordociegas puedan acceder a todos los servicios que como ciudadanos colombianos les confiere la Constitución. Para ello el Estado organizará a través de entidades oficiales y a través de convenios con asociaciones de intérpretes y asociaciones de sordos la presencia de intérpretes y guías intérpretes, para el acceso a los servicios mencionados.\n\nLo anterior, sin perjuicio de que el apoyo estatal de los intérpretes idóneos en la Lengua de Señas Colombiana, solo sería legítimo si el Estado no excluye el respaldo a opciones de comunicación oral para el acceso a los servicios que como ciudadanos colombianos tiene derecho la población con limitación auditiva, usuaria de la lengua oral.",
       "canonical_id": "co:ley:982:2005:art:4",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672206",
+      "art_id": "1672205",
       "number": "Artículo 5º.",
       "number_normalized": "5",
       "title": null,
       "text": "Artículo 5º.Podrán desempeñarse como intérpretes oficiales de la Lengua de Señas Colombiana aquellas personas nacionales o extranjeras domiciliadas en Colombia que reciban dicho reconocimiento por parte del Ministerio de Educación Nacional previo el cumplimiento de requisitos académicos, de idoneidad y de solvencia lingüística, según la reglamentación existente.\n\nParágrafo.Las personas que a la vigencia de esta ley vienen desempeñándose como intérpretes oficiales de la Lengua de Señas, podrán convalidar dicho reconocimiento, presentando y superando las pruebas que para tal efecto expida el Ministerio de Educación Nacional.",
       "canonical_id": "co:ley:982:2005:art:5",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672207",
+      "art_id": "1672206",
       "number": "Artículo 6º.",
       "number_normalized": "6",
       "title": null,
       "text": "Artículo 6º.El intérprete oficial de la Lengua de Señas Colombiana tendrá como función principal traducir al idioma castellano o de este a la Lengua de Señas Colombiana, las comunicaciones que deben efectuar las personas sordas con personas oyentes, o la traducción a los sistemas especiales de comunicación utilizados por las personas sordociegas.\n\nEn especial, cumplirá esta función en situaciones de carácter oficial ante las autoridades competentes o cuando sea requerido para garantizar el acceso de la persona sorda y sordociega a los servicios a que tiene derecho como ciudadano colombiano.",
       "canonical_id": "co:ley:982:2005:art:6",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672208",
+      "art_id": "1672207",
       "number": "Artículo 7º.",
       "number_normalized": "7",
       "title": null,
       "text": "Artículo 7º.Cuando se formulen requerimientos judiciales a personas sordas y sordociegas por parte de cualquier autoridad competente, los respectivos organismos del nivel nacional o territorial, facilitarán servicios de interpretación en Lengua de Señas Colombiana, u otros sistemas de comunicación que podrán ser suministrados directamente, o mediante convenio con federaciones o asociaciones de sordos, sordociegos, intérpretes, guía intérprete u otros organismos privados competentes, reconocidos por el Instituto Nacional para Sordos, Insor.\n\nParágrafo.Para efectos de este artículo, el Instituto Nacional para Sordos, Insor, dispondrá de un registro de intérpretes y guía intérprete que estará a disposición de los interesados, con indicación de la remuneración que por su trabajo pueden percibir, cuando a ello hubiere lugar, según la reglamentación que expida dicha entidad.",
       "canonical_id": "co:ley:982:2005:art:7",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672209",
+      "art_id": "1672208",
       "number": "Artículo 8º.",
       "number_normalized": "8",
       "title": null,
       "text": "Artículo 8º.Las entidades estatales de cualquier orden, incorporan paulatinamente dentro de los programas de atención al cliente, el servicio de intérprete y guía intérprete para las personas sordas y sordociegas que lo requieran de manera directa o mediante convenios con organismos que ofrezcan tal servicio.\n\nDe igual manera, lo harán las empresas prestadoras de servicios públicos, las Instituciones Prestadoras de Salud, las bibliotecas públicas, los centros de documentación e información y en general las instituciones gubernamentales y no gubernamentales que ofrezcan servicios al público, fijando en lugar visible la in formación correspondiente, con plena identificación del lugar o lugares en los que podrán ser atendidas las personas sordas y sordociegas.",
       "canonical_id": "co:ley:982:2005:art:8",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672210",
+      "art_id": "1672209",
       "number": "Artículo 9º.",
       "number_normalized": "9",
       "title": null,
       "text": "Artículo 9º.El Gobierno Nacional y los gobiernos territoriales, deberán respetar las diferencias lingüísticas y comunicativas en las prácticas educativas, fomentando una educación bilingüe de calidad que dé respuesta a las necesidades de la de sordos y sordociegos garantizando el acceso, permanencia y promoción de esta población en lo que apunta a la educación formal y no formal de acuerdo con la reglamentación que para el efecto expida el Ministerio de Educación Nacional.",
       "canonical_id": "co:ley:982:2005:art:9",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672211",
+      "art_id": "1672210",
       "number": "Artículo 10.",
       "number_normalized": "10",
       "title": null,
-      "text": "Artículo 10.Las entidades territoriales tomarán medidas de planificación para garantizar el servicio de interpretación a los educandos sordos y sordociegos que se comunican en Lengua de Señas, en la educación básica, media, técnica, tecnológica y superior, con el fin de que estos puedan tener acceso, permanencia y proyección en el sistema educativo.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 10.Las entidades territoriales tomarán medidas de planificación para garantizar el servicio de interpretación a los educandos sordos y sordociegos que se comunican en Lengua de Señas, en la educación básica, media, técnica, tecnológica y superior, con el fin de que estos puedan tener acceso, permanencia y proyección en el sistema educativo.",
       "canonical_id": "co:ley:982:2005:art:10",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028277",
+      "art_id": "1672211",
       "number": "Artículo 11.",
       "number_normalized": "11",
       "title": null,
       "text": "Artículo 11.Todos los derechos de educación, salud, interpretación, traducción e información referidos a los sordos señantes se extenderán a los sordociegos señantes, quienes además tendrán derecho a exigir servicio de guía-intérprete para permitir la interacción comunicativa de estas personas sordociegas mediante el uso de los diversos sistemas de comunicación.\n\nLos entes competentes en los departamentos, distritos y municipios deben promover, adecuar, implementar servicios de atención integral a las personas sordociegas para evitar su degeneramiento en la calidad de vida.",
       "canonical_id": "co:ley:982:2005:art:11",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672212",
-      "number": "Artículo 11.",
-      "number_normalized": "11",
-      "title": null,
-      "text": "Artículo 11.Todos los derechos de educación, salud, interpretación, traducción e información referidos a los sordos señantes se extenderán a los sordociegos señantes, quienes además tendrán derecho a exigir servicio de guía-intérprete para permitir la interacción comunicativa de estas personas sordociegas mediante el uso de los diversos sistemas de comunicación.\n\nLos entes competentes en los departamentos, distritos y municipios deben promover, adecuar, implementar servicios de atención integral a las personas sordociegas para evitar su degeneramiento en la calidad de vida.",
-      "canonical_id": "co:ley:982:2005:art:11",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672213",
       "number": "Artículo 12.",
       "number_normalized": "12",
       "title": null,
       "text": "Artículo 12.Todos los derechos de educación, salud, interpretación, traducción e información referidos a los sordos hablantes de español se extenderán a los sordociegos hablantes, quienes, además, tendrán derecho a exigir formas táctiles de texto o intérpretes especializados en la representación táctil del español u otros sistemas de comunicación.",
       "canonical_id": "co:ley:982:2005:art:12",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028278",
+      "art_id": "1672213",
       "number": "Artículo 13.",
       "number_normalized": "13",
       "title": null,
       "text": "Artículo 13.El Estado asegurará a las personas sordas, sordociegas e hipoacúsicas el efectivo ejercicio de su derecho a la información en sus canales nacionales de televisión abierta, para lo cual implementará la intervención de Intérpretes de Lengua de Señas, closed caption y subtítulos, en los programas informativos, documentales, culturales, educacionales y en los mensajes de las autoridades nacionales, departamentales y municipales dirigidos a la ciudadanía.\n\nParágrafo 1º.En los aeropuertos, terminales de transporte y demás lugares públicos donde se dé información por altoparlante deberán contar con sistemas de información escrita visibles para personas sordas.\n\nParágrafo 2º.Cuando se transmitan las sesiones del Congreso, tanto en comisiones como en plenarias, por Señal Colombia o por el canal institucional del Estado que llegare a sustituirlo, será obligatorio el servicio de intérprete de Lengua de Señas, closed caption y subtítulos. De igual forma los noticieros de Senado y Cámara incluirán este servicio.",
       "canonical_id": "co:ley:982:2005:art:13",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672214",
-      "number": "Artículo 13.",
-      "number_normalized": "13",
-      "title": null,
-      "text": "Artículo 13.El Estado asegurará a las personas sordas, sordociegas e hipoacúsicas el efectivo ejercicio de su derecho a la información en sus canales nacionales de televisión abierta, para lo cual implementará la intervención de Intérpretes de Lengua de Señas, closed caption y subtítulos, en los programas informativos, documentales, culturales, educacionales y en los mensajes de las autoridades nacionales, departamentales y municipales dirigidos a la ciudadanía.\n\nParágrafo 1º.En los aeropuertos, terminales de transporte y demás lugares públicos donde se dé información por altoparlante deberán contar con sistemas de información escrita visibles para personas sordas.\n\nParágrafo 2º.Cuando se transmitan las sesiones del Congreso, tanto en comisiones como en plenarias, por Señal Colombia o por el canal institucional del Estado que llegare a sustituirlo, será obligatorio el servicio de intérprete de Lengua de Señas, closed caption y subtítulos. De igual forma los noticieros de Senado y Cámara incluirán este servicio.",
-      "canonical_id": "co:ley:982:2005:art:13",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672215",
       "number": "Artículo 14.",
       "number_normalized": "14",
       "title": null,
       "text": "Artículo 14.El Estado facilitará a las personas sordas, sordociegas e hipoacúsicas el acceso a todas las ayudas técnicas necesarias para mejorar su calidad de vida.",
       "canonical_id": "co:ley:982:2005:art:14",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672216",
+      "art_id": "1672215",
       "number": "Artículo 15.",
       "number_normalized": "15",
       "title": null,
       "text": "Artículo 15.Todo establecimiento o dependencia del Estado y de los entes territoriales con acceso al público, deberá contar con señalización, avisos, información visual y sistemas de alarmas luminosas aptos para su reconocimiento por personas sordas, sordociegas e hipoacúsicas.",
       "canonical_id": "co:ley:982:2005:art:15",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672217",
+      "art_id": "1672216",
       "number": "Artículo 16.",
       "number_normalized": "16",
       "title": null,
       "text": "Artículo 16.En todo anuncio de servicio público en el que se utilice algún sonido ambiental, efectos sonoros, diálogo o mensaje verbal, que sea transmitido por el canal institucional del Estado, se deberán utilizar los sistemas de acceso a la información para los sordos como el closed caption o texto escondido, la subtitulación y el servicio de interpretación en Lengua de Señas, de acuerdo con la reglamentación que expida el Gobierno Nacional para tal efecto.",
       "canonical_id": "co:ley:982:2005:art:16",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672218",
+      "art_id": "1672217",
       "number": "Artículo 17.",
       "number_normalized": "17",
       "title": null,
       "text": "Artículo 17.El Gobierno Nacional, a través del Ministerio de Comunicaciones y la Comisión Nacional de Televisión, deberán garantizar la televisión como un servicio público a los sordos y sordociegos, para lo cual establecerán acuerdos colaborativos con los canales abiertos en el nivel nacional, regional, o local, tendientes a implementar las disposiciones establecidas en el artículo anterior.",
       "canonical_id": "co:ley:982:2005:art:17",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672219",
+      "art_id": "1672218",
       "number": "Artículo 18.",
       "number_normalized": "18",
       "title": null,
       "text": "Artículo 18.Los teléfonos públicos deberán contar con características técnicas que permitan a los limitados sensoriales el acceso a este servicio. El Gobierno Nacional reglamentará la materia.",
       "canonical_id": "co:ley:982:2005:art:18",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672220",
+      "art_id": "1672219",
       "number": "Artículo 19.",
       "number_normalized": "19",
       "title": null,
       "text": "Artículo 19.En las obras de teatro, conferencias, congresos u otros eventos públicos se llevarán a cabo con intérpretes español-Lengua de Señas Colombiana y un guía intérprete o viceversa cuando un grupo de diez (10) o más sordos señantes y/o sordociegos lo soliciten.",
       "canonical_id": "co:ley:982:2005:art:19",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672221",
+      "art_id": "1672220",
       "number": "Artículo 20.",
       "number_normalized": "20",
       "title": null,
       "text": "Artículo 20.En las obras de teatro, conferencias, congresos u otros eventos públicos se llevarán a cabo con captura de texto a pantalla cuando un grupo de (10) o más sordos señantes o hablantes lo soliciten.",
       "canonical_id": "co:ley:982:2005:art:20",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028279",
+      "art_id": "1672221",
       "number": "Artículo 21.",
       "number_normalized": "21",
       "title": null,
       "text": "Artículo 21.Respetando su particularidad lingüística y comunicativa la persona sorda y, sordociega, tendrá el derecho inalienable de acceder a una forma de comunicación, ya sea esta, el oralismo o la Lengua de Señas Colombiana como las dos formas con las cuales se puede rehabilitar una persona; respetando las características de la pérdida auditiva y posibilidades ante la misma. Aunque se trate de un menor de edad, el Estado velará que nadie lo prive de este derecho.",
       "canonical_id": "co:ley:982:2005:art:21",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672222",
-      "number": "Artículo 21.",
-      "number_normalized": "21",
-      "title": null,
-      "text": "Artículo 21.Respetando su particularidad lingüística y comunicativa la persona sorda y, sordociega, tendrá el derecho inalienable de acceder a una forma de comunicación, ya sea esta, el oralismo o la Lengua de Señas Colombiana como las dos formas con las cuales se puede rehabilitar una persona; respetando las características de la pérdida auditiva y posibilidades ante la misma. Aunque se trate de un menor de edad, el Estado velará que nadie lo prive de este derecho.",
-      "canonical_id": "co:ley:982:2005:art:21",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672223",
       "number": "Artículo 22.",
       "number_normalized": "22",
       "title": null,
       "text": "Artículo 22.Todo sordo o sordociego tendrá el derecho inalienable de acceder a una forma de comunicación, ya sea esta la Lengua de Señas Colombiana o el oralismo. Aunque se trate de un menor de edad, el Estado velará que nadie lo prive de este derecho, para que no corra el riesgo de convertirse en una persona semilingüe.",
       "canonical_id": "co:ley:982:2005:art:22",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672224",
+      "art_id": "1672223",
       "number": "Artículo 23.",
       "number_normalized": "23",
       "title": null,
       "text": "Artículo 23.Todo sordo y/o sordociego hablante tendrá el derecho de acceder a la Lengua de Señas Colombiana como su segunda lengua, si así lo desea. En dicho caso el Estado lo apoyará por medio de programas para tal propósito, sin perjuicio alguno del derecho que tiene todo sordo hablante de preservar el castellano oral como primera lengua.",
       "canonical_id": "co:ley:982:2005:art:23",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672225",
+      "art_id": "1672224",
       "number": "Artículo 24.",
       "number_normalized": "24",
       "title": null,
-      "text": "Artículo 24.A padres, cónyuges y hermanos de sordos y sordociegos que lo deseen el Estado les proveerá de acceso a la Lengua de Señas Colombiana, a través de los programas de educación bilingüe de sordos.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 24.A padres, cónyuges y hermanos de sordos y sordociegos que lo deseen el Estado les proveerá de acceso a la Lengua de Señas Colombiana, a través de los programas de educación bilingüe de sordos.",
       "canonical_id": "co:ley:982:2005:art:24",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672226",
+      "art_id": "1672225",
       "number": "Artículo 25.",
       "number_normalized": "25",
       "title": null,
-      "text": "Artículo 25.El Gobierno Nacional instituirá programas para que los padres oyentes de niños sordos y sordociegos que usan la Lengua de Señas para comunicarse puedan disponer de tiempo para aprender la Lengua de Señas Colombiana y convivir con la comunidad de sordos y sordociegos. Estos programas incluirán el apoyo económico que sea necesario.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 25.El Gobierno Nacional instituirá programas para que los padres oyentes de niños sordos y sordociegos que usan la Lengua de Señas para comunicarse puedan disponer de tiempo para aprender la Lengua de Señas Colombiana y convivir con la comunidad de sordos y sordociegos. Estos programas incluirán el apoyo económico que sea necesario.",
       "canonical_id": "co:ley:982:2005:art:25",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672227",
+      "art_id": "1672226",
       "number": "Artículo 26.",
       "number_normalized": "26",
       "title": null,
       "text": "Artículo 26.Los niños sordos que nazcan en zonas rurales donde no existe ni una comunidad de sordos, ni una escuela bilingüe para sordos, serán trasladados a zonas urbanas que cuenten con una escuela bilingüe para sordos de acuerdo con el reglamento que expida el Gobierno Nacional.",
       "canonical_id": "co:ley:982:2005:art:26",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672228",
+      "art_id": "1672227",
       "number": "Artículo 27.",
       "number_normalized": "27",
       "title": null,
       "text": "Artículo 27.Nadie podrá atentar contra la patria potestad de los padres sordos sobre sus hijos oyentes o sordos o sordociegos, aduciendo que la sordera los incapacita para el ejercicio cabal de la paternidad. Quien así lo hiciere será castigado de acuerdo con la legislación vigente.",
       "canonical_id": "co:ley:982:2005:art:27",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672229",
+      "art_id": "1672228",
       "number": "Artículo 28.",
       "number_normalized": "28",
       "title": null,
-      "text": "Artículo 28.Toda forma de represión al uso de una Lengua de Señas, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre expresión consagrada en la Constitución y será sancionada conforme a la legislación vigente.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 28.Toda forma de represión al uso de una Lengua de Señas, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre expresión consagrada en la Constitución y será sancionada conforme a la legislación vigente.",
       "canonical_id": "co:ley:982:2005:art:28",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028280",
+      "art_id": "1672229",
       "number": "Artículo 29.",
       "number_normalized": "29",
       "title": null,
-      "text": "Artículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegosseñantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.\n\nJURISPRUDENCIA[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegos señantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.",
+      "text": "Artículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegosseñantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.\n\nArtículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegos señantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.",
       "canonical_id": "co:ley:982:2005:art:29",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "30134472",
-      "number": "Artículo 29.",
-      "number_normalized": "29",
+      "number": "Artículo 30.",
+      "number_normalized": "30",
       "title": null,
-      "text": "Artículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegosseñantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.\n\nJURISPRUDENCIA[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegos señantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.",
-      "canonical_id": "co:ley:982:2005:art:29",
+      "text": "Artículo 30.Al sordo y sordociego no se le podrá negar, condicionar o restringir el acceso a un trabajo arguyendo su falta de audición o visión a menos que se demuestre fehacientemente que dicha función es imprescindible para la labor que habría de realizar.\n\nCarece de todo efecto jurídico el despido o la terminación del contrato de una persona por razón de su limitación auditiva o visual sin que exista autorización previa de la oficina de trabajo que constate la configuración de la existencia de una justa causa para el despido o terminación del respectivo contrato.\n\nNo obstante, quienes fueren despedidos o su contrato terminado por razón de su limitación auditiva o visual, sin el cumplimiento del requisito previsto en el inciso anterior, tendrán derecho a una indemnización equivalente a ciento ochenta días (180) del salario, sin perjuicio de las demás prestaciones e indemnizaciones a que hubiere lugar de acuerdo con el Código Sustantivo del Trabajo y demás normas que lo modifiquen, adicionen, complementen o aclaren.",
+      "canonical_id": "co:ley:982:2005:art:30",
       "notes": [],
       "previous_versions": [
         {
           "text": "Artículo 29.Toda forma de represión a la congregación y organización pacífica de los sordos y sordociegos señantes, tanto en espacios públicos como en espacios privados, será considerada como una violación al derecho de libre asociación consagrada en la Constitución y será sancionada conforme a la legislación vigente.",
           "date_range": "Vigente desde: 02/08/2005 y hasta el: 31/07/2012"
         }
-      ]
-    },
-    {
-      "art_id": "30134473",
-      "number": "Artículo 30.",
-      "number_normalized": "30",
-      "title": null,
-      "text": "Artículo 30.Al sordo y sordociego no se le podrá negar, condicionar o restringir el acceso a un trabajo arguyendo su falta de audición o visión a menos que se demuestre fehacientemente que dicha función es imprescindible para la labor que habría de realizar.\n\nCarece de todo efecto jurídico el despido o la terminación del contrato de una persona por razón de su limitación auditiva o visual sin que exista autorización previa de la oficina de trabajo que constate la configuración de la existencia de una justa causa para el despido o terminación del respectivo contrato.\n\nNo obstante, quienes fueren despedidos o su contrato terminado por razón de su limitación auditiva o visual, sin el cumplimiento del requisito previsto en el inciso anterior, tendrán derecho a una indemnización equivalente a ciento ochenta días (180) del salario, sin perjuicio de las demás prestaciones e indemnizaciones a que hubiere lugar de acuerdo con el Código Sustantivo del Trabajo y demás normas que lo modifiquen, adicionen, complementen o aclaren.",
-      "canonical_id": "co:ley:982:2005:art:30",
-      "notes": [],
-      "previous_versions": []
+      ],
+      "affects": []
     },
     {
       "art_id": "1672231",
-      "number": "Artículo 30.",
-      "number_normalized": "30",
-      "title": null,
-      "text": "Artículo 30.Al sordo y sordociego no se le podrá negar, condicionar o restringir el acceso a un trabajo arguyendo su falta de audición o visión a menos que se demuestre fehacientemente que dicha función es imprescindible para la labor que habría de realizar.\n\nCarece de todo efecto jurídico el despido o la terminación del contrato de una persona por razón de su limitación auditiva o visual sin que exista autorización previa de la oficina de trabajo que constate la configuración de la existencia de una justa causa para el despido o terminación del respectivo contrato.\n\nNo obstante, quienes fueren despedidos o su contrato terminado por razón de su limitación auditiva o visual, sin el cumplimiento del requisito previsto en el inciso anterior, tendrán derecho a una indemnización equivalente a ciento ochenta días (180) del salario, sin perjuicio de las demás prestaciones e indemnizaciones a que hubiere lugar de acuerdo con el Código Sustantivo del Trabajo y demás normas que lo modifiquen, adicionen, complementen o aclaren.",
-      "canonical_id": "co:ley:982:2005:art:30",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672232",
       "number": "Artículo 31.",
       "number_normalized": "31",
       "title": null,
       "text": "Artículo 31.Al sordo o sordociego no se le podrá negar, condicionar o restringir una licencia para ejercer actividad u oficio alguno arguyendo su falta de audición o visión, a menos que se demuestre fehacientemente que dicha función es imprescindible para la actividad que habría de realizar.",
       "canonical_id": "co:ley:982:2005:art:31",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672233",
+      "art_id": "1672232",
       "number": "Artículo 32.",
       "number_normalized": "32",
       "title": null,
       "text": "Artículo 32.De conformidad con la legislación laboral vigente, a igual trabajo debe corresponder igual salario, sin importar que el trabajador sea sordo, sordociego u oyente. De conformidad con la ley, se sancionará a todo aquel empleador que pague menos a un sordo o sordociego por el solo hecho de serlo.",
       "canonical_id": "co:ley:982:2005:art:32",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672234",
+      "art_id": "1672233",
       "number": "Artículo 33.",
       "number_normalized": "33",
       "title": null,
       "text": "Artículo 33.De conformidad con la legislación vigente, a los sordos y sordociegos se les darán las mismas oportunidades para ascender en su trabajo, de acuerdo con su capacidad y antigüedad, sin importar que sean sordos o sordociegos. De conformidad con la ley, se sancionará a todo aquel empleador que discrimine al sordo o sordociego por el solo hecho de serlo.",
       "canonical_id": "co:ley:982:2005:art:33",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672235",
+      "art_id": "1672234",
       "number": "Artículo 34.",
       "number_normalized": "34",
       "title": null,
       "text": "Artículo 34.Toda discriminación de un sordo o sordociego señante en virtud de su identidad lingüística o cultural, o de un sordo hablante o semilingüe en virtud de su condición de sordo será sancionada de conformidad con la legislación correspondiente, aun cuando la naturaleza de dicha discriminación no esté prevista en la presente ley.",
       "canonical_id": "co:ley:982:2005:art:34",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30028281",
+      "art_id": "1672235",
       "number": "Artículo 35.",
       "number_normalized": "35",
       "title": null,
       "text": "Artículo 35.El Gobierno Nacional, dentro de la política de empleo, reservará para ser cubiertos con sordos y sordociegos, un porcentaje de cargos de la Administración Pública y Empresas del Estado siempre que no afecte la eficiencia del servicio y destinándolas a tareas que puedan ser desempeñadas sin afectar el normal desenvolvimiento de los organismos. La proporción de los cargos que deberán reservarse será determinada por vía de reglamentación. Los cargos en la administración se deben dar siempre y cuando cumplan con los requisitos.",
       "canonical_id": "co:ley:982:2005:art:35",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672236",
-      "number": "Artículo 35.",
-      "number_normalized": "35",
-      "title": null,
-      "text": "Artículo 35.El Gobierno Nacional, dentro de la política de empleo, reservará para ser cubiertos con sordos y sordociegos, un porcentaje de cargos de la Administración Pública y Empresas del Estado siempre que no afecte la eficiencia del servicio y destinándolas a tareas que puedan ser desempeñadas sin afectar el normal desenvolvimiento de los organismos. La proporción de los cargos que deberán reservarse será determinada por vía de reglamentación. Los cargos en la administración se deben dar siempre y cuando cumplan con los requisitos.",
-      "canonical_id": "co:ley:982:2005:art:35",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672237",
       "number": "Artículo 36.",
       "number_normalized": "36",
       "title": null,
-      "text": "Artículo 36.El Servicio Nacional de Aprendizaje, Sena, realizará acciones de promoción de sus cursos entre la población sorda y sordociega y permitirá el acceso en igualdad de condiciones de dicha población previa valoración de sus potencialidades a los diferentes programas de formación. Garantizará el servicio de interpretación para el acceso, permanencia y proyección de los sordos y sordociegos, que se comunican en Lengua de Señas. Asimismo a través de los servicios de información para el empleo establecerá unas líneas de orientación laboral que permita relacionar las capacidades del beneficiario y su adecuación con la demanda laboral.\n\nJURISPRUDENCIA[Mostrar]",
+      "text": "Artículo 36.El Servicio Nacional de Aprendizaje, Sena, realizará acciones de promoción de sus cursos entre la población sorda y sordociega y permitirá el acceso en igualdad de condiciones de dicha población previa valoración de sus potencialidades a los diferentes programas de formación. Garantizará el servicio de interpretación para el acceso, permanencia y proyección de los sordos y sordociegos, que se comunican en Lengua de Señas. Asimismo a través de los servicios de información para el empleo establecerá unas líneas de orientación laboral que permita relacionar las capacidades del beneficiario y su adecuación con la demanda laboral.",
       "canonical_id": "co:ley:982:2005:art:36",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672238",
+      "art_id": "1672237",
       "number": "Artículo 37.",
       "number_normalized": "37",
       "title": null,
       "text": "Artículo 37.En los concursos que se organicen para el ingreso al servicio público, serán admitidas en igualdad de condiciones las personas con limitación auditiva y visual asociada, siempre y cuando dicha limitación no resulte incompatible o insuperable frente al trabajo ofrecido, luego de haberse agotado todos los medios posibles de capacitación.",
       "canonical_id": "co:ley:982:2005:art:37",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672239",
+      "art_id": "1672238",
       "number": "Artículo 38.",
       "number_normalized": "38",
       "title": null,
       "text": "Artículo 38.Las entidades tanto públicas como privadas que ofrecen programas de formación y capacitación profesional a personas sordas y sordociegas tales como el Servicio Nacional de Aprendizaje, Sena, las universidades, centros educativos, deberán tener en cuenta las particularidades lingüísticas y comunicativas e incorporar el servicio de intérprete de Lengua de Señas y guía intérprete en los programas que ofrecen.",
       "canonical_id": "co:ley:982:2005:art:38",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672240",
+      "art_id": "1672239",
       "number": "Artículo 39.",
       "number_normalized": "39",
       "title": null,
       "text": "Artículo 39.El Gobierno Nacional, a través de Icetex, garantizará la obtención de crédito educativo por parte de la población estudiantil de sordos y sordociegos en concordancia con la valoración académica de los mismos y la situación económica de la familia.",
       "canonical_id": "co:ley:982:2005:art:39",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672241",
+      "art_id": "1672240",
       "number": "Artículo 40.",
       "number_normalized": "40",
       "title": null,
       "text": "Artículo 40.El Gobierno Nacional a través del Ministerio de Desarrollo (Instituto de Fomento Industrial, IFI) establecerá líneas de crédito especial para el funcionamiento y constitución de pequeñas y medianas empresas cualquiera que sea su forma jurídica, que le permita a las personas sordas y sordociegas desarrollar sus actividades económicas que en consecuencia les sirva para elevar su calidad de vida.",
       "canonical_id": "co:ley:982:2005:art:40",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672242",
+      "art_id": "1672241",
       "number": "Artículo 41.",
       "number_normalized": "41",
       "title": null,
       "text": "Artículo 41.El Gobierno Nacional al reglamentar la presente ley tipificará las aptitudes, determinará las actividades, la extensión de la jornada laboral y las actividades industriales, que por su peligrosidad quedan vedadas a los sordos y sordociegos.",
       "canonical_id": "co:ley:982:2005:art:41",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672243",
+      "art_id": "1672242",
       "number": "Artículo 42.",
       "number_normalized": "42",
       "title": null,
       "text": "Artículo 42.Todo niño recién nacido tiene derecho a que se estudie tempranamente su capacidad auditiva y se le brinde tratamiento en forma oportuna si lo necesitare.",
       "canonical_id": "co:ley:982:2005:art:42",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672244",
+      "art_id": "1672243",
       "number": "Artículo 43.",
       "number_normalized": "43",
       "title": null,
       "text": "Artículo 43.Será obligatoria la realización de los estudios que establezcan para tal efecto las normas emanadas por el Ministerio de la Protección Social conforme al avance de la ciencia y la tecnología para la detección temprana de la hipoacusia, a todo recién nacido, antes del primer año de vida.",
       "canonical_id": "co:ley:982:2005:art:43",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672245",
+      "art_id": "1672244",
       "number": "Artículo 44.",
       "number_normalized": "44",
       "title": null,
       "text": "Artículo 44.Autorízase al Gobierno Nacional para crear el Programa Nacional de Detección Temprana y Atención de la Hipoacusia en el ámbito del Ministerio de la Protección Social, que tendrá los siguientes objetivos, sin perjuicio de otros que se determinen por vía reglamentaria:\n\na) Crear el centro de información, documentación y orientación para familias de niños detectados con deficiencia auditiva de cualquier grado, para que tengan acceso a la información oportuna, adecuada y equilibrada en relación con las distintas modalidades comunicativas: sus alcances, oportunidades y debilidades;\n\nb) Atender en todo lo referente a la investigación, docencia, prevención, detección y atención de la hipoacusia;\n\nc) Coordinar con las entidades de salud y educativas del país que adhieran al mismo, las campañas de educación, detección y prevención de la hipoacusia tendientes a la concientización sobre la importancia de la realización de los estudios, diagnósticos tempranos, incluyendo la inmunización contra la rubéola y otras enfermedades inmunoprevenibles;\n\nd) Planificar y promover la capacitación del recurso humano en las prácticas diagnósticas y tecnología adecuada;\n\ne) Realizar estudios estadísticos que abarquen a todo el país con el fin de evaluar el impacto de la aplicación de la presente ley.",
       "canonical_id": "co:ley:982:2005:art:44",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672246",
+      "art_id": "1672245",
       "number": "Artículo 45.",
       "number_normalized": "45",
       "title": null,
       "text": "Artículo 45.Para dar cumplimiento a lo dispuesto en la presente ley, los gobernadores y alcaldes podrán integrar comisiones asesoras y consultivas en su respectiva jurisdicción, en las que participen organismos estatales y privados de la educación, el trabajo, las comunicaciones, la salud y el medio ambiente, las federaciones y asociaciones que agrupan a la población sorda y sordociega y a las organizaciones de padres de familia.",
       "canonical_id": "co:ley:982:2005:art:45",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672247",
-      "number": "Artículo 45.",
-      "number_normalized": "45",
-      "title": null,
-      "text": "Artículo 45.Para dar cumplimiento a lo dispuesto en la presente ley, los gobernadores y alcaldes podrán integrar comisiones asesoras y consultivas en su respectiva jurisdicción, en las que participen organismos estatales y privados de la educación, el trabajo, las comunicaciones, la salud y el medio ambiente, las federaciones y asociaciones que agrupan a la población sorda y sordociega y a las organizaciones de padres de familia.",
-      "canonical_id": "co:ley:982:2005:art:45",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672248",
       "number": "Artículo 46.",
       "number_normalized": "46",
       "title": null,
       "text": "Artículo 46.El Ministerio de Educación Nacional, a través del Insor, coordinará con otras entidades del Estado del nivel nacional y territorial, la realización de foros, seminarios, cursos y jornadas pedagógicas que permitan dar a conocer las disposiciones de la presente ley que faciliten su correcta aplicación.",
       "canonical_id": "co:ley:982:2005:art:46",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672249",
+      "art_id": "1672248",
       "number": "Artículo 47.",
       "number_normalized": "47",
       "title": null,
       "text": "Artículo 47.La presente ley regirá sesenta (60) días posteriores a su promulgación y derogará todas las disposiciones que le sean contrarias.",
       "canonical_id": "co:ley:982:2005:art:47",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

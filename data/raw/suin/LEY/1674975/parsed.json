@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1161",
     "anio": "2007",
-    "fecha": "200709\r\nscript\r\nvar date = new Date(26/09/2007); document.write(date.getDate());\r\nscript",
+    "fecha": "200709\nscript\nvar date = new Date(26/09/2007); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLIII. N. 46763. 26, SEPTIEMBRE, 2007. PÁG. 5.",

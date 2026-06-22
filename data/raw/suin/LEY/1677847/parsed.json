@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1343",
     "anio": "2009",
-    "fecha": "200907\r\nscript\r\nvar date = new Date(31/07/2009); document.write(date.getDate());\r\nscript",
+    "fecha": "200907\nscript\nvar date = new Date(31/07/2009); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLIV. N. 47427. 31, JULIO, 2009. PÁG. 26.",
@@ -34,37 +34,30 @@
       "text": "Artículo 1°.Apruébanse el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994.",
       "canonical_id": "co:ley:1343:2009:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1677851",
-      "number": "Artículo 1°.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1°.Apruébanse el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994.",
-      "canonical_id": "co:ley:1343:2009:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1677852",
       "number": "Artículo 2°.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, el “Tratado sobre el Derecho de Marcas” y su “Reglamento”, adoptados el 27 de octubre de 1994, que por el artículo primero de esta Ley se aprueban, obligarán al país a partir de la fecha en que se perfeccione el vínculo internacional respecto de los mismos.",
       "canonical_id": "co:ley:1343:2009:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1677853",
+      "art_id": "1677852",
       "number": "Artículo 3°.",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
       "canonical_id": "co:ley:1343:2009:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

@@ -130,6 +130,9 @@ class Database:
         ("rama", "TEXT"),
         ("cabeza", "TEXT"),
         ("entidad_norm", "TEXT"),
+        # Retry: cuántas veces se intentó scrapear (cap para no reintentar para
+        # siempre lo genuinamente roto, p.ej. 404).
+        ("scrape_attempts", "INTEGER NOT NULL DEFAULT 0"),
     )
 
     # Indexes that depend on the new columns — created only after migration.
@@ -363,12 +366,14 @@ class Database:
     def update_scrape_status(
         self, suin_id: str, status: str, suin_vigencia: str | None = None
     ) -> None:
+        # Cada fallo incrementa scrape_attempts → permite reintentar con tope.
         self.conn.execute(
             """UPDATE catalog
                SET scrape_status = ?, suin_vigencia = ?,
+                   scrape_attempts = scrape_attempts + (CASE WHEN ? = 'error' THEN 1 ELSE 0 END),
                    updated_at = CURRENT_TIMESTAMP
                WHERE suin_id = ?""",
-            (status, suin_vigencia, suin_id),
+            (status, suin_vigencia, status, suin_id),
         )
         # Check vigencia discrepancy
         if suin_vigencia:
@@ -391,6 +396,34 @@ class Database:
                         (suin_id, row["vigencia"], suin_vigencia),
                     )
         self.conn.commit()
+
+    def reset_errors_to_pending(
+        self,
+        *,
+        tipo: str | None = None,
+        source: str | None = None,
+        max_attempts: int = 3,
+    ) -> int:
+        """Re-encola para scraping las filas en 'error' que aún no agotaron el
+        tope de intentos. Devuelve cuántas se re-encolaron.
+
+        Esto cierra el hueco de retry ENTRE corridas: ``get_pending_norms`` solo
+        toma 'pending', así que sin esto los 'error' quedaban abandonados. El
+        tope ``max_attempts`` evita reintentar para siempre lo genuinamente roto
+        (404, normas sin texto)."""
+        sql = """UPDATE catalog
+                 SET scrape_status = 'pending', updated_at = CURRENT_TIMESTAMP
+                 WHERE scrape_status = 'error' AND scrape_attempts < ?"""
+        params: list[Any] = [max_attempts]
+        if tipo:
+            sql += " AND tipo = ?"
+            params.append(tipo)
+        if source:
+            sql += " AND source = ?"
+            params.append(source)
+        cur = self.conn.execute(sql, params)
+        self.conn.commit()
+        return cur.rowcount
 
     # ── Scrape log ──────────────────────────────────────────────────────
 

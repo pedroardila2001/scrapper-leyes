@@ -1,6 +1,12 @@
 # Stray root DB (the real one lives in data/catalog.db)
 /catalog.db
 
+# Secretos de respaldo/operación (llaves Wasabi, password Neo4j)
+.env.backup
+.env
+# Copia temporal del catálogo que crea backup_to_wasabi.sh
+data/_catalog_backup.db
+
 # Python
 __pycache__/
 *.py[cod]
@@ -13,3 +19,8 @@ venv/
 .playwright-mcp/
 *-inicial.png
 *-expandida.png
+
+# Node / build
+frontend/node_modules/
+frontend/dist/
+*.tgz

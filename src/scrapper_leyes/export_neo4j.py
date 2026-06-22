@@ -35,8 +35,15 @@ class Neo4jExporter:
     def close(self):
         self.driver.close()
 
-    def export_all(self):
-        """Export entire catalog to Neo4j."""
+    def export_all(self) -> dict[str, int]:
+        """Export entire catalog to Neo4j.
+
+        Cada documento se exporta de forma AISLADA: si uno falla (parsed.json
+        corrupto, dato inesperado) se loguea y se cuenta, pero NO aborta el resto
+        del grafo. Devuelve stats {norms, sentencias, failed}.
+        """
+        stats = {"norms": 0, "sentencias": 0, "failed": 0}
+        failed_ids: list[str] = []
         with self.driver.session() as session:
             # Create constraints/indexes for performance
             self._ensure_indexes(session)
@@ -45,26 +52,43 @@ class Neo4jExporter:
             norms = self.db.conn.execute(
                 "SELECT * FROM catalog WHERE tipo != 'SENTENCIA' AND scrape_status = 'done'"
             ).fetchall()
-            exported_norms = 0
             for row in norms:
-                self._export_norm(session, dict(row))
-                exported_norms += 1
+                d = dict(row)
+                try:
+                    self._export_norm(session, d)
+                    stats["norms"] += 1
+                except Exception as e:
+                    stats["failed"] += 1
+                    failed_ids.append(str(d.get("canonical_id") or d.get("suin_id")))
+                    logger.error("export_norm falló para %s: %s",
+                                 d.get("canonical_id") or d.get("suin_id"), e)
 
-            logger.info(f"Exported {exported_norms} norms to Neo4j")
+            logger.info("Exported %d norms to Neo4j", stats["norms"])
 
             # Export Jurisprudence
             sentencias = self.db.conn.execute(
                 "SELECT * FROM catalog WHERE tipo = 'SENTENCIA' AND scrape_status = 'done'"
             ).fetchall()
-            exported_sent = 0
             for row in sentencias:
-                self._export_sentencia(session, dict(row))
-                exported_sent += 1
+                d = dict(row)
+                try:
+                    self._export_sentencia(session, d)
+                    stats["sentencias"] += 1
+                except Exception as e:
+                    stats["failed"] += 1
+                    failed_ids.append(str(d.get("canonical_id") or d.get("suin_id")))
+                    logger.error("export_sentencia falló para %s: %s",
+                                 d.get("canonical_id") or d.get("suin_id"), e)
 
-            logger.info(f"Exported {exported_sent} sentencias to Neo4j")
+            logger.info("Exported %d sentencias to Neo4j", stats["sentencias"])
 
             # Thematic interconnection via embeddings (beyond explicit citations).
             self._export_similarity_edges(session)
+
+        if stats["failed"]:
+            logger.warning("Neo4j export: %d documentos fallaron: %s",
+                           stats["failed"], ", ".join(failed_ids[:20]))
+        return stats
 
     def _ensure_indexes(self, session):
         """Create indexes and constraints for efficient graph operations."""
@@ -283,6 +307,9 @@ class Neo4jExporter:
                 # ── Export citation edges (CITA_A) ──────────────────────────
                 self._export_citations(session, sent_id, parsed)
 
+                # ── Export typed decision edges (DECLARA_*/SE_INHIBE) ───────
+                self._export_decision_orders(session, sent_id, parsed)
+
     def _export_citations(self, session, source_id: str, parsed: dict[str, Any]):
         """Create CITA_A edges from the citaciones list in parsed data.
 
@@ -327,6 +354,100 @@ class Neo4jExporter:
                 "MERGE (t:Norma {id: c.target_id}) ON CREATE SET t.nombre = c.nombre "
                 "MERGE (s)-[:CITA_A {texto: c.texto}]->(t)",
                 source_id=source_id, citas=norm_citas,
+            )
+
+    # ── Typed decision edges from the parte resolutiva ──────────────────
+
+    # decision_type (sentencia_decision) → (graph relationship, affectation tipo).
+    # The relationship name is human-readable; the `tipo` property carries the
+    # AffectationType value the vigencia engine matches on (None when the outcome
+    # does not change vigencia). Tutela verbs (conceder/negar/…) act on
+    # parties/lower rulings, not norms, so they produce no norm edge.
+    _DECISION_REL = {
+        "EXEQUIBLE": ("DECLARA_EXEQUIBLE", "EXEQUIBLE"),
+        "EXEQUIBLE_CONDICIONADA": ("DECLARA_EXEQUIBLE_CONDICIONADA", "EXEQUIBLE_CONDICIONADA"),
+        "INEXEQUIBLE": ("DECLARA_INEXEQUIBLE", "INEXEQUIBLE"),
+        "INHIBIDA": ("SE_INHIBE", None),
+        "NULIDAD": ("DECLARA_NULIDAD", None),
+        "ESTARSE_A_LO_RESUELTO": ("ESTARSE_A_LO_RESUELTO", None),
+    }
+
+    def _export_decision_orders(self, session, source_id: str, parsed: dict[str, Any]) -> None:
+        """Emit typed edges from a sentencia's RESUELVE to the norms it controls.
+
+        This is the OUTGOING direction (what THIS ruling decided), complementing
+        SUIN's incoming jurisprudence backlinks. Edges point at the *article*
+        node when the order names a specific article, else the *norm* node, and
+        carry ``source='resuelve'`` + ``tipo`` so the vigencia engine consumes
+        them exactly like SUIN/jurisprudence affectations. Grouped by
+        (relationship, target label) via UNWIND.
+        """
+        from scrapper_leyes.models import build_canonical_id
+
+        orders = parsed.get("orders") or []
+        if not orders:
+            return
+
+        sent_anio = parsed.get("metadata", {}).get("anio") or ""
+
+        # Group by (relationship, target label) so each batch uses literal labels
+        # (no APOC dep). Both come from fixed whitelists → safe to interpolate.
+        by_key: dict[tuple[str, str], list[dict[str, Any]]] = {}
+        for order in orders:
+            mapping = self._DECISION_REL.get(order.get("decision_type", ""))
+            if not mapping:
+                continue
+            rel, tipo = mapping
+            for target in order.get("targets") or []:
+                ttype = target.get("type", "")
+                numero = target.get("numero", "")
+                anio = target.get("anio", "")
+                if not numero or not anio:
+                    # Unanchored target (e.g. "la Constitución") — skip typed edge.
+                    continue
+                articulo = (target.get("articulo") or "").strip()
+                # Article-level node when the order names an article, else norm.
+                target_id = build_canonical_id(
+                    ttype, str(numero), str(anio), art=articulo or None
+                )
+                norm_id = build_canonical_id(ttype, str(numero), str(anio))
+                label = "Sentencia" if ":sentencia:" in target_id else (
+                    "Articulo" if articulo else "Norma"
+                )
+                by_key.setdefault((rel, label), []).append(
+                    {
+                        "tid": target_id,
+                        "tname": target.get("raw", "").replace("\n", " ").strip()[:120],
+                        "tipo": tipo,
+                        "articulo": articulo,
+                        "anio": str(sent_anio),
+                        "orden": order.get("order_number"),
+                        "scope": order.get("scope") or "",
+                        "condicion": order.get("condicion") or "",
+                        "norm_id": norm_id,
+                    }
+                )
+
+        for (rel, label), items in by_key.items():
+            # Article nodes are linked to their parent norm (PERTENECE_A) so the
+            # graph stays connected even if the norm wasn't ingested.
+            link_parent = (
+                "MERGE (n:Norma {id: it.norm_id}) MERGE (t)-[:PERTENECE_A]->(n) "
+                if label == "Articulo"
+                else ""
+            )
+            session.run(
+                "MATCH (s:Sentencia {id: $source_id}) "
+                "UNWIND $items AS it "
+                f"MERGE (t:{label} {{id: it.tid}}) "
+                "  ON CREATE SET t.nombre = it.tname "
+                f"{link_parent}"
+                f"MERGE (s)-[r:{rel}]->(t) "
+                "SET r.orden = it.orden, r.scope = it.scope, r.condicion = it.condicion, "
+                "    r.source = 'resuelve', r.tipo = it.tipo, r.articulo = it.articulo, "
+                "    r.anio = it.anio",
+                source_id=source_id,
+                items=items,
             )
 
     # ── Similarity edges (embeddings) ───────────────────────────────────

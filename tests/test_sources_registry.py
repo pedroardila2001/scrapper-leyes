@@ -27,12 +27,20 @@ def test_registro_cubre_las_fuentes_que_faltaban():
         assert get_source(key).spike, f"{key} sin spike definido"
 
 
-def test_suin_operativo_y_nuevas_pendientes():
+def test_conectores_construidos_y_sin_pendientes_puros():
+    from scrapper_leyes.sources import EST_ANDAMIAJE, EST_PENDIENTE
+
     assert get_source("suin").implementado
-    pend = {s.key for s in pending_sources()}
-    assert "corte_idh" in pend and "banco_republica" in pend
-    # Las comisiones ya tienen discoverer (parcial) → no están pendientes.
-    assert get_source("creg").implementado
+    # Conectores construidos y verificados en vivo que descubren docs reales (parcial).
+    for k in ("jep", "can", "banco_republica", "organos_control", "regimen_bogota",
+              "creg", "corte_idh", "cne", "funcion_publica"):
+        assert get_source(k).implementado, k
+    # Andamiaje: discoverer escrito pero el buscador real es JSF/AJAX/WAF (pendiente
+    # de capturar el endpoint). Honesto, no falso positivo.
+    assert get_source("diario_oficial").estado == EST_ANDAMIAJE
+    assert get_source("diario_oficial") in pending_sources()  # andamiaje ⊂ no-implementado
+    # Ya NINGUNA fuente queda como 'pendiente' pura: todas tienen conector cableado.
+    assert [s.key for s in all_sources() if s.estado == EST_PENDIENTE] == []
 
 
 def test_specs_bien_formados():
@@ -51,8 +59,10 @@ def test_factory_error_accionable():
     from scrapper_leyes.scraper.factory import ScraperFactory
 
     f = ScraperFactory(Settings(), db=None, cache=None)
+    # corte_idh YA tiene discoverer; lo que aún falta es el scraper de TEXTO →
+    # ahí debe seguir el error accionable con el spike.
     with pytest.raises(NotImplementedError) as exc:
-        f.get_discoverer("corte_idh")
+        f.get_scraper("corte_idh")
     assert "Corte Interamericana" in str(exc.value)
     assert "Spike" in str(exc.value)
     with pytest.raises(ValueError):

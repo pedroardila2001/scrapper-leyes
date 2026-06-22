@@ -4,7 +4,7 @@
     "tipo": "DECRETO",
     "numero": "1941",
     "anio": "1991",
-    "fecha": "199108\r\nscript\r\nvar date = new Date(09/08/1991); document.write(date.getDate());\r\nscript",
+    "fecha": "199108\nscript\nvar date = new Date(09/08/1991); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXXVII. N. 39964. 12, AGOSTO, 1991. PÁG. 7.",
@@ -33,37 +33,40 @@
       "text": "Articulo 1ºSuprímense de la Planta de Personal del Departamento Administrativo Nacional de Cooperativas, los siguientes cargos:\n\nNIVEL NACIONAL\n\nNº de cargos\n\nDependencia y denominación del empleo\n\nCódigo\n\nGrado\n\nDespacho del Secretario General.\n\n2\n\nProfesional Especializado\n\n3010\n\n10",
       "canonical_id": "co:decreto:1941:1991:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1755128",
-      "number": "Articulo 1º",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Articulo 1ºSuprímense de la Planta de Personal del Departamento Administrativo Nacional de Cooperativas, los siguientes cargos:\n\nNIVEL NACIONAL\n\nNº de cargos\n\nDependencia y denominación del empleo\n\nCódigo\n\nGrado\n\nDespacho del Secretario General.\n\n2\n\nProfesional Especializado\n\n3010\n\n10",
-      "canonical_id": "co:decreto:1941:1991:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1755129",
       "number": "Artículo 2º",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2ºCréanse en la Planta de Personal del Departamento Administrativo Nacional de Cooperativas, los siguientes cargos:\n\nNº de cargos\n\nDependencia y denominación del empleo\n\nCódigo\n\nGrado\n\nDespacho del Director.\n\n2\n\nProfesional Especializado\n\n3010\n\n10",
       "canonical_id": "co:decreto:1941:1991:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1755130",
+      "art_id": "1755129",
       "number": "Artículo 3º",
       "number_normalized": "3",
       "title": null,
-      "text": "Artículo 3ºEl presente Decreto rige a partir de la fecha de su publicación, modifica en lo pertinente el Decreto 22 de 1987 y deroga las disposiciones que le sean contrarias.\n\nAfecta la vigencia de:[Mostrar]",
+      "text": "Artículo 3ºEl presente Decreto rige a partir de la fecha de su publicación, modifica en lo pertinente el Decreto 22 de 1987 y deroga las disposiciones que le sean contrarias.",
       "canonical_id": "co:decreto:1941:1991:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": [
+        {
+          "normalized_type": "MODIFICA",
+          "raw_type": "Modifica en lo pertinente",
+          "mapped": true,
+          "target_text": "DECRETO 22 de 1987",
+          "target_suin_id": "1699980",
+          "target_anchor": null,
+          "context": null
+        }
+      ]
     }
   ],
   "modifications": [],

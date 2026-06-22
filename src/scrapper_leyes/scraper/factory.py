@@ -76,14 +76,52 @@ class ScraperFactory:
         """Get the crawl-driven discoverer for a source.
 
         Los discoverers enumeran documentos desde el buscador propio de la fuente
-        (CSJ, Consejo de Estado, normogramas, relatorías internacionales). Se
-        implementan por fuente; hasta entonces esto lanza un error con el spike.
+        (CSJ, Consejo de Estado, normogramas, relatorías internacionales y
+        territoriales). Cada familia tiene su mecanismo (JSF, API Buscar.ashx,
+        Drupal Views, blob, PDF determinístico…); aquí se despacha al adecuado.
+        Una fuente registrada sin discoverer lanza un error accionable con su spike.
         """
+        # Normogramas "Avance Jurídico" (mismo motor que SUIN): DIAN, CREG, CRC, CRA.
         from scrapper_leyes.scraper.normograma_discoverer import NORMOGRAMA_SOURCES
         if source in NORMOGRAMA_SOURCES:
             from scrapper_leyes.scraper.normograma_discoverer import NormogramaDiscoverer
             return NormogramaDiscoverer(source)
+        # Altas cortes vía WebRelatoria (PrimeFaces/JSF).
         if source in ("csj", "consejo_estado"):
             from scrapper_leyes.scraper.webrelatoria_discoverer import WebRelatoriaDiscoverer
             return WebRelatoriaDiscoverer(source)
+        # Resto de fuentes: un discoverer por familia.
+        if source == "jep":
+            from scrapper_leyes.scraper.jep_discoverer import JEPDiscoverer
+            return JEPDiscoverer()
+        if source == "corte_idh":
+            from scrapper_leyes.scraper.corteidh_discoverer import CorteIDHDiscoverer
+            return CorteIDHDiscoverer()
+        if source == "can":
+            from scrapper_leyes.scraper.can_discoverer import CANDiscoverer
+            return CANDiscoverer()
+        if source == "funcion_publica":
+            from scrapper_leyes.scraper.eva_discoverer import EVADiscoverer
+            return EVADiscoverer()
+        if source == "cne":
+            from scrapper_leyes.scraper.cne_discoverer import CNEDiscoverer
+            return CNEDiscoverer()
+        if source == "organos_control":
+            from scrapper_leyes.scraper.organos_control_discoverer import OrganosControlDiscoverer
+            return OrganosControlDiscoverer()
+        if source == "banco_republica":
+            from scrapper_leyes.scraper.banco_republica_discoverer import BancoRepublicaDiscoverer
+            return BancoRepublicaDiscoverer()
+        if source == "diario_oficial":
+            from scrapper_leyes.scraper.diario_oficial_discoverer import DiarioOficialDiscoverer
+            return DiarioOficialDiscoverer()
+        if source == "regimen_bogota":
+            from scrapper_leyes.scraper.regimen_bogota_discoverer import RegimenBogotaDiscoverer
+            return RegimenBogotaDiscoverer()
+        if source == "gaceta_congreso":
+            from scrapper_leyes.scraper.gaceta_congreso_discoverer import GacetaCongresoDiscoverer
+            return GacetaCongresoDiscoverer()
+        if source == "superintendencias":
+            from scrapper_leyes.scraper.superintendencias_discoverer import SuperintendenciasDiscoverer
+            return SuperintendenciasDiscoverer()
         raise self._no_conector(source, "discoverer")

@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "2132",
     "anio": "2021",
-    "fecha": "202108\r\nscript\r\nvar date = new Date(04/08/2021); document.write(date.getDate());\r\nscript",
+    "fecha": "202108\nscript\nvar date = new Date(04/08/2021); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "Año CLVII No. 51.756 Bogotá, D. C., miércoles, 4 de agosto de 2021 Página 23",
@@ -29,18 +29,19 @@
       "number": "Artículo 1°. Objetivo.",
       "number_normalized": "1",
       "title": null,
-      "text": "Artículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario Nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana y el orgullo por sus saberes ancestrales, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y la importancia que tienen para la conservación de la identidad cultural de los pueblos indígenas y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\n\nTEXTO CORRESPONDIENTE A[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "text": "Artículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario Nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana y el orgullo por sus saberes ancestrales, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y la importancia que tienen para la conservación de la identidad cultural de los pueblos indígenas y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\n\nArtículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.",
       "canonical_id": "co:ley:2132:2021:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "30364513",
-      "number": "Artículo 1°. Objetivo.",
-      "number_normalized": "1",
+      "number": "Artículo 2°. Ámbito de aplicación.",
+      "number_normalized": "2",
       "title": null,
-      "text": "Artículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario Nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana y el orgullo por sus saberes ancestrales, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y la importancia que tienen para la conservación de la identidad cultural de los pueblos indígenas y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\n\nTEXTO CORRESPONDIENTE A[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
-      "canonical_id": "co:ley:2132:2021:art:1",
+      "text": "Artículo 2°. Ámbito de aplicación.Las disposiciones contenidas en la presente ley están dirigidas a todos los niños, niñas y adolescentes de los pueblos indígenas de Colombia que se encuentran dentro y fuera de los territorios indígenas.",
+      "canonical_id": "co:ley:2132:2021:art:2",
       "notes": [
         "ModificadoArtículo 3 LEY 2517 de 2025"
       ],
@@ -49,37 +50,27 @@
           "text": "Artículo 1°. Objetivo.La presente ley tiene por objeto establecer e institucionalizar en el calendario nacional el 26 de agosto como el día Nacional de la Niñez y Adolescencia Indígena Colombiana, para reivindicar la importancia de los niños, las niñas y los adolescentes indígenas como sujetos de derechos, de especial protección y consolidar en el país una cultura de protección y reconocimiento hacia los mismos.\nTEXTO CORRESPONDIENTE A[Mostrar]",
           "date_range": "Vigente desde: 04/08/2021 y hasta el: 04/08/2025"
         }
-      ]
-    },
-    {
-      "art_id": "30249765",
-      "number": "Artículo 2°. Ámbito de aplicación.",
-      "number_normalized": "2",
-      "title": null,
-      "text": "Artículo 2°. Ámbito de aplicación.Las disposiciones contenidas en la presente ley están dirigidas a todos los niños, niñas y adolescentes de los pueblos indígenas de Colombia que se encuentran dentro y fuera de los territorios indígenas.",
-      "canonical_id": "co:ley:2132:2021:art:2",
-      "notes": [
-        "ModificadoArtículo 3 LEY 2517 de 2025"
       ],
-      "previous_versions": []
+      "affects": []
     },
     {
       "art_id": "30249766",
-      "number": "Artículo 2°. Ámbito de aplicación.",
-      "number_normalized": "2",
-      "title": null,
-      "text": "Artículo 2°. Ámbito de aplicación.Las disposiciones contenidas en la presente ley están dirigidas a todos los niños, niñas y adolescentes de los pueblos indígenas de Colombia que se encuentran dentro y fuera de los territorios indígenas.",
-      "canonical_id": "co:ley:2132:2021:art:2",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30364514",
       "number": "Artículo 3. Conmemoración.",
       "number_normalized": "3",
       "title": null,
-      "text": "Artículo 3. Conmemoración.Autorícese al Ministerio del Interior, en coordinación con el Ministerio de Salud y Protección Social, el Ministerio de Educación Nacional, el Ministerio de Igualdad y Equidad, el Ministerio del Trabajo, el Ministerio de Cultura las Artes y los Saberes, el Ministerio de Agricultura Y Desarrollo Rural y el Instituto Colombiano del Bienestar Familiar (ICBF), para que cada 26 de agosto, adelanten acciones de conmemoración para propiciar el desarrollo de programas, actividades y eventos, que:\n\n1. Incidan en la inclusión de la niñez y adolescencia indígena como un asunto prioritario de la agenda pública, legislativa y mediática, así como de los órganos de control, las orga­nizaciones y las autoridades indígenas del nivel nacional, regional y local;\n\n2. Reivindiquen a los niños, las niñas y los adolescentes in­dígenas, incluyendo a quienes tienen diversidad funcional, como sujetos de derechos y de políticas públicas afirmati­vas diferenciales y especiales;\n\n3. Celebren su vida, existencia y su rol en la pervivencia de los saberes ancestrales y la cultura de los pueblos indíge­nas.\n\n4. Permitan la presentación de informes sobre el desarrollo de las políticas públicas implementadas a nivel nacional y te­rritorial frente a la protección de los niños, niñas y adoles­centes indígenas y la promoción de la conservación de sus saberes ancestrales.\n\n5. Incluyan la participación en igualdad de género de las li­deresas de las comunidades en las mesas de concertación, resguardos y cabildos a cargo de la planeación de activida­des conmemorativas con el fin de garantizar la inclusión de las niñas y las mujeres en las actividades culturales y los juegos ancestrales.\n\nParágrafo 1°. El Ministerio del Interior, en coordinación con el Ministerio de Salud y Protección Social, el Ministerio de Educación Nacional, el Ministerio de Igualdad y Equidad, el Ministerio del Trabajo, el Ministerio de Cultura las Artes y los Saberes, el Ministerio de Agricultura y Desarrollo Rural y el Instituto Colombiano del Bienestar Familiar (ICBF) y demás instituciones competentes orientarán a los Gobiernos locales y darán publicidad de esta ley para su aplicación y presentarán un informe en esta fecha a la Mesa Permanente de Concertación Indígena (MPC), y a la Comisión Nacional de Mujeres Indígenas (CNMI), sobre la situación de vulnerabilidad y riesgo de exterminio de la niñez y adolescencia indígena, y riesgo de cualquier tipo de violencia, así como del estado de avance e implementación de los programas orientados a la garantía de los derechos de esta población.\n\nParágrafo 2º. Cada pueblo indígena tendrá la completa libertad de realizar la conmemoración y celebración del Día de la Niñez y Adolescencia Indígena el orgullo por sus saberes ancestrales, según sus respectivas costumbres y creencias, es decir, tendrán la potestad de determinar la manera en que se llevarán a cabo las actividades y eventos de la conmemoración en sus pueblos según sus propias creencias sobre el papel y significado de la niñez en cada uno de ellos. Dando protección a la diversidad que existe en los diferentes pueblos indígenas, permitiendo que no se desconozca la multiculturalidad existente en el territorio colombiano.\n\nTEXTO CORRESPONDIENTE A[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 3. Conmemoración.Autorícese al Ministerio del Interior, en coordinación con el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo y el Instituto Colombiano del Bienestar Familiar (ICBF), para que cada 26 de agosto, adelanten acciones de conmemoración para propiciar el desarrollo de programas, actividades y eventos, que:\n\n1. Incidan en la inclusión de la niñez y adolescencia indígena como un asunto prioritario de la agenda pública, legislativa y mediáti­ca, así como de los órganos de control, las organizaciones y las autoridades indígenas del nivel nacional, regional y local;\n\n2. Reivindiquen a los niños, las niñas y los adolescentes indígenas, incluyendo a quienes tienen diversidad funcional, como sujetos de derechos y de políticas públicas afirmativas diferenciales y especiales;\n\n3. Celebren su vida, existencia y su rol en la pervivencia de la cul­tura de los pueblos indígenas.\n\nParágrafo 1°.El Ministerio del Interior, el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo, el Instituto Colombiano de Bienestar Familiar (ICBF) y demás instituciones competentes presentarán un informe en esta fecha a la Mesa Permanente de Concertación Indígena (MPC), y a la Comisión Nacional de Mujeres Indígenas (CNMI), sobre la situación de vulnerabilidad y riesgo de exterminio de la niñez y adolescencia indígena, y riesgo de cualquier tipo de violencia, así como del estado de avance e implementación de los programas orientados a la garantía de los derechos de esta población.\n\nParágrafo 2°.Cada pueblo indígena tendrá la completa libertad de realizar la conmemoración y celebración del día de la Niñez y Adolescencia Indígena, según sus respectivas costumbres y creencias, es decir, tendrán la potestad de determinar la manera en que se llevarán a cabo las actividades y eventos de la conmemoración en sus pueblos según sus propias creencias sobre el papel y significado de la niñez en cada uno de ellos. Dando protección a la diversidad que existe en los diferentes pueblos indígenas, permitiendo que no se desconozca la multiculturalidad existente en el territorio colombiano.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "text": "Artículo 3. Conmemoración.Autorícese al Ministerio del Interior, en coordinación con el Ministerio de Salud y Protección Social, el Ministerio de Educación Nacional, el Ministerio de Igualdad y Equidad, el Ministerio del Trabajo, el Ministerio de Cultura las Artes y los Saberes, el Ministerio de Agricultura Y Desarrollo Rural y el Instituto Colombiano del Bienestar Familiar (ICBF), para que cada 26 de agosto, adelanten acciones de conmemoración para propiciar el desarrollo de programas, actividades y eventos, que:\n\n1. Incidan en la inclusión de la niñez y adolescencia indígena como un asunto prioritario de la agenda pública, legislativa y mediática, así como de los órganos de control, las orga­nizaciones y las autoridades indígenas del nivel nacional, regional y local;\n\n2. Reivindiquen a los niños, las niñas y los adolescentes in­dígenas, incluyendo a quienes tienen diversidad funcional, como sujetos de derechos y de políticas públicas afirmati­vas diferenciales y especiales;\n\n3. Celebren su vida, existencia y su rol en la pervivencia de los saberes ancestrales y la cultura de los pueblos indíge­nas.\n\n4. Permitan la presentación de informes sobre el desarrollo de las políticas públicas implementadas a nivel nacional y te­rritorial frente a la protección de los niños, niñas y adoles­centes indígenas y la promoción de la conservación de sus saberes ancestrales.\n\n5. Incluyan la participación en igualdad de género de las li­deresas de las comunidades en las mesas de concertación, resguardos y cabildos a cargo de la planeación de activida­des conmemorativas con el fin de garantizar la inclusión de las niñas y las mujeres en las actividades culturales y los juegos ancestrales.\n\nParágrafo 1°. El Ministerio del Interior, en coordinación con el Ministerio de Salud y Protección Social, el Ministerio de Educación Nacional, el Ministerio de Igualdad y Equidad, el Ministerio del Trabajo, el Ministerio de Cultura las Artes y los Saberes, el Ministerio de Agricultura y Desarrollo Rural y el Instituto Colombiano del Bienestar Familiar (ICBF) y demás instituciones competentes orientarán a los Gobiernos locales y darán publicidad de esta ley para su aplicación y presentarán un informe en esta fecha a la Mesa Permanente de Concertación Indígena (MPC), y a la Comisión Nacional de Mujeres Indígenas (CNMI), sobre la situación de vulnerabilidad y riesgo de exterminio de la niñez y adolescencia indígena, y riesgo de cualquier tipo de violencia, así como del estado de avance e implementación de los programas orientados a la garantía de los derechos de esta población.\n\nParágrafo 2º. Cada pueblo indígena tendrá la completa libertad de realizar la conmemoración y celebración del Día de la Niñez y Adolescencia Indígena el orgullo por sus saberes ancestrales, según sus respectivas costumbres y creencias, es decir, tendrán la potestad de determinar la manera en que se llevarán a cabo las actividades y eventos de la conmemoración en sus pueblos según sus propias creencias sobre el papel y significado de la niñez en cada uno de ellos. Dando protección a la diversidad que existe en los diferentes pueblos indígenas, permitiendo que no se desconozca la multiculturalidad existente en el territorio colombiano.\n\nArtículo 3. Conmemoración.Autorícese al Ministerio del Interior, en coordinación con el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo y el Instituto Colombiano del Bienestar Familiar (ICBF), para que cada 26 de agosto, adelanten acciones de conmemoración para propiciar el desarrollo de programas, actividades y eventos, que:\n\n1. Incidan en la inclusión de la niñez y adolescencia indígena como un asunto prioritario de la agenda pública, legislativa y mediáti­ca, así como de los órganos de control, las organizaciones y las autoridades indígenas del nivel nacional, regional y local;\n\n2. Reivindiquen a los niños, las niñas y los adolescentes indígenas, incluyendo a quienes tienen diversidad funcional, como sujetos de derechos y de políticas públicas afirmativas diferenciales y especiales;\n\n3. Celebren su vida, existencia y su rol en la pervivencia de la cul­tura de los pueblos indígenas.\n\nParágrafo 1°.El Ministerio del Interior, el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo, el Instituto Colombiano de Bienestar Familiar (ICBF) y demás instituciones competentes presentarán un informe en esta fecha a la Mesa Permanente de Concertación Indígena (MPC), y a la Comisión Nacional de Mujeres Indígenas (CNMI), sobre la situación de vulnerabilidad y riesgo de exterminio de la niñez y adolescencia indígena, y riesgo de cualquier tipo de violencia, así como del estado de avance e implementación de los programas orientados a la garantía de los derechos de esta población.\n\nParágrafo 2°.Cada pueblo indígena tendrá la completa libertad de realizar la conmemoración y celebración del día de la Niñez y Adolescencia Indígena, según sus respectivas costumbres y creencias, es decir, tendrán la potestad de determinar la manera en que se llevarán a cabo las actividades y eventos de la conmemoración en sus pueblos según sus propias creencias sobre el papel y significado de la niñez en cada uno de ellos. Dando protección a la diversidad que existe en los diferentes pueblos indígenas, permitiendo que no se desconozca la multiculturalidad existente en el territorio colombiano.",
       "canonical_id": "co:ley:2132:2021:art:3",
+      "notes": [],
+      "previous_versions": [],
+      "affects": []
+    },
+    {
+      "art_id": "30364514",
+      "number": "Artículo 4°. Veedurías.",
+      "number_normalized": "4",
+      "title": null,
+      "text": "Artículo 4°. Veedurías.Créese una instancia de seguimiento en el marco de la Mesa Permanente de Concertación Indígena (MPC) y de la Comisión Nacional de Mujeres Indígenas (CNMI), que haga veeduría a las normas y políticas públicas relacionadas con la niñez y adolescencia indígena.",
+      "canonical_id": "co:ley:2132:2021:art:4",
       "notes": [
         "ModificadoArtículo 4 LEY 2517 de 2025"
       ],
@@ -88,47 +79,38 @@
           "text": "Artículo 3. Conmemoración.Autorícese al Ministerio del Interior, en coordinación con el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo y el Instituto Colombiano del Bienestar Familiar (ICBF), para que cada 26 de agosto, adelanten acciones de conmemoración para propiciar el desarrollo de programas, actividades y eventos, que:\n1. Incidan en la inclusión de la niñez y adolescencia indígena como un asunto prioritario de la agenda pública, legislativa y mediáti­ca, así como de los órganos de control, las organizaciones y las autoridades indígenas del nivel nacional, regional y local;\n2. Reivindiquen a los niños, las niñas y los adolescentes indígenas, incluyendo a quienes tienen diversidad funcional, como sujetos de derechos y de políticas públicas afirmativas diferenciales y especiales;\n3. Celebren su vida, existencia y su rol en la pervivencia de la cul­tura de los pueblos indígenas.\nParágrafo 1°.El Ministerio del Interior, el Ministerio de Salud, el Ministerio de Educación, el Ministerio del Trabajo, el Instituto Colombiano de Bienestar Familiar (ICBF) y demás instituciones competentes presentarán un informe en esta fecha a la Mesa Permanente de Concertación Indígena (MPC), y a la Comisión Nacional de Mujeres Indígenas (CNMI), sobre la situación de vulnerabilidad y riesgo de exterminio de la niñez y adolescencia indígena, y riesgo de cualquier tipo de violencia, así como del estado de avance e implementación de los programas orientados a la garantía de los derechos de esta población.\nParágrafo 2°.Cada pueblo indígena tendrá la completa libertad de realizar la conmemoración y celebración del día de la Niñez y Adolescencia Indígena, según sus respectivas costumbres y creencias, es decir, tendrán la potestad de determinar la manera en que se llevarán a cabo las actividades y eventos de la conmemoración en sus pueblos según sus propias creencias sobre el papel y significado de la niñez en cada uno de ellos. Dando protección a la diversidad que existe en los diferentes pueblos indígenas, permitiendo que no se desconozca la multiculturalidad existente en el territorio colombiano.\nTEXTO CORRESPONDIENTE A[Mostrar]",
           "date_range": "Vigente desde: 04/08/2021 y hasta el: 04/08/2025"
         }
-      ]
-    },
-    {
-      "art_id": "30249767",
-      "number": "Artículo 4°. Veedurías.",
-      "number_normalized": "4",
-      "title": null,
-      "text": "Artículo 4°. Veedurías.Créese una instancia de seguimiento en el marco de la Mesa Permanente de Concertación Indígena (MPC) y de la Comisión Nacional de Mujeres Indígenas (CNMI), que haga veeduría a las normas y políticas públicas relacionadas con la niñez y adolescencia indígena.",
-      "canonical_id": "co:ley:2132:2021:art:4",
-      "notes": [
-        "ModificadoArtículo 4 LEY 2517 de 2025"
       ],
-      "previous_versions": []
+      "affects": []
     },
     {
       "art_id": "30249768",
-      "number": "Artículo 4°. Veedurías.",
-      "number_normalized": "4",
-      "title": null,
-      "text": "Artículo 4°. Veedurías.Créese una instancia de seguimiento en el marco de la Mesa Permanente de Concertación Indígena (MPC) y de la Comisión Nacional de Mujeres Indígenas (CNMI), que haga veeduría a las normas y políticas públicas relacionadas con la niñez y adolescencia indígena.",
-      "canonical_id": "co:ley:2132:2021:art:4",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30249769",
       "number": "Artículo 5°. Campañas de conmemoración.",
       "number_normalized": "5",
       "title": null,
       "text": "Artículo 5°. Campañas de conmemoración.El Ministerio de las Tecnologías de la Información y las Comunicaciones, en coordinación con la Mesa Permanente de Concertación Indígena (MPC), y la Comisión Nacional de Mujeres Indígenas (CNMI), adelantarán campañas de conmemoración de la niñez y la adolescencia indígena, que propicien y visibilicen en la sociedad la valoración de sus aportes en la pervivencia de los pueblos y en la construcción de Nación.",
       "canonical_id": "co:ley:2132:2021:art:5",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30364515",
+      "art_id": "30249769",
       "number": "Artículo 6°.",
       "number_normalized": "6",
       "title": null,
-      "text": "Artículo 6°.Autorizase a los entes territoriales, al Senado de la República, la Cámara de Representantes, las Asambleas Departamentales, los Concejos Municipales y las Juntas Administradoras Locales para que dentro del ámbito de sus competencias y de su autonomía administrativa y presupuestal, puedan realizar actos públicos de conmemoración del día Nacional de la Niñez y Adolescencia Indígena Colombiana el orgullo por sus saberes ancestrales.\n\nParágrafo 1º. Las autoridades deberán invitar a los representantes de las asociaciones indígenas, las mesas de concertación, los resguardos y los cabildos del municipio o departamento, a participar en la conformación de la agenda de esta celebración, de acuerdo con las tradiciones y vocación local, garantizando la consulta a las comunidades con la participación efectiva de los niños, niñas y adolescentes indígenas.\n\nTEXTO CORRESPONDIENTE A[Mostrar]\n\nLEGISLACIÓN  ANTERIOR[Mostrar]\n\nArtículo 6°.La presente ley rige a partir de la fecha de su sanción, promulgación y publicación en elDiario Oficial.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
+      "text": "Artículo 6°.Autorizase a los entes territoriales, al Senado de la República, la Cámara de Representantes, las Asambleas Departamentales, los Concejos Municipales y las Juntas Administradoras Locales para que dentro del ámbito de sus competencias y de su autonomía administrativa y presupuestal, puedan realizar actos públicos de conmemoración del día Nacional de la Niñez y Adolescencia Indígena Colombiana el orgullo por sus saberes ancestrales.\n\nParágrafo 1º. Las autoridades deberán invitar a los representantes de las asociaciones indígenas, las mesas de concertación, los resguardos y los cabildos del municipio o departamento, a participar en la conformación de la agenda de esta celebración, de acuerdo con las tradiciones y vocación local, garantizando la consulta a las comunidades con la participación efectiva de los niños, niñas y adolescentes indígenas.\n\nArtículo 6°.La presente ley rige a partir de la fecha de su sanción, promulgación y publicación en elDiario Oficial.",
       "canonical_id": "co:ley:2132:2021:art:6",
+      "notes": [],
+      "previous_versions": [],
+      "affects": []
+    },
+    {
+      "art_id": "30364515",
+      "number": "Artículo 7º",
+      "number_normalized": "7",
+      "title": null,
+      "text": "Artículo 7º.El Gobierno nacional, los entes territoriales y las corporaciones públicas podrán, destinar recursos públicos para la celebración del “Día Nacional de la Niñez y Adolescencia Indígena Colombiana el orgullo por sus saberes ancestrales”, en los términos permitidos por la constitución y la ley. Las actividades se realizarán en las fechas establecidas por la presente ley, con el objetivo de fomentar la cultura, la identidad, la economía y el bienestar de los niños y niñas indígenas.",
+      "canonical_id": "co:ley:2132:2021:art:7",
       "notes": [
         "SustituidoArtículo 5 LEY 2517 de 2025"
       ],
@@ -137,31 +119,8 @@
           "text": "Artículo 6°.La presente ley rige a partir de la fecha de su sanción, promulgación y publicación en elDiario Oficial.\nTEXTO CORRESPONDIENTE A[Mostrar]",
           "date_range": "Vigente desde: 04/08/2021 y hasta el: 04/08/2025"
         }
-      ]
-    },
-    {
-      "art_id": "30249770",
-      "number": "Artículo 7º",
-      "number_normalized": "7",
-      "title": null,
-      "text": "Artículo 7º.El Gobierno nacional, los entes territoriales y las corporaciones públicas podrán, destinar recursos públicos para la celebración del “Día Nacional de la Niñez y Adolescencia Indígena Colombiana el orgullo por sus saberes ancestrales”, en los términos permitidos por la constitución y la ley. Las actividades se realizarán en las fechas establecidas por la presente ley, con el objetivo de fomentar la cultura, la identidad, la economía y el bienestar de los niños y niñas indígenas.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
-      "canonical_id": "co:ley:2132:2021:art:7",
-      "notes": [
-        "SustituidoArtículo 5 LEY 2517 de 2025"
       ],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30364516",
-      "number": "Artículo 7º",
-      "number_normalized": "7",
-      "title": null,
-      "text": "Artículo 7º.El Gobierno nacional, los entes territoriales y las corporaciones públicas podrán, destinar recursos públicos para la celebración del “Día Nacional de la Niñez y Adolescencia Indígena Colombiana el orgullo por sus saberes ancestrales”, en los términos permitidos por la constitución y la ley. Las actividades se realizarán en las fechas establecidas por la presente ley, con el objetivo de fomentar la cultura, la identidad, la economía y el bienestar de los niños y niñas indígenas.\n\nTEXTO CORRESPONDIENTE A[Mostrar]",
-      "canonical_id": "co:ley:2132:2021:art:7",
-      "notes": [
-        "AdicionadoArtículo 6 LEY 2517 de 2025"
-      ],
-      "previous_versions": []
+      "affects": []
     }
   ],
   "modifications": [

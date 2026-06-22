@@ -5,7 +5,8 @@ import Dashboard from "./components/Dashboard";
 import GlobalGraph from "./components/GlobalGraph";
 import Biblioteca from "./components/Biblioteca";
 import Fuentes from "./components/Fuentes";
-import { Scale, LayoutDashboard, BookOpen, Network, Library, Database } from "lucide-react";
+import Jurimetria from "./components/Jurimetria";
+import { Scale, LayoutDashboard, BookOpen, Network, Library, Database, BarChart3 } from "lucide-react";
 import "./App.css";
 
 function Sidebar() {
@@ -42,6 +43,10 @@ function Sidebar() {
           <Database className="icon" size={18} />
           <span>Fuentes</span>
         </Link>
+        <Link to="/jurimetria" className={isActive("/jurimetria")}>
+          <BarChart3 className="icon" size={18} />
+          <span>Jurimetría</span>
+        </Link>
       </nav>
       <div className="sidebar-footer">
         <p>Bodega Legal v1.0</p>
@@ -64,6 +69,7 @@ function App() {
               <Route path="/norm/:id" element={<DocumentView />} />
               <Route path="/global" element={<GlobalGraph />} />
               <Route path="/fuentes" element={<Fuentes />} />
+              <Route path="/jurimetria" element={<Jurimetria />} />
             </Routes>
           </div>
         </main>

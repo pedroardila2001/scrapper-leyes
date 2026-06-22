@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1160",
     "anio": "2007",
-    "fecha": "200709\r\nscript\r\nvar date = new Date(26/09/2007); document.write(date.getDate());\r\nscript",
+    "fecha": "200709\nscript\nvar date = new Date(26/09/2007); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLIII. N. 46763. 26, SEPTIEMBRE, 2007. PÁG. 1.",
@@ -34,37 +34,30 @@
       "text": "Artículo 1°.Apruébanse los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994).",
       "canonical_id": "co:ley:1160:2007:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1696127",
-      "number": "Artículo 1°.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1°.Apruébanse los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994).",
-      "canonical_id": "co:ley:1160:2007:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1696128",
       "number": "Artículo 2°.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, los “Estatutos del Consejo Iberoamericano del Deporte (CID)”, firmados en la ciudad de Montevideo, República Oriental del Uruguay, el cuatro (4) de agosto de mil novecientos noventa y cuatro (1994), que por el artículo 1° de esta ley se aprueba, obligarán al país a partir de la fecha en que se perfeccione el vínculo internacional respecto del mismo.",
       "canonical_id": "co:ley:1160:2007:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1696129",
+      "art_id": "1696128",
       "number": "Artículo 3°.",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
       "canonical_id": "co:ley:1160:2007:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

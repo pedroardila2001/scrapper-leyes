@@ -9,6 +9,8 @@ services:
     environment:
       NEO4J_AUTH: neo4j/password
       NEO4J_PLUGINS: '["apoc"]'
+      # Permite el export del grafo a archivo (Tier 4 de backup_to_wasabi.sh).
+      NEO4J_apoc_export_file_enabled: 'true'
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
@@ -55,7 +57,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: scrapper-leyes-app
+      args:
+        INSTALL_INGEST: "true"   # incluye docling (HTML/PDF→Markdown) para scrape/reparse
+    image: scrapper-leyes-ingest
     container_name: legal_pipeline
     profiles: ["cli"]
     environment:
@@ -80,6 +84,28 @@ services:
       - "5173:80"
     depends_on:
       - api
+    restart: unless-stopped
+
+  # ── Servidor MCP (tools para LLMs) ─────────────────────────────────────
+  # Arrancar con: docker compose --profile mcp up -d mcp
+  # (requiere imagen reconstruida tras añadir 'mcp' a dependencies)
+  mcp:
+    image: scrapper-leyes-app
+    container_name: legal_mcp
+    profiles: ["mcp"]
+    environment:
+      - DATA_DIR=/app/data
+      - NEO4J_URI=bolt://neo4j:7687
+      - QDRANT_URL=http://qdrant:6333
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: ["scrapper-leyes", "mcp", "--transport", "sse", "--host", "0.0.0.0", "--port", "8765"]
+    ports:
+      - "8765:8765"
+    depends_on:
+      - neo4j
+      - qdrant
     restart: unless-stopped
 
 volumes:

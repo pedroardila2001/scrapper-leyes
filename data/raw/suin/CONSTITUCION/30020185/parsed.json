@@ -4,7 +4,7 @@
     "tipo": "CONSTITUCION POLITICA",
     "numero": "Ley fundamental de la Nueva Granada de 1831",
     "anio": "1831",
-    "fecha": "183111\r\nscript\r\nvar date = new Date(17/11/1831); document.write(date.getDate());\r\nscript",
+    "fecha": "183111\nscript\nvar date = new Date(17/11/1831); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL número",
@@ -24,67 +24,63 @@
       "text": "Artículo 1.-Las provincias del centro de Colombia, forman un Estado con el nombre de Nueva Granada: lo constituirá y organizará la presente Convención.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "30066523",
-      "number": "Artículo 1.-",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1.-Las provincias del centro de Colombia, forman un Estado con el nombre de Nueva Granada: lo constituirá y organizará la presente Convención.",
-      "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "30066524",
       "number": "Artículo 2.-",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2.-Los límites de este Estado, son los mismos que en 1810 dividían el territorio de la Nueva Granada, de las capitanías generales de Venezuela y Guatemala y de las posesiones portuguesas del Brasil: por la parte meridional, sus límites serán definitivamente señalados al sur de la provincia de Pasto, luego que se haya determinado lo conveniente respecto de los departamentos del Ecuador, Asuai y Guayaquil, para lo cual se prescribirá por decreto separado, la línea de conducta que debe seguirse.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30066525",
+      "art_id": "30066524",
       "number": "Artículo 3.-",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3.-No se admitirán pueblos que, separándose de hecho de otros Estados a que pertenezcan, intenten incorporarse al de la N. Granada, ni se permitirá por el contrario, que los que hacen parte de éste, se agreguen a otros. Ninguna adquisición, cambio, o enajenación de territorio se verificará por parte de la Nueva Granada, sino por tratados públicos, celebrados conforme al derecho de gentes, y ratificados según el modo que se prescriba en su constitución.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30066526",
+      "art_id": "30066525",
       "number": "Artículo 4.-",
       "number_normalized": "4",
       "title": null,
       "text": "Artículo 4.-Se halla dispuesto el Estado de la Nueva Granada, a establecer con el Estado de Venezuela nuevos pactos, bien sean de alianza, o bien cualesquiera otros que puedan convenir; con tal que ellos no se extiendan a renunciar los derechos de su soberanía.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:4",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30066527",
+      "art_id": "30066526",
       "number": "Artículo 5.-",
       "number_normalized": "5",
       "title": null,
       "text": "Artículo 5.-También entrará con el mismo, tan pronto como sea posible, en aquellos deslindes y arreglos que deben hacerse de los derechos, intereses y compromisos que son comunes a todos los pueblos de Colombia; adoptando para ello los medios, que de común acuerdo se crean más propios y adecuados, para lograr un avenimiento amigable y equitativo sobre cada uno de aquellos objetos.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:5",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "30066528",
+      "art_id": "30066527",
       "number": "Artículo 6.-",
       "number_normalized": "6",
       "title": null,
       "text": "Artículo 6.-El Estado de la Nueva Granada reconoce del modo más solemne, y promete pagar a los acreedores de Colombia, nacionales y extranjeros, la parte de deuda que proporcionalmente le corresponda. Para cumplir con este deber adoptará de preferencia aquellas medidas que estime más eficaces.",
       "canonical_id": "co:constitucion:ley fundamental de la nueva granada de 1831:1831:art:6",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "984",
     "anio": "2005",
-    "fecha": "200508\r\nscript\r\nvar date = new Date(12/08/2005); document.write(date.getDate());\r\nscript",
+    "fecha": "200508\nscript\nvar date = new Date(12/08/2005); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLI. N. 46002. 16, AGOSTO, 2005. PÁG. 1.",
@@ -33,37 +33,30 @@
       "text": "Artículo 1º.Apruébase el Protocolo facultativo de la Convención sobre la eliminación de todas las formas de discriminación contra la mujer, adoptado por la Asamblea General de las Naciones Unidas el seis (6) de octubre de mil novecientos noventa y nueve (1999).",
       "canonical_id": "co:ley:984:2005:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1672262",
-      "number": "Artículo 1º.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1º.Apruébase el Protocolo facultativo de la Convención sobre la eliminación de todas las formas de discriminación contra la mujer, adoptado por la Asamblea General de las Naciones Unidas el seis (6) de octubre de mil novecientos noventa y nueve (1999).",
-      "canonical_id": "co:ley:984:2005:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1672263",
       "number": "Artículo 2º.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2º.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, el Protocolo facultativo de la Convención sobre la eliminación de todas las formas de discriminación contra la mujer, adoptado por la Asamblea General de las Naciones Unidas el seis (6) de octubre de mil novecientos noventa y nueve (1999), que por el artículo primero de esta ley se aprueba, obligará al país a partir de la fecha en que se perfeccione el vínculo internacional del mismo.",
       "canonical_id": "co:ley:984:2005:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1672264",
+      "art_id": "1672263",
       "number": "Artículo 3º.",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3º.La presente ley rige a partir de la fecha de su publicación.",
       "canonical_id": "co:ley:984:2005:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

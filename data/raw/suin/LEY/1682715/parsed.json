@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1524",
     "anio": "2012",
-    "fecha": "201204\r\nscript\r\nvar date = new Date(26/04/2012); document.write(date.getDate());\r\nscript",
+    "fecha": "201204\nscript\nvar date = new Date(26/04/2012); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLVII. N. 48413. 26, ABRIL, 2012. PAG. 2.",

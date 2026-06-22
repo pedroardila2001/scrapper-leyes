@@ -4,7 +4,7 @@
     "tipo": "LEY",
     "numero": "1346",
     "anio": "2009",
-    "fecha": "200907\r\nscript\r\nvar date = new Date(31/07/2009); document.write(date.getDate());\r\nscript",
+    "fecha": "200907\nscript\nvar date = new Date(31/07/2009); document.write(date.getDate());\nscript",
     "division_documento": "false",
     "es_reglamento": "false",
     "documento_fuente": "DIARIO OFICIAL. AÑO CXLIV. N. 47427. 31, JULIO, 2009. PÁG. 54.",
@@ -33,37 +33,30 @@
       "text": "Artículo 1°.Apruébase la “Convención sobre los Derechos de las Personas con Discapacidad”, adoptada por la Asamblea General de las Naciones Unidas el 13 de diciembre de 2006.",
       "canonical_id": "co:ley:1346:2009:art:1",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
       "art_id": "1677874",
-      "number": "Artículo 1°.",
-      "number_normalized": "1",
-      "title": null,
-      "text": "Artículo 1°.Apruébase la “Convención sobre los Derechos de las Personas con Discapacidad”, adoptada por la Asamblea General de las Naciones Unidas el 13 de diciembre de 2006.",
-      "canonical_id": "co:ley:1346:2009:art:1",
-      "notes": [],
-      "previous_versions": []
-    },
-    {
-      "art_id": "1677875",
       "number": "Artículo 2°.",
       "number_normalized": "2",
       "title": null,
       "text": "Artículo 2°.De conformidad con lo dispuesto en el artículo 1° de la Ley 7ª de 1944, la “Convención sobre los Derechos de las Personas con Discapacidad”, adoptada por la Asamblea General de las Naciones Unidas el 13 de diciembre de 2006, que por el artículo 1° de esta ley se aprueba obligará al país a partir de la fecha en que se perfeccione el vínculo internacional respecto de la misma.",
       "canonical_id": "co:ley:1346:2009:art:2",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     },
     {
-      "art_id": "1677876",
+      "art_id": "1677875",
       "number": "Artículo 3°.",
       "number_normalized": "3",
       "title": null,
       "text": "Artículo 3°.La presente ley rige a partir de la fecha de su publicación.",
       "canonical_id": "co:ley:1346:2009:art:3",
       "notes": [],
-      "previous_versions": []
+      "previous_versions": [],
+      "affects": []
     }
   ],
   "modifications": [],

@@ -14,8 +14,14 @@ RUN pip install --no-cache-dir --upgrade pip hatchling
 COPY pyproject.toml .
 COPY src/ ./src/
 
-# Install the package in editable mode
-RUN pip install --no-cache-dir -e .
+# Install the package in editable mode. Set INSTALL_INGEST=true to also pull the
+# heavy ingestion extra (docling + torch) — used by the `pipeline` service that
+# scrapes / re-parses sentencias. The API image stays lean (INSTALL_INGEST=false).
+ARG INSTALL_INGEST=false
+RUN pip install --no-cache-dir -e . \
+    && if [ "$INSTALL_INGEST" = "true" ]; then \
+         pip install --no-cache-dir -e ".[ingest]"; \
+       fi
 
 # Expose port for FastAPI
 EXPOSE 8000
