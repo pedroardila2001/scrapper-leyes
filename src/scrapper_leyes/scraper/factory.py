@@ -41,36 +41,54 @@ class ScraperFactory:
         )
 
     def get_indexer(self, source: str) -> BaseIndexer:
-        """Get the indexer for a source."""
+        """Get the indexer for a source.
+
+        SUIN y Corte Constitucional tienen resolución a medida (necesitan
+        construir/buscar un id interno). El resto de fuentes crawl ya traen el
+        ``external_id`` y ``source_url`` del discoverer → resolución identidad
+        con :class:`UrlIndexer`.
+        """
         if source == "suin":
             from scrapper_leyes.scraper.suin_scraper import SuinIndexer
             return SuinIndexer(self.settings, self.db)
         elif source == "corte_constitucional":
             from scrapper_leyes.scraper.cc_scraper import CCIndexer
             return CCIndexer(self.settings, self.db)
-        elif source == "csj":
-            from scrapper_leyes.scraper.csj_scraper import CSJIndexer
-            return CSJIndexer(self.settings, self.db)
-        elif source == "consejo_estado":
-            from scrapper_leyes.scraper.ce_scraper import CEIndexer
-            return CEIndexer(self.settings, self.db)
-        raise self._no_conector(source, "indexer")
+        if get_source(source) is None:
+            raise self._no_conector(source, "indexer")
+        from scrapper_leyes.scraper.url_scraper import UrlIndexer
+        return UrlIndexer(self.settings, self.db, source)
 
     def get_scraper(self, source: str) -> BaseScraper:
-        """Get the scraper for a source."""
+        """Get the scraper for a source.
+
+        SUIN/CC tienen parser estructural propio. El resto usa el scraper
+        genérico por URL (:class:`UrlScraper`): baja ``source_url`` y guarda el
+        texto plano, que el chunker indexa como "Texto completo".
+        """
         if source == "suin":
             from scrapper_leyes.scraper.suin_scraper import SuinScraper
             return SuinScraper(self.settings, self.db, self.cache)
         elif source == "corte_constitucional":
             from scrapper_leyes.scraper.cc_scraper import CCScraper
             return CCScraper(self.settings, self.db, self.cache)
-        elif source == "csj":
-            from scrapper_leyes.scraper.csj_scraper import CSJScraper
-            return CSJScraper(self.settings, self.db, self.cache)
-        elif source == "consejo_estado":
-            from scrapper_leyes.scraper.ce_scraper import CEScraper
-            return CEScraper(self.settings, self.db, self.cache)
-        raise self._no_conector(source, "scraper")
+        if source in ("csj", "consejo_estado"):
+            # El texto de WebRelatoria NO es un PDF directo: el cuerpo
+            # (CONSIDERACIONES/titulación) se obtiene con un flujo JSF con estado
+            # (búsqueda por fecha → selección de fila → POST a j_idt273/j_idt272,
+            # que devuelve el texto inline en mainForm:addInfoDialog). El
+            # discoverer ya siembra el catálogo; falta cablear ese scraper de
+            # texto a medida. Hasta entonces no se enruta al scraper genérico
+            # (su source_url FileReferenceServlet responde 404).
+            raise NotImplementedError(
+                f"Scraper de texto de '{source}' pendiente: WebRelatoria entrega el "
+                "cuerpo vía flujo JSF con estado (consideraciones/titulación inline), "
+                "no por URL directa. El catálogo ya está sembrado por el discoverer."
+            )
+        if get_source(source) is None:
+            raise self._no_conector(source, "scraper")
+        from scrapper_leyes.scraper.url_scraper import UrlScraper
+        return UrlScraper(self.settings, self.db, self.cache, source)
 
     def get_discoverer(self, source: str) -> BaseDiscoverer:
         """Get the crawl-driven discoverer for a source.

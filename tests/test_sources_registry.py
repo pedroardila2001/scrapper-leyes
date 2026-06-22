@@ -59,12 +59,11 @@ def test_factory_error_accionable():
     from scrapper_leyes.scraper.factory import ScraperFactory
 
     f = ScraperFactory(Settings(), db=None, cache=None)
-    # corte_idh YA tiene discoverer; lo que aún falta es el scraper de TEXTO →
-    # ahí debe seguir el error accionable con el spike.
-    with pytest.raises(NotImplementedError) as exc:
-        f.get_scraper("corte_idh")
-    assert "Corte Interamericana" in str(exc.value)
-    assert "Spike" in str(exc.value)
+    # corte_idh ya tiene discoverer Y ahora scraper de TEXTO genérico (UrlScraper):
+    # baja su source_url y guarda el texto. Las fuentes registradas son scrapeables.
+    from scrapper_leyes.scraper.url_scraper import UrlScraper
+    assert isinstance(f.get_scraper("corte_idh"), UrlScraper)
+    # Una fuente desconocida sigue siendo un ValueError accionable.
     with pytest.raises(ValueError):
         f.get_scraper("fuente_inventada")
 

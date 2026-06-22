@@ -451,6 +451,13 @@ def chunk_norm(
                     payload=payload,
                 )
             )
+    if not chunks:
+        # Norma sin articulado estructurado (scraper genérico de texto plano):
+        # se indexa el texto completo como respaldo.
+        return _chunk_flat_text(
+            parsed, base_payload, norm_cid, _norm_label(catalog), "FULL_TEXT",
+            max_chars=max_chars, overlap=overlap,
+        )
     return chunks
 
 
@@ -500,9 +507,71 @@ def chunk_sentencia(
         return _chunk_sentencia_sections(
             sections, base_payload, norm_cid, label, max_chars=max_chars, overlap=overlap
         )
-    return _chunk_sentencia_legacy(
+    legacy = _chunk_sentencia_legacy(
         parsed, base_payload, norm_cid, label, max_chars=max_chars, overlap=overlap
     )
+    if legacy:
+        return legacy
+    # Sin estructura (parsed por el scraper genérico de texto plano): se indexa
+    # el texto completo como un único grupo de chunks "Texto completo".
+    return _chunk_flat_text(
+        parsed, base_payload, norm_cid, label, "FULL_TEXT",
+        max_chars=max_chars, overlap=overlap,
+    )
+
+
+def _chunk_flat_text(
+    parsed: dict[str, Any],
+    base_payload: dict[str, Any],
+    norm_cid: str,
+    label: str,
+    content_type: str,
+    *,
+    max_chars: int,
+    overlap: int,
+) -> list[Chunk]:
+    """Chunk de respaldo cuando no hay estructura: parte ``raw_text``/``texto``.
+
+    Permite indexar el texto de fuentes sin parser estructural propio (las
+    relatorías/normogramas que el scraper genérico baja como PDF/HTML→texto).
+    """
+    body = strip_suin_ui_noise(
+        (parsed.get("raw_text") or parsed.get("texto") or "").strip()
+    )
+    if not body:
+        return []
+    sec_cid = f"{norm_cid}:texto"
+    pieces = split_text(body, max_chars=max_chars, overlap=overlap)
+    n = len(pieces)
+    chunks: list[Chunk] = []
+    for i, piece in enumerate(pieces):
+        section = "Texto completo" + (f" ({i + 1}/{n})" if n > 1 else "")
+        header = f"{label} · {section}:"
+        payload = {
+            **base_payload,
+            "canonical_id": sec_cid,
+            "titulo": "Texto completo",
+            "section": section,
+            "normalized_section": "FULL_TEXT",
+            "original_heading": "",
+            "content_type": content_type,
+            "text": piece,
+        }
+        chunks.append(
+            Chunk(
+                uid=_uid(sec_cid, i),
+                canonical_id=sec_cid,
+                norm_canonical_id=norm_cid,
+                section=section,
+                title="Texto completo",
+                text=f"{header}\n\n{piece}",
+                body=piece,
+                chunk_index=i,
+                n_chunks=n,
+                payload=payload,
+            )
+        )
+    return chunks
 
 
 def _chunk_sentencia_sections(

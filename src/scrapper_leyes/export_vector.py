@@ -151,7 +151,10 @@ class VectorStoreExporter:
             suin_id = cat.get("suin_id")
             if not suin_id:
                 continue
-            source = _source_for(cat["tipo"], cat.get("corte"))
+            # El scraper guarda bajo el `source` del catálogo; para las fuentes
+            # legacy (suin/cc) ese valor coincide con _source_for, así que se usa
+            # directamente y solo se cae al mapeo por tipo si falta.
+            source = cat.get("source") or _source_for(cat["tipo"], cat.get("corte"))
             parsed = self.cache.load_parsed(source, cat["tipo"], suin_id)
             if not parsed:
                 continue

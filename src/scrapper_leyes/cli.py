@@ -306,9 +306,13 @@ def run(
     if (workers or rps) and hasattr(scraper, "reconfigure"):
         scraper.reconfigure(workers=workers, rps=rps)
 
+    # Fuentes legacy (suin/cc) comparten catálogo y se separan por tipo; el resto
+    # de fuentes crawl se acotan por la columna `source` para no pisarse entre sí.
+    legacy = source in ("suin", "corte_constitucional")
+
     # Step 1: Resolve IDs if there are unresolved norms
-    unresolved = db.get_unresolved_norms(tipo=tipo)
-    # Filter unresolved by entity/source mapping if necessary. For now, assume if we are 
+    unresolved = db.get_unresolved_norms(tipo=tipo, source=None if legacy else source)
+    # Filter unresolved by entity/source mapping if necessary. For now, assume if we are
     # running --source corte_constitucional, we only want to resolve sentencias.
     if source == "corte_constitucional":
         unresolved = [r for r in unresolved if r["tipo"] == "SENTENCIA"]
@@ -327,7 +331,9 @@ def run(
         console.print(f"  Errores: {resolve_stats.get('error', 0)}")
 
     # Step 2: Scrape resolved+pending norms
-    pending = db.get_pending_norms(tipo=tipo, limit=limit)
+    pending = db.get_pending_norms(
+        tipo=tipo, limit=limit, source=None if legacy else source
+    )
     if source == "corte_constitucional":
         pending = [r for r in pending if r["tipo"] == "SENTENCIA"]
     elif source == "suin":
