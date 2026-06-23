@@ -40,6 +40,14 @@ services:
       - DATA_DIR=/app/data
       - NEO4J_URI=bolt://neo4j:7687
       - QDRANT_URL=http://qdrant:6333
+      # Backend de embeddings — DEBE ser idéntico en api, pipeline y mcp para que
+      # query y documentos vivan en el mismo espacio (si difieren, la búsqueda
+      # revienta con "Vector dimension error"). Valores desde .env (ver .env.example).
+      - EMBEDDING_BACKEND=${EMBEDDING_BACKEND:-fastembed}
+      - EMBEDDING_API_URL=${EMBEDDING_API_URL:-http://localhost:8001/v1}
+      - EMBEDDING_API_MODEL=${EMBEDDING_API_MODEL:-Qwen/Qwen3-Embedding-4B}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY:-EMPTY}
+      - EMBEDDING_DIM=${EMBEDDING_DIM:-0}
     volumes:
       - ./data:/app/data
       - ./src:/app/src          # código editable montado → sin rebuild en dev
@@ -66,6 +74,12 @@ services:
       - DATA_DIR=/app/data
       - NEO4J_URI=bolt://neo4j:7687
       - QDRANT_URL=http://qdrant:6333
+      # MISMO backend que api/mcp (ver nota en el servicio api).
+      - EMBEDDING_BACKEND=${EMBEDDING_BACKEND:-fastembed}
+      - EMBEDDING_API_URL=${EMBEDDING_API_URL:-http://localhost:8001/v1}
+      - EMBEDDING_API_MODEL=${EMBEDDING_API_MODEL:-Qwen/Qwen3-Embedding-4B}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY:-EMPTY}
+      - EMBEDDING_DIM=${EMBEDDING_DIM:-0}
     volumes:
       - ./data:/app/data
       - ./src:/app/src          # código editable montado → sin rebuild en dev
@@ -97,6 +111,12 @@ services:
       - DATA_DIR=/app/data
       - NEO4J_URI=bolt://neo4j:7687
       - QDRANT_URL=http://qdrant:6333
+      # MISMO backend que api/pipeline (ver nota en el servicio api).
+      - EMBEDDING_BACKEND=${EMBEDDING_BACKEND:-fastembed}
+      - EMBEDDING_API_URL=${EMBEDDING_API_URL:-http://localhost:8001/v1}
+      - EMBEDDING_API_MODEL=${EMBEDDING_API_MODEL:-Qwen/Qwen3-Embedding-4B}
+      - EMBEDDING_API_KEY=${EMBEDDING_API_KEY:-EMPTY}
+      - EMBEDDING_DIM=${EMBEDDING_DIM:-0}
     volumes:
       - ./data:/app/data
       - ./src:/app/src
