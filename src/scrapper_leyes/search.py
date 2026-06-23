@@ -87,10 +87,14 @@ class SemanticSearcher:
 
     def _load_models(self) -> None:
         if self._dense is None or self._sparse is None:
-            from fastembed import SparseTextEmbedding, TextEmbedding
+            from fastembed import SparseTextEmbedding
+
+            from scrapper_leyes.embeddings import get_dense_embedder
 
             logger.info("Cargando modelos de embedding para búsqueda...")
-            self._dense = TextEmbedding(self.settings.embedding_model_dense)
+            # Dense via the SAME pluggable backend used at index time, or the
+            # query/document spaces would not match. Sparse BM25 stays local.
+            self._dense = get_dense_embedder(self.settings)
             self._sparse = SparseTextEmbedding(self.settings.embedding_model_sparse)
 
     # ── filtros ─────────────────────────────────────────────────────────
@@ -137,7 +141,7 @@ class SemanticSearcher:
             raise CollectionMissing(self.collection)
 
         self._load_models()
-        dense_vec = next(iter(self._dense.embed([query]))).tolist()
+        dense_vec = self._dense.embed_query(query)
         sparse = next(iter(self._sparse.embed([query])))
         q_filter = self._build_filter(tipo, anio, estado_vigencia, excluir_derogadas)
 

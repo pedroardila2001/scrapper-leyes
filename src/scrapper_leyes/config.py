@@ -82,6 +82,38 @@ class Settings:
         default_factory=lambda: os.environ.get("EMBEDDING_MODEL_SPARSE", "Qdrant/bm25")
     )
 
+    # ── Dense embedding backend ─────────────────────────────────────────
+    # "fastembed" (local, default) | "openai" (any OpenAI-compatible
+    # /v1/embeddings server: vLLM, TEI, LM Studio). The OpenAI backend lets us
+    # offload embedding to a GPU box (e.g. vLLM serving Qwen3-Embedding-4B over
+    # Tailscale). The SAME backend is used to embed documents and queries.
+    embedding_backend: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_BACKEND", "fastembed")
+    )
+    embedding_api_url: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_API_URL", "http://localhost:8001/v1")
+    )
+    embedding_api_model: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_API_MODEL", "Qwen/Qwen3-Embedding-4B")
+    )
+    embedding_api_key: str = field(
+        default_factory=lambda: os.environ.get("EMBEDDING_API_KEY", "EMPTY")
+    )
+    # Output dimension. 0 = autodetect (native). For Qwen3-Embedding set 1536 to
+    # use Matryoshka truncation (lighter vectors, near-native quality).
+    embedding_dim: int = field(
+        default_factory=lambda: int(os.environ.get("EMBEDDING_DIM", "0"))
+    )
+    # Instruction prefix applied to QUERIES ONLY (documents are embedded raw).
+    # Required for instruction-tuned models like Qwen3-Embedding.
+    embedding_query_instruction: str = field(
+        default_factory=lambda: os.environ.get(
+            "EMBEDDING_QUERY_INSTRUCTION",
+            "Instruct: Dada una consulta jurídica en español, recupera las normas, "
+            "sentencias y doctrina colombianas más relevantes.\nQuery: ",
+        )
+    )
+
     # ── Chunking ────────────────────────────────────────────────────────
     chunk_max_chars: int = field(
         default_factory=lambda: int(os.environ.get("CHUNK_MAX_CHARS", "3000"))

@@ -70,11 +70,15 @@ class VectorStoreExporter:
         self.collection_name = collection_name or settings.qdrant_collection
         self.client = client or self._build_client(settings)
 
-        logger.info("Loading embedding models (dense=%s, sparse=%s)...",
-                    settings.embedding_model_dense, settings.embedding_model_sparse)
-        from fastembed import SparseTextEmbedding, TextEmbedding
+        logger.info("Loading embedding models (backend=%s, sparse=%s)...",
+                    settings.embedding_backend, settings.embedding_model_sparse)
+        from fastembed import SparseTextEmbedding
 
-        self.dense_model = TextEmbedding(settings.embedding_model_dense)
+        from scrapper_leyes.embeddings import get_dense_embedder
+
+        # Dense: pluggable backend (fastembed local OR OpenAI-compatible API).
+        # Sparse BM25 stays local — it is cheap and API servers don't serve it.
+        self.dense = get_dense_embedder(settings)
         self.sparse_model = SparseTextEmbedding(settings.embedding_model_sparse)
         self._dense_size: int | None = None
 
@@ -92,8 +96,7 @@ class VectorStoreExporter:
 
     def _detect_dense_size(self) -> int:
         if self._dense_size is None:
-            vec = next(iter(self.dense_model.embed(["dimension probe"])))
-            self._dense_size = len(vec)
+            self._dense_size = self.dense.dim
         return self._dense_size
 
     def ensure_collection(self, recreate: bool = False) -> None:
@@ -172,7 +175,7 @@ class VectorStoreExporter:
 
     def _points_for(self, chunks: list[Chunk]) -> list[models.PointStruct]:
         texts = [c.text for c in chunks]
-        dense = list(self.dense_model.embed(texts))
+        dense = self.dense.embed_documents(texts)
         sparse = list(self.sparse_model.embed(texts))
         points: list[models.PointStruct] = []
         for chunk, d_vec, s_vec in zip(chunks, dense, sparse):
@@ -180,7 +183,7 @@ class VectorStoreExporter:
                 models.PointStruct(
                     id=chunk.uid,
                     vector={
-                        DENSE_VECTOR_NAME: d_vec.tolist(),
+                        DENSE_VECTOR_NAME: d_vec,
                         SPARSE_VECTOR_NAME: models.SparseVector(
                             indices=s_vec.indices.tolist(),
                             values=s_vec.values.tolist(),
