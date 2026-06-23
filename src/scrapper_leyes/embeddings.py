@@ -119,11 +119,12 @@ class OpenAIDense:
     def _post(self, inputs: list[str]) -> list[list[float]]:
         import httpx
 
-        body: dict = {"model": self._model, "input": inputs}
-        if self._dim:
-            # MRL truncation (Qwen3 et al.). Servers that don't support it ignore
-            # the field and return native dim — handled by the caller's probe.
-            body["dimensions"] = self._dim
+        # We do NOT send the OpenAI `dimensions` field: many servers (e.g. vLLM
+        # serving Qwen3-Embedding) reject it with 400. Instead we truncate
+        # client-side — valid for Matryoshka (MRL) models, where a vector prefix
+        # is itself a good embedding — then re-normalize. Same truncation runs
+        # for documents and queries, so the spaces stay consistent.
+        body = {"model": self._model, "input": inputs}
         resp = httpx.post(
             f"{self._base_url}/embeddings",
             json=body,
@@ -134,7 +135,13 @@ class OpenAIDense:
         data = resp.json()["data"]
         # Preserve request order (OpenAI spec returns an "index" per item).
         data.sort(key=lambda d: d.get("index", 0))
-        return [_l2_normalize(d["embedding"]) for d in data]
+        out: list[list[float]] = []
+        for d in data:
+            vec = d["embedding"]
+            if self._dim and len(vec) > self._dim:
+                vec = vec[: self._dim]  # MRL prefix
+            out.append(_l2_normalize(vec))
+        return out
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         return self._post(texts)

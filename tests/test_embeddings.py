@@ -55,3 +55,28 @@ def test_query_gets_instruction_prefix_documents_do_not():
 def test_dim_is_reported_from_config_without_probe():
     emb = OpenAIDense(base_url="u", model="m", dim=1536)
     assert emb.dim == 1536  # no network call needed when dim is set
+
+
+def test_post_truncates_to_dim_and_normalizes():
+    # MRL prefix truncation + L2-normalize, client-side (no `dimensions` field).
+    import sys
+    import types
+
+    fake = types.ModuleType("httpx")
+
+    class FakeResp:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"data": [{"index": 0, "embedding": [3.0, 4.0, 100.0, 100.0]}]}
+
+    fake.post = lambda *a, **k: FakeResp()  # type: ignore[attr-defined]
+    sys.modules["httpx"] = fake
+    try:
+        emb = OpenAIDense(base_url="u", model="m", dim=2)
+        v = emb.embed_documents(["x"])[0]
+        assert len(v) == 2                       # truncated 4 → 2 (MRL prefix)
+        assert math.isclose(v[0], 0.6) and math.isclose(v[1], 0.8)  # renormalized
+    finally:
+        del sys.modules["httpx"]
