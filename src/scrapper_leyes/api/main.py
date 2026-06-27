@@ -7,12 +7,16 @@ vector chunk previews, and graph neighborhood data.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import sqlite3
+import subprocess
+import time
 from pathlib import Path
 from typing import Any, Optional
 
+import requests
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase
@@ -41,7 +45,13 @@ DB_PATH = DATA_DIR / "catalog.db"
 RAW_DIR = DATA_DIR / "raw"
 NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
 NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD", "password")
+NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD") or "password"
+QDRANT_URL = os.environ.get("QDRANT_URL", "http://localhost:6333")
+NEO4J_CONTAINER = os.environ.get("NEO4J_CONTAINER", "legal_neo4j")
+
+# Caché en memoria para el recuento de vacíos del endpoint /monitor (ver abajo).
+# Los vacíos no cambian segundo a segundo, así que se refresca cada 5 min.
+_MONITOR_CALIDAD_CACHE: dict[str, Any] = {}
 
 neo4j_driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
@@ -769,19 +779,44 @@ def _keyword_search(q: str, limit: int) -> dict[str, Any]:
 def _graph_node_dict(node, degree: int = 0) -> dict[str, Any]:
     """Normaliza un nodo Norma/Sentencia para el frontend.
 
-    Distingue 3 grupos: ``sentencia``, ``norma`` (ingeridas, con suin_id) y
-    ``fantasma`` (referenciadas por una cita/afectación pero aún no ingeridas —
-    p.ej. la Constitución o leyes citadas). Los fantasmas se dimensionan por
-    grado para que los hubs reales (Constitución, códigos) se vean.
+    Incluye nivel_jerarquico y rama_poder para visualización jerárquica.
     """
     es_sentencia = "Sentencia" in node.labels
     ingerido = bool(node.get("suin_id"))
+    nivel = node.get("nivel_jerarquico")
+    rama = node.get("rama_poder")
+
+    # Si no tiene nivel asignado, inferirlo del tipo
+    if nivel is None:
+        tipo_raw = (node.get("tipo") or "").upper()
+        if "CONSTIT" in tipo_raw or "ACTO LEGISLATIVO" in tipo_raw:
+            nivel = 1
+        elif "TRATADO" in tipo_raw:
+            nivel = 2
+        elif "LEY" in tipo_raw:
+            nivel = 3
+        elif "DECRETO" in tipo_raw:
+            nivel = 4
+        elif es_sentencia:
+            nivel = 6
+        elif "ACUERDO" in tipo_raw or "ORDENANZA" in tipo_raw:
+            nivel = 7
+        else:
+            nivel = 5
+
     if not ingerido:
         group = "fantasma"
         val = min(4 + degree, 22)
     else:
         group = "sentencia" if es_sentencia else "norma"
         val = 10 if es_sentencia else 8
+
+    # El nivel determina el color y posición Y en el grafo
+    nivel_colores = {
+        1: "#1a237e", 2: "#283593", 3: "#1565c0", 4: "#0277bd",
+        5: "#00838f", 6: "#2e7d32", 7: "#558b2f",
+    }
+
     tipo_str = "Sentencia" if es_sentencia else (node.get("tipo") or "Norma")
     label = node.get("nombre") or f"{tipo_str} {node.get('numero', '')} de {node.get('anio', '')}"
     return {
@@ -791,6 +826,12 @@ def _graph_node_dict(node, degree: int = 0) -> dict[str, Any]:
         "group": group,
         "ingerido": ingerido,
         "val": val,
+        "nivel": nivel,
+        "rama": rama or "",
+        "color": nivel_colores.get(nivel, "#757575"),
+        "tipo": tipo_str,
+        "numero": node.get("numero"),
+        "anio": node.get("anio"),
     }
 
 
@@ -869,6 +910,351 @@ def get_global_graph(
             "aristas": len(links),
         },
     }
+
+
+# ── Monitor de ingesta en tiempo real ────────────────────────────────────
+
+# Objetivos estimados del universo documental colombiano (~660k docs).
+# Mismas claves `source` que guarda el catálogo. Sirve para mostrar cuánto
+# falta por descubrir/ingerir de cada fuente.
+_FUENTES_660K: dict[str, dict[str, Any]] = {
+    "suin":                 {"objetivo": 89_000,  "nombre": "SUIN – Justicia Ordinaria"},
+    "funcion_publica":      {"objetivo": 261_000, "nombre": "Función Pública – Normativa"},
+    "regimen_bogota":       {"objetivo": 188_000, "nombre": "Régimen Distrital – Bogotá"},
+    "csj":                  {"objetivo": 50_000,  "nombre": "Corte Suprema de Justicia"},
+    "consejo_estado":       {"objetivo": 100_000, "nombre": "Consejo de Estado"},
+    "corte_constitucional": {"objetivo": 29_000,  "nombre": "Corte Constitucional"},
+    "dian":                 {"objetivo": 23_000,  "nombre": "DIAN – Doctrina Tributaria"},
+    "jep":                  {"objetivo": 15_000,  "nombre": "JEP – Jurisdicción Especial"},
+    "creg":                 {"objetivo": 7_000,   "nombre": "CREG – Regulación"},
+    "cra":                  {"objetivo": 4_000,   "nombre": "CRA – Agua"},
+    "crc":                  {"objetivo": 3_000,   "nombre": "CRC – Comunicaciones"},
+    "tratados":             {"objetivo": 1_000,   "nombre": "Tratados Internacionales"},
+    "senado":               {"objetivo": 5_000,   "nombre": "Senado – Proyectos de Ley"},
+    "diario_oficial":       {"objetivo": 200_000, "nombre": "Diario Oficial"},
+    "organos_control":      {"objetivo": 500,     "nombre": "Órganos de Control"},
+    "corte_idh":            {"objetivo": 73,      "nombre": "Corte IDH"},
+    "banco_republica":      {"objetivo": 15,      "nombre": "Banco de la República"},
+    "cne":                  {"objetivo": 7,       "nombre": "CNE – Consejo Nacional Electoral"},
+}
+
+
+def _qdrant_count(collection: str) -> Optional[int]:
+    """Point count exacto de una colección Qdrant; None si no existe/error."""
+    try:
+        r = requests.post(
+            f"{QDRANT_URL}/collections/{collection}/points/count",
+            json={"exact": True},
+            timeout=5,
+        )
+        if r.status_code == 200:
+            return r.json().get("result", {}).get("count")
+        return None
+    except Exception:
+        return None
+
+
+def _neo4j_counts() -> dict[str, Any]:
+    """Node count por label y relationship count.
+
+    Ruta preferida: el driver de Neo4j ya conectado (rápido, funciona dentro
+    del contenedor Docker donde la API corre). Fallback: ``docker exec ... cypher-shell``
+    para entornos donde la API corre en el host sin driver.
+    """
+    out: dict[str, Any] = {"nodes_by_label": {}, "relationships_total": 0, "ok": False}
+    # ── Ruta 1: driver de Neo4j ──
+    try:
+        with neo4j_driver.session() as session:
+            labels = session.run(
+                "CALL db.labels() YIELD label RETURN collect(label) AS labels"
+            ).single()["labels"]
+            for lb in labels:
+                rec = session.run(f"MATCH (n:`{lb}`) RETURN count(n) AS c").single()
+                out["nodes_by_label"][lb] = rec["c"] if rec else 0
+            rec = session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()
+            out["relationships_total"] = rec["c"] if rec else 0
+            out["ok"] = True
+            return out
+    except Exception as e:
+        logging.getLogger(__name__).debug("Neo4j driver falló (%s); intento docker exec", e)
+    # ── Ruta 2: docker exec cypher-shell (fallback host) ──
+    try:
+        labels = subprocess.run(
+            ["docker", "exec", NEO4J_CONTAINER,
+             "cypher-shell", "-u", "neo4j", "-p", NEO4J_PASSWORD,
+             "CALL db.labels() YIELD label RETURN label", "--format", "plain"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if labels.returncode != 0:
+            out["error"] = (labels.stderr or "").strip()[:200]
+            return out
+        for line in labels.stdout.splitlines():
+            label = line.strip().strip('"')
+            if not label:
+                continue
+            cnt = subprocess.run(
+                ["docker", "exec", NEO4J_CONTAINER,
+                 "cypher-shell", "-u", "neo4j", "-p", NEO4J_PASSWORD,
+                 f"MATCH (n:`{label}`) RETURN count(n) AS c", "--format", "plain"],
+                capture_output=True, text=True, timeout=10,
+            )
+            try:
+                out["nodes_by_label"][label] = int(cnt.stdout.strip().splitlines()[-1])
+            except Exception:
+                out["nodes_by_label"][label] = 0
+        rels = subprocess.run(
+            ["docker", "exec", NEO4J_CONTAINER,
+             "cypher-shell", "-u", "neo4j", "-p", NEO4J_PASSWORD,
+             "MATCH ()-[r]->() RETURN count(r) AS c", "--format", "plain"],
+            capture_output=True, text=True, timeout=10,
+        )
+        try:
+            out["relationships_total"] = int(rels.stdout.strip().splitlines()[-1])
+        except Exception:
+            out["relationships_total"] = 0
+        out["ok"] = True
+    except Exception as e:
+        out["error"] = str(e)[:200]
+    return out
+
+
+def _vm_resources() -> dict[str, Any]:
+    """Memoria, disco y load average del host.
+
+    Usa ``/proc`` (universal, funciona dentro de contenedores) como ruta
+    preferida, con ``free``/``df`` como fallback.
+    """
+    res: dict[str, Any] = {}
+    # RAM — /proc/meminfo (siempre disponible en Linux, incl. dentro de Docker)
+    try:
+        info: dict[str, int] = {}
+        with open("/proc/meminfo") as f:
+            for line in f:
+                parts = line.split()
+                if len(parts) >= 2:
+                    info[parts[0].rstrip(":")] = int(parts[1])  # kB
+        if "MemTotal" in info:
+            total_kb = info["MemTotal"]
+            avail_kb = info.get("MemAvailable", info.get("MemFree", 0))
+            used_kb = total_kb - avail_kb
+            res["mem_total_mb"] = total_kb // 1024
+            res["mem_used_mb"] = used_kb // 1024
+            res["mem_available_mb"] = avail_kb // 1024
+            res["mem_pct"] = round(used_kb / total_kb * 100, 1) if total_kb else 0
+    except Exception:
+        pass
+    if "mem_total_mb" not in res:
+        # Fallback: free -m (host con util-linux)
+        try:
+            out = subprocess.run(["free", "-m"], capture_output=True, text=True, timeout=5).stdout
+            lines = out.splitlines()
+            if len(lines) >= 2:
+                parts = lines[1].split()
+                total, used, avail = int(parts[1]), int(parts[2]), int(parts[-1])
+                res["mem_total_mb"] = total
+                res["mem_used_mb"] = used
+                res["mem_available_mb"] = avail
+                res["mem_pct"] = round(used / total * 100, 1) if total else 0
+        except Exception:
+            pass
+    # Disco (raíz)
+    try:
+        out = subprocess.run(["df", "-h", "/"], capture_output=True, text=True, timeout=5).stdout
+        lines = out.splitlines()
+        if len(lines) >= 2:
+            parts = lines[1].split()
+            res["disk_total"] = parts[1]
+            res["disk_used"] = parts[2]
+            res["disk_avail"] = parts[3]
+            res["disk_pct"] = int(parts[4].rstrip("%")) if parts[4].endswith("%") else 0
+    except Exception:
+        pass
+    # Load average — /proc/loadavg (universal)
+    try:
+        with open("/proc/loadavg") as f:
+            p = f.read().split()
+            res["load_1"] = float(p[0])
+            res["load_5"] = float(p[1])
+            res["load_15"] = float(p[2])
+    except Exception:
+        pass
+    return res
+
+
+@app.get("/api/monitor")
+def get_monitor():
+    """Monitoreo en tiempo real de la ingesta del sistema legal colombiano.
+
+    Agrega en una sola llamada: estado del catálogo por fuente/tipo, progreso y
+    ETA, conteos de Qdrant y Neo4j, mapeo 660k (actual vs objetivo), calidad
+    del corpus (parsed.json vacíos) y recursos de la VM.
+    """
+    log = logging.getLogger(__name__)
+    conn = _get_conn()
+    try:
+        # ── Catálogo: totales y desglose por fuente/tipo ──
+        total_docs = conn.execute("SELECT COUNT(*) FROM catalog").fetchone()[0]
+        by_source_status = conn.execute(
+            "SELECT source, scrape_status, COUNT(*) AS n "
+            "FROM catalog GROUP BY source, scrape_status"
+        ).fetchall()
+        by_tipo_status = conn.execute(
+            "SELECT tipo, scrape_status, COUNT(*) AS n "
+            "FROM catalog GROUP BY tipo, scrape_status"
+        ).fetchall()
+
+        # Aplana a {fuente: {done,pending,error,total}} y análogamente por tipo.
+        catalog_by_source: dict[str, dict[str, int]] = {}
+        catalog_by_tipo: dict[str, dict[str, int]] = {}
+        totals = {"done": 0, "pending": 0, "error": 0, "skipped": 0, "other": 0}
+        for r in by_source_status:
+            src, st, n = r["source"] or "desconocido", r["scrape_status"], r["n"]
+            bucket = catalog_by_source.setdefault(src, {"done": 0, "pending": 0, "error": 0, "total": 0})
+            if st in bucket:
+                bucket[st] += n
+            bucket["total"] += n
+            if st in totals:
+                totals[st] += n
+            else:
+                totals["other"] += n
+        for r in by_tipo_status:
+            tp, st, n = r["tipo"], r["scrape_status"], r["n"]
+            bucket = catalog_by_tipo.setdefault(tp, {"done": 0, "pending": 0, "error": 0, "total": 0})
+            if st in bucket:
+                bucket[st] += n
+            bucket["total"] += n
+
+        done = totals["done"]
+        pending = totals["pending"]
+        error = totals["error"]
+
+        # ── Progreso + ETA basado en tasa de los últimos minutos ──
+        # Cuenta filas marcadas done en los últimos N minutos para estimar tasa.
+        rate_window_min = 10
+        try:
+            recent = conn.execute(
+                "SELECT COUNT(*) FROM catalog "
+                "WHERE scrape_status='done' AND updated_at >= datetime('now', ?)",
+                (f"-{rate_window_min} minutes",),
+            ).fetchone()[0]
+        except Exception:
+            recent = 0
+        rate_per_min = recent / rate_window_min if recent else 0
+        remaining = pending
+        eta_seconds: Optional[int] = None
+        if rate_per_min > 0:
+            eta_seconds = int(remaining / rate_per_min * 60)
+        pct = round(done / total_docs * 100, 2) if total_docs else 0.0
+
+        # ── Qdrant ──
+        qdrant = {
+            "legal_corpus": _qdrant_count("legal_corpus"),
+            "legal_corpus__docreps": _qdrant_count("legal_corpus__docreps"),
+        }
+
+        # ── Neo4j ──
+        neo4j_stats = _neo4j_counts()
+
+        # ── Mapeo 660k: actual (ingerido) vs objetivo ──
+        ingerido_by_source = {
+            r["source"]: r["n"]
+            for r in conn.execute(
+                "SELECT source, COUNT(*) AS n FROM catalog GROUP BY source"
+            ).fetchall()
+        }
+        mapeo_660k = []
+        for key, meta in _FUENTES_660K.items():
+            actual = ingerido_by_source.get(key, 0)
+            objetivo = meta["objetivo"]
+            mapeo_660k.append({
+                "fuente": key,
+                "nombre": meta["nombre"],
+                "actual": actual,
+                "objetivo": objetivo,
+                "faltante": max(objetivo - actual, 0),
+                "pct_objetivo": round(actual / objetivo * 100, 2) if objetivo else 0.0,
+            })
+        mapeo_660k.sort(key=lambda x: x["objetivo"], reverse=True)
+
+        # ── Calidad: parsed.json con 0 articles Y 0 raw_text (corpus vacío) ──
+        # Escanear 139k+ JSONs en cada poll de 10s es inviable. Estrategia:
+        #   · Un parsed.json "vacío" (0 articles Y 0 raw_text) serializa a <2KB
+        #     (verificado empíricamente: ~90% de los <2KB son vacíos reales y
+        #      <0.4% de los ≥2KB lo son). Así que solo abrimos los candidatos
+        #      pequeños y aplicamos la verificación ground-truth ahí; los demás
+        #      cuentan para el denominador (total parseados) vía stat rápido.
+        #   · El recuento se cachea en memoria 5 min porque los vacíos no cambian
+        #     segundo a segundo —solo cuando corre el scraper/reparser.
+        vacios = 0
+        revisados = 0
+        cache = _MONITOR_CALIDAD_CACHE
+        now_ts = time.time()
+        if cache.get("ts") and (now_ts - cache["ts"]) < 300:
+            vacios = cache["vacios"]
+            revisados = cache["revisados"]
+        else:
+            try:
+                for src_dir in RAW_DIR.iterdir():
+                    if not src_dir.is_dir():
+                        continue
+                    for parsed_path in src_dir.rglob("parsed.json"):
+                        revisados += 1
+                        try:
+                            if parsed_path.stat().st_size >= 2048:
+                                continue  # casi seguro tiene contenido
+                            d = json.loads(
+                                parsed_path.read_text(encoding="utf-8")
+                            )
+                            n_art = len(d.get("articles", []) or [])
+                            raw_len = len(d.get("raw_text", "") or "")
+                            if n_art == 0 and raw_len == 0:
+                                vacios += 1
+                        except Exception:
+                            vacios += 1  # corrupto = inservible, contamos como vacío
+                cache["vacios"] = vacios
+                cache["revisados"] = revisados
+                cache["ts"] = now_ts
+            except FileNotFoundError:
+                log.warning("RAW_DIR no existe: %s", RAW_DIR)
+        pct_vacios = round(vacios / revisados * 100, 2) if revisados else 0.0
+
+        # ── Recursos VM ──
+        vm = _vm_resources()
+
+        return {
+            "catalog": {
+                "total_docs": total_docs,
+                "done": done,
+                "pending": pending,
+                "error": error,
+                "by_source": catalog_by_source,
+                "by_tipo": catalog_by_tipo,
+            },
+            "progress": {
+                "pct_scrapeado": pct,
+                "rate_per_min": round(rate_per_min, 2),
+                "rate_window_min": rate_window_min,
+                "recent_done": recent,
+                "remaining": remaining,
+                "eta_seconds": eta_seconds,
+            },
+            "qdrant": qdrant,
+            "neo4j": neo4j_stats,
+            "mapeo_660k": {
+                "fuentes": mapeo_660k,
+                "objetivo_total": sum(m["objetivo"] for m in _FUENTES_660K.values()),
+                "actual_total": sum(m["actual"] for m in mapeo_660k),
+            },
+            "calidad": {
+                "parsed_revisados": revisados,
+                "vacios": vacios,
+                "pct_vacios": pct_vacios,
+            },
+            "vm": vm,
+            "generated_at": conn.execute("SELECT datetime('now')").fetchone()[0],
+        }
+    finally:
+        conn.close()
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -962,3 +1348,70 @@ def get_jurimetria(
         corte=corte, materia=materia, magistrado=magistrado,
         anio_desde=anio_desde, anio_hasta=anio_hasta, tipo=tipo, top=top,
     )
+
+
+@app.get("/api/graph/hierarchy", tags=["graph"])
+def get_hierarchy_graph(limit: int = Query(500, ge=10, le=5000)):
+    """Grafo jerárquico: Constitución → Tratados → Leyes → Decretos → Actos admin → Jurisprudencia → Territorial."""
+    cypher = (
+        "MATCH (n) WHERE n.nivel_jerarquico IS NOT NULL "
+        "WITH n ORDER BY n.nivel_jerarquico, n.tipo LIMIT $limit "
+        "RETURN collect({"
+        "id: n.id, tipo: n.tipo, numero: n.numero, anio: n.anio, "
+        "nivel: n.nivel_jerarquico, rama: n.rama_poder, suin_id: n.suin_id, "
+        "name: coalesce(n.tipo,'') + ' ' + coalesce(n.numero,'') + ' de ' + coalesce(n.anio,'')"
+        "}) AS nodes"
+    )
+    nodes = []
+    if neo4j_driver:
+        with neo4j_driver.session() as session:
+            for r in session.run(cypher, limit=limit):
+                nodes = r["nodes"]
+                break
+
+    # Counts reales por nivel (sin limit)
+    counts_by_level = {}
+    rama_counts = {}
+    if neo4j_driver:
+        with neo4j_driver.session() as session:
+            for r in session.run(
+                "MATCH (n) WHERE n.nivel_jerarquico IS NOT NULL "
+                "RETURN n.nivel_jerarquico AS nivel, count(*) AS c ORDER BY nivel"
+            ):
+                counts_by_level[r["nivel"]] = r["c"]
+            # Counts por rama
+            rama_counts = {}
+            for r in session.run(
+                "MATCH (n) WHERE n.rama_poder IS NOT NULL AND n.nivel_jerarquico IS NOT NULL "
+                "RETURN n.rama_poder AS rama, count(*) AS c ORDER BY c DESC"
+            ):
+                rama_counts[r["rama"]] = r["c"]
+    nivel_info = {
+        1: {"nombre": "Constitución", "color": "#1a237e", "descripcion": "Constitución Política y Actos Legislativos"},
+        2: {"nombre": "Bloque Constitucional", "color": "#283593", "descripcion": "Tratados Internacionales de DDHH"},
+        3: {"nombre": "Leyes", "color": "#1565c0", "descripcion": "Leyes, Leyes Estatutarias y Orgánicas"},
+        4: {"nombre": "Decretos", "color": "#0277bd", "descripcion": "Decretos reglamentarios y ley"},
+        5: {"nombre": "Actos Administrativos", "color": "#00838f", "descripcion": "Resoluciones, Conceptos, Circulares"},
+        6: {"nombre": "Jurisprudencia", "color": "#2e7d32", "descripcion": "Sentencias de Altas Cortes"},
+        7: {"nombre": "Normativa Territorial", "color": "#558b2f", "descripcion": "Acuerdos y ordenanzas territoriales"},
+    }
+
+    # Niveles para la visualización
+    niveles = [
+        {"nivel": k, "nombre": v["nombre"], "color": v["color"],
+         "descripcion": v["descripcion"], "count": counts_by_level.get(k, 0)}
+        for k, v in sorted(nivel_info.items())
+    ]
+
+    # Relaciones jerárquicas (conexiones entre niveles)
+    links = []
+    for i in range(1, 7):
+        links.append({"source_nivel": i, "target_nivel": i + 1, "type": "jerarquia"})
+
+    return {
+        "niveles": niveles,
+        "nodes": nodes,
+        "links_jerarquia": links,
+        "total_nodos": len(nodes),
+        "rama_poder": rama_counts,
+    }

@@ -364,16 +364,24 @@ class Database:
         self.conn.commit()
 
     def update_scrape_status(
-        self, suin_id: str, status: str, suin_vigencia: str | None = None
+        self,
+        suin_id: str,
+        status: str,
+        suin_vigencia: str | None = None,
+        note: str | None = None,
     ) -> None:
         # Cada fallo incrementa scrape_attempts → permite reintentar con tope.
+        # ``note`` registra la CAUSA del fallo (http_404, parse_error, empty_text…)
+        # en resolve_note para que la taxonomía de errores sea consultable por SQL
+        # sin re-probar las URLs. Solo se escribe si se provee.
         self.conn.execute(
             """UPDATE catalog
                SET scrape_status = ?, suin_vigencia = ?,
+                   resolve_note = COALESCE(?, resolve_note),
                    scrape_attempts = scrape_attempts + (CASE WHEN ? = 'error' THEN 1 ELSE 0 END),
                    updated_at = CURRENT_TIMESTAMP
                WHERE suin_id = ?""",
-            (status, suin_vigencia, status, suin_id),
+            (status, suin_vigencia, note, status, suin_id),
         )
         # Check vigencia discrepancy
         if suin_vigencia:

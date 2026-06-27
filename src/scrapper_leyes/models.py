@@ -71,6 +71,7 @@ def build_canonical_id(
     sala: str | None = None,
     art: str | None = None,
     par: str | None = None,
+    entidad: str | None = None,
 ) -> str:
     """Build a canonical ID string.
 
@@ -82,11 +83,18 @@ def build_canonical_id(
         sala: Sala/Seccion code (e.g. "plena", "sec1")
         art: Article reference (e.g. "1", "5a", "trans:1")
         par: Paragraph number (e.g. "2")
+        entidad: Issuing entity (e.g. "CREG", "MINISTERIO DE JUSTICIA").
+            When present, included to disambiguate normas that share tipo/numero/año
+            but come from different entities (common with RESOLUCION, ACUERDO, CIRCULAR).
     """
     tipo_norm = TIPO_CANONICAL.get(tipo, tipo.lower().replace(" ", "_"))
     
     if corte and sala:
         cid = f"co:{tipo_norm}:{corte.lower()}:{sala.lower()}:{numero.lower()}:{anio}"
+    elif entidad:
+        # Normalizar entidad: quitar acentos, espacios→_, mayúsculas
+        ent_norm = entidad.upper().strip()
+        cid = f"co:{tipo_norm}:{numero.lower()}:{anio}:{ent_norm}"
     else:
         cid = f"co:{tipo_norm}:{numero.lower()}:{anio}"
         
@@ -127,12 +135,39 @@ def parse_canonical_id(cid: str) -> dict[str, str | None] | None:
 _ART_NUM_RE = re.compile(
     r"Art[ií]culo\s+"
     r"(?:(?P<trans>Transitorio)\s+)?"
-    r"(?P<num>\d+)"
+    r"(?P<num>\d+|[IVXLCDM]+)"
     r"(?:[°ºo]\.)?"  # ordinal markers (°, º, o) followed by period
     r"(?P<letter>[A-NP-Za-np-z])?"  # letter suffix (excluding 'o'/'O' which is ordinal)
     r"[.]?",
     re.IGNORECASE,
 )
+
+# Mapa de números romanos a arábigos para normalización
+_ROMAN_MAP = {
+    "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7,
+    "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13,
+    "XIV": 14, "XV": 15, "XVI": 16, "XVII": 17, "XVIII": 18, "XIX": 19,
+    "XX": 20, "XXI": 21, "XXII": 22, "XXIII": 23, "XXIV": 24, "XXV": 25,
+    "XXVI": 26, "XXVII": 27, "XXVIII": 28, "XXIX": 29, "XXX": 30,
+}
+
+
+def _roman_to_int(roman: str) -> int | None:
+    """Convierte números romanos (I-XXX) a enteros."""
+    roman_upper = roman.upper()
+    if roman_upper in _ROMAN_MAP:
+        return _ROMAN_MAP[roman_upper]
+    # Intentar conversión manual para números más grandes
+    vals = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+    result = 0
+    prev = 0
+    for c in reversed(roman_upper):
+        if c not in vals:
+            return None
+        cur = vals[c]
+        result += cur if cur >= prev else -cur
+        prev = cur
+    return result if result > 0 else None
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -169,11 +204,19 @@ def normalize_article_number(raw_text: str) -> str | None:
     """Extract normalized article ref from raw text like 'Artículo 5°.'
 
     Returns strings like: '5', '5a', 'trans:1'
+    Soporta números romanos (I, II, III...) → los convierte a arábigos.
     """
     m = _ART_NUM_RE.search(raw_text)
     if not m:
         return None
     num = m.group("num")
+    # Convertir números romanos a arábigos
+    if num and not num.isdigit():
+        roman_int = _roman_to_int(num)
+        if roman_int is not None:
+            num = str(roman_int)
+        else:
+            return None
     letter = (m.group("letter") or "").lower()
     if m.group("trans"):
         return f"trans:{num}"

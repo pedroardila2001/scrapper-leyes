@@ -74,42 +74,12 @@ class SuinIndexer(BaseIndexer):
                 
         return stats
 
-    def _resolve_ids_from_clp_for_tipo(self, tipo: str, rows: list[dict[str, Any]]) -> dict[str, int]:
-        """Scrape the CLP listing to build (tipo, numero, anio) → suin_id mapping."""
-        ruta = TIPO_TO_RUTA.get(tipo)
-        if not ruta:
-            logger.warning(f"No CLP ruta mapping for tipo={tipo}")
-            return {"resolved": 0, "ambiguous": 0, "not_found": 0, "error": 0}
-
-        stats = {"resolved": 0, "ambiguous": 0, "not_found": 0, "error": 0}
-        clp_url = (
-            f"{self.settings.suin_base_url}/clp/contenidos.dll/{ruta}"
-            f"?f=templates$fn=contents-frame-h.htm$3.0"
-            f"&sel=0&tf=main&tt=document-frameset.htm"
-            f"&t=contents-frame-h.htm&och=onClick"
-        )
-
-        logger.info(f"Fetching CLP listing for {tipo} from {clp_url}")
-
-        with httpx.Client(
-            headers={"User-Agent": self.settings.suin_user_agent},
-            timeout=60.0,
-            follow_redirects=True,
-            verify=False,
-        ) as client:
-            try:
-                resp = client.get(clp_url)
-                resp.raise_for_status()
-            except httpx.HTTPError as e:
-                logger.error(f"Failed to fetch CLP listing: {e}")
-                stats["error"] = len(rows)
-                return stats
-
-        html = resp.text
-        clp_index: dict[tuple[str, str], list[str]] = {}
-
+    def _parse_clp_page(self, html: str, ruta: str,
+                        clp_index: dict[tuple[str, str], list[str]]) -> int:
+        """Parse a single CLP listing page into the index. Returns new entries added."""
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html, "lxml")
+        added = 0
         for a_tag in soup.find_all("a", href=re.compile(r"/clp/contenidos\.dll/")):
             href = a_tag.get("href", "")
             label = a_tag.get_text(strip=True)
@@ -139,8 +109,76 @@ class SuinIndexer(BaseIndexer):
                 clp_index[key] = []
             if suin_id not in clp_index[key]:
                 clp_index[key].append(suin_id)
+                added += 1
+        return added
 
-        logger.info(f"CLP listing parsed: {len(clp_index)} unique (numero, anio) entries")
+    def _resolve_ids_from_clp_for_tipo(self, tipo: str, rows: list[dict[str, Any]]) -> dict[str, int]:
+        """Scrape the CLP listing to build (tipo, numero, anio) → suin_id mapping."""
+        ruta = TIPO_TO_RUTA.get(tipo)
+        if not ruta:
+            logger.warning(f"No CLP ruta mapping for tipo={tipo}")
+            return {"resolved": 0, "ambiguous": 0, "not_found": 0, "error": 0}
+
+        stats = {"resolved": 0, "ambiguous": 0, "not_found": 0, "error": 0}
+        clp_url = (
+            f"{self.settings.suin_base_url}/clp/contenidos.dll/{ruta}"
+            f"?f=templates$fn=contents-frame-h.htm$3.0"
+            f"&sel=0&tf=main&tt=document-frameset.htm"
+            f"&t=contents-frame-h.htm&och=onClick"
+        )
+
+        clp_index: dict[tuple[str, str], list[str]] = {}
+
+        # El CLP listing (Ciclope) devuelve 100 entradas por página e incluye
+        # un JavaScript con la URL de la siguiente página:
+        #   var next_toc_page_url = '/clp/.../start={last_id}$3.0'
+        # Seguimos esa cadena hasta agotar el listado completo del tipo.
+        max_pages = 2000  # safety limit (~200k entries per tipo)
+        total_pages_fetched = 0
+
+        with httpx.Client(
+            headers={"User-Agent": self.settings.suin_user_agent},
+            timeout=60.0,
+            follow_redirects=True,
+            verify=False,
+        ) as client:
+            current_url = clp_url
+            for page in range(max_pages):
+                logger.info(f"Fetching CLP listing for {tipo} page {page + 1}")
+
+                try:
+                    resp = client.get(current_url)
+                    resp.raise_for_status()
+                except httpx.HTTPError as e:
+                    logger.warning(f"CLP page {page + 1} for {tipo} failed: {e}")
+                    break
+
+                page_ids_before = len(clp_index)
+                self._parse_clp_page(resp.text, ruta, clp_index)
+
+                # Buscar la URL de la siguiente página embebida en el JS.
+                m_next = re.search(
+                    r"next_toc_page_url\s*=\s*'([^']+)'", resp.text
+                )
+                next_url = m_next.group(1) if m_next else None
+
+                # Si la página no trajo IDs nuevos Y no hay siguiente página, fin.
+                if not next_url:
+                    logger.info(f"CLP listing for {tipo} exhausted at page {page + 1} "
+                                f"({len(clp_index)} entries total)")
+                    break
+
+                # Si la página no trajo nada nuevo pero hay next_url, algo anda mal.
+                if len(clp_index) == page_ids_before:
+                    logger.warning(f"CLP page {page + 1} for {tipo} returned 0 new IDs "
+                                   f"but has next_url — stopping to avoid loop")
+                    break
+
+                current_url = self.settings.suin_base_url + next_url
+                total_pages_fetched += 1
+
+        logger.info(f"CLP listing parsed for {tipo}: {len(clp_index)} unique (numero, anio) entries "
+                    f"from {total_pages_fetched} pages")
 
         for row in rows:
             numero = row.get("numero")

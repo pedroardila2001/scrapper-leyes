@@ -247,16 +247,55 @@ _SPECS: list[SourceSpec] = [
     ),
     SourceSpec(
         key="superintendencias", nombre="Superintendencias (Financiera, Sociedades, SIC, Salud, SSPD)",
-        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_ANDAMIAJE, prioridad="media",
-        tipos=("circular_externa", "concepto"),
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media",
+        tipos=("circular_externa", "concepto", "resolucion"),
         rama="Rama Ejecutiva", cabeza="Superintendencias",
-        spike="ANDAMIAJE (la genuinamente difícil). Recon en vivo 2026-06-19: SIC "
-              "(repositorio-de-normatividad) es Drupal con Views por AJAX → los documentos NO "
-              "están en el HTML estático (un GET da solo la landing); hay que llamar al endpoint "
-              "Views/facetas (field_tipo_de_norma_value). Superfinanciera (loader.jsf) responde "
-              "302/redirección de sesión + WAF en rutas de documento → requiere Playwright con "
-              "sesión. Los parsers _parse_sic/_parse_financiera están listos para el fragmento "
-              "correcto; falta el acceso al endpoint real. Prioridad media (circulares externas).",
+        spike="PARCIAL tras recon 2026-06-26. Desglose por entidad: "
+              "• SSPD (Superservicios) RESUELTO: corre Normograma Avance Jurídico estático "
+              "(normograma.info/sspd2024/compilacion/) → BFS httpx funciona "
+              "(docs/<tipo>_superservicios_<num>_<año>.htm; 439 conceptos en el índice "
+              "cronológico). Es la vía por defecto del discoverer. "
+              "• Supersalud: Normograma Avance Jurídico PERO el índice cronológico es árbol JS "
+              "→ los docs no salen en HTML estático; falta el endpoint API/Buscar.ashx (no está "
+              "en /buscador/Buscar.ashx) o Playwright. "
+              "• SIC: Drupal Views por AJAX (los docs no están en el HTML estático del "
+              "repositorio-de-normatividad; hay que llamar al endpoint Views/facetas). "
+              "• Superfinanciera: loader.jsf + WAF (uzdbm) → requiere Playwright con sesión. "
+              "• Supersociedades: portal Liferay (conceptos-juridicos), recon pendiente. "
+              "_parse_sic/_parse_financiera listos para el fragmento correcto.",
+        notas="SuperintendenciasDiscoverer cosecha SSPD por defecto (httpx); financiera/sic "
+              "quedan best-effort hasta resolver WAF/AJAX; salud necesita API o Playwright.",
+    ),
+    SourceSpec(
+        key="cce", nombre="Colombia Compra Eficiente — Relatoría ANCP-CCE",
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="alta",
+        tipos=("concepto", "sentencia", "laudo_arbitral", "ley", "decreto"),
+        rama="Rama Ejecutiva", cabeza="Agencia Nacional de Contratación Pública",
+        base_url="https://relatoria.colombiacompra.gov.co",
+        spike="VERIFICADO Y FUNCIONANDO 2026-06-26: la relatoría corre WordPress y "
+              "expone REST público /wp-json/wp/v2/<post_type>. Custom post types: "
+              "conceptos (7.064), providencias (3.117 CE relatadas), normativa (286), "
+              "laudo (52). title/slug = '<TIPO> <num> de <año>' (C-819 de 2026); el "
+              "TEXTO COMPLETO viene embebido en content.rendered (no hay que bajar PDF). "
+              "Paginación ?per_page=100&page=N con X-WP-Total/X-WP-TotalPages. 100% httpx.",
+        notas="Doctrina de contratación estatal. CCEDiscoverer cosecha 'conceptos' por "
+              "defecto; providencias del CE ya tienen su fuente (consejo_estado) → no "
+              "duplicar en ingesta masiva.",
+    ),
+    SourceSpec(
+        key="mintrabajo", nombre="Ministerio del Trabajo — Conceptos institucionales",
+        capa=CAPA_DOCTRINA, modo=MODO_CRAWL, estado=EST_PARCIAL, prioridad="media",
+        tipos=("concepto", "circular"),
+        rama="Rama Ejecutiva", cabeza="Sector Trabajo",
+        base_url="https://www.mintrabajo.gov.co/web/guest/normatividad",
+        spike="VERIFICADO 2026-06-26: MinTrabajo NO corre Normograma Avance Jurídico. "
+              "Doctrina laboral en el portal Liferay como PDFs estáticos (100% httpx): "
+              "/web/guest/normatividad/conceptos-institucionales (~140 conceptos del set "
+              "curado) y /circulares. El número canónico es el RADICADO "
+              "(11EE2020120300000005871; año codificado \\d{2}[A-Z]{2}(20\\d{2})). "
+              "MinTrabajoDiscoverer cosecha el set publicado. LIMITACIÓN: el corpus "
+              "completo (miles) no tiene buscador público enumerable.",
+        notas="🔴 Eje doctrina laboral. Texto = PDF por source_url (docling).",
     ),
     SourceSpec(
         key="funcion_publica", nombre="Función Pública — Gestor Normativo (EVA)",
@@ -343,6 +382,7 @@ VOLUMEN_MEDIDO: dict[str, int] = {
     "creg": 4888,              # BFS Normograma
     "cra": 3323,
     "crc": 2170,
+    "cce": 7064,               # WordPress REST conceptos (relatoria ANCP-CCE)
 }
 
 # Volumen ESTIMADO por fuente cuyo discoverer existe pero aún no se ha corrido un
@@ -360,7 +400,8 @@ VOLUMEN_ESTIMADO: dict[str, int] = {
     "diario_oficial": 53526,   # ediciones (unidad = edición; la nº 53.526 al 2026-06)
     "regimen_bogota": 30000,   # normativa distrital consolidada (orden de magnitud)
     "gaceta_congreso": 8000,   # gacetas/proyectos por legislatura
-    "superintendencias": 10000,  # circulares + conceptos por super
+    "superintendencias": 10000,  # circulares + conceptos por super (SSPD ~500+ medible)
+    "mintrabajo": 140,           # set curado de conceptos institucionales (httpx)
 }
 
 

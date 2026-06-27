@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import ForceGraph2D from "react-force-graph-2d";
 import { ArrowLeft } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = "";
 
 /** Measure a container so ForceGraph2D gets an explicit width/height
  *  (it renders a blank canvas otherwise). */
@@ -107,7 +107,25 @@ export default function DocumentView() {
           </div>
         </div>
         <div className="panel-content markdown-body">
-          <ReactMarkdown>{rawText}</ReactMarkdown>
+          {catalog.scrape_status && catalog.scrape_status !== "done" ? (
+            <div style={{ textAlign: "center", padding: "3rem 1rem", color: "var(--text-muted)" }}>
+              <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>⏳</div>
+              <h3 style={{ marginBottom: "0.5rem" }}>Documento pendiente de descarga</h3>
+              <p style={{ fontSize: "0.9rem", maxWidth: "400px", margin: "0 auto" }}>
+                Este documento está registrado en el catálogo ({catalog.source}) pero aún no se ha descargado su contenido.
+                Su estado actual es: <strong>{catalog.scrape_status}</strong>.
+              </p>
+              {catalog.source_url && (
+                <p style={{ fontSize: "0.8rem", marginTop: "1rem", wordBreak: "break-all" }}>
+                  <a href={catalog.source_url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--blue)" }}>
+                    Ver en fuente original ↗
+                  </a>
+                </p>
+              )}
+            </div>
+          ) : (
+            <ReactMarkdown>{rawText}</ReactMarkdown>
+          )}
         </div>
       </div>
 
@@ -416,10 +434,32 @@ function GraphTab({ data }: { data: any }) {
           linkLabel={(link: any) => link.label}
           linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}
-          linkColor={() => "rgba(60, 70, 81, 0.22)"}
+          linkWidth={1.5}
+          linkColor={(link: any) =>
+            link.label === "SIMILAR_A" ? "rgba(29, 107, 83, 0.2)" : "rgba(60, 70, 81, 0.3)"
+          }
           backgroundColor="#faf9f6"
-          cooldownTicks={80}
-          onEngineStop={() => fgRef.current?.zoomToFit(400, 40)}
+          cooldownTicks={150}
+          warmupTicks={50}
+          enableNodeDrag={true}
+          enableZoomInteraction={true}
+          enablePanInteraction={true}
+          minZoom={0.3}
+          maxZoom={8}
+          onEngineStop={() => {
+            const fg = fgRef.current;
+            if (fg && !fg._subInit) {
+              fg._subInit = true;
+              // Más repulsión para separar los nodos y aprovechar el espacio
+              fg.d3Force("charge").strength(-200);
+              fg.d3Force("link").distance((l: any) =>
+                l.label === "SIMILAR_A" ? 60 : 100
+              );
+              fg.d3Force("center").strength(0.05);
+              fg.d3ReheatSimulation();
+              setTimeout(() => fg.zoomToFit(400, 60), 600);
+            }
+          }}
         />
       )}
     </div>

@@ -122,7 +122,7 @@ class UrlScraper(BaseScraper):
         tipo = row["tipo"]
         url = row.get("source_url")
         if not url:
-            self.db.update_scrape_status(ext, "error")
+            self.db.update_scrape_status(ext, "error", note="no_source_url")
             return "error"
 
         if self.cache.has_content(source, tipo, ext):
@@ -134,12 +134,14 @@ class UrlScraper(BaseScraper):
                     await asyncio.sleep(1.0 / self._rps)
                 resp = await client.get(url)
             if resp.status_code == 404:
-                self.db.update_scrape_status(ext, "error")
+                self.db.update_scrape_status(ext, "error", note="http_404")
                 return "not_found"
             resp.raise_for_status()
         except Exception as e:
             logger.warning("fetch %s (%s): %s", ext, source, str(e)[:160])
-            self.db.update_scrape_status(ext, "error")
+            self.db.update_scrape_status(
+                ext, "error", note=f"fetch_error:{type(e).__name__}"
+            )
             return "error"
 
         content = resp.content
@@ -149,11 +151,13 @@ class UrlScraper(BaseScraper):
             text = await asyncio.to_thread(self._extract, content, content_type, url)
         except Exception as e:
             logger.warning("parse %s (%s): %s", ext, source, str(e)[:160])
-            self.db.update_scrape_status(ext, "error")
+            self.db.update_scrape_status(
+                ext, "error", note=f"parse_error:{type(e).__name__}"
+            )
             return "error"
 
         if not text or not text.strip():
-            self.db.update_scrape_status(ext, "error")
+            self.db.update_scrape_status(ext, "error", note="empty_text")
             return "empty"
 
         catalog_match = {

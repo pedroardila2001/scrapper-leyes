@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = "http://localhost:8000";
+const API = "";
 
 function fmt(n: number | null | undefined) {
   if (n == null) return "—";

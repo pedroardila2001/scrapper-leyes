@@ -139,4 +139,10 @@ class ScraperFactory:
         if source == "superintendencias":
             from scrapper_leyes.scraper.superintendencias_discoverer import SuperintendenciasDiscoverer
             return SuperintendenciasDiscoverer()
+        if source == "cce":
+            from scrapper_leyes.scraper.cce_discoverer import CCEDiscoverer
+            return CCEDiscoverer()
+        if source == "mintrabajo":
+            from scrapper_leyes.scraper.mintrabajo_discoverer import MinTrabajoDiscoverer
+            return MinTrabajoDiscoverer()
         raise self._no_conector(source, "discoverer")

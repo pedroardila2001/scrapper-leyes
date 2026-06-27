@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = "http://localhost:8000";
+const API = "";
 
 const ESTADO_STYLE: Record<string, { bg: string; fg: string; label: string }> = {
   operativo: { bg: "#dcfce7", fg: "#166534", label: "operativo" },

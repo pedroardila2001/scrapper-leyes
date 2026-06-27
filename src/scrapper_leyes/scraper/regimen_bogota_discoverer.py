@@ -100,7 +100,7 @@ class RegimenBogotaDiscoverer(BaseDiscoverer):
     def __init__(
         self,
         id_inicio: int = 1,
-        id_fin: int = 200,
+        id_fin: int = 189000,
         concurrency: int = 4,
         tipos: tuple[str, ...] = ("DECRETO", "ACUERDO", "RESOLUCION"),
     ):

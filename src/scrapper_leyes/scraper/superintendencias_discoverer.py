@@ -34,16 +34,33 @@ import logging
 import re
 from datetime import date
 from typing import Any, Iterator
+from urllib.parse import urljoin, urlparse
 
 import httpx
 
 from scrapper_leyes.models import build_canonical_id
 from scrapper_leyes.scraper.base import BaseDiscoverer, CatalogSeed
+from scrapper_leyes.scraper.normograma_discoverer import (
+    _DOC_RE as _NG_DOC_RE,
+    _DOCNAME_RE as _NG_DOCNAME_RE,
+    _IDX_RE as _NG_IDX_RE,
+    _TIPO_MAP as _NG_TIPO_MAP,
+)
 
 logger = logging.getLogger(__name__)
 
 _FIN_BASE = "https://www.superfinanciera.gov.co"
 _SIC_BASE = "https://www.sic.gov.co"
+# SSPD (Superservicios) corre Normograma Avance Jurídico (mismo motor que SUIN/DIAN):
+# documentos estáticos docs/<tipo>_superservicios_<num>_<año>.htm descubiertos por
+# BFS sobre los índices cronológicos. Verificado en vivo 2026-06-26 (439 conceptos
+# en el índice cronológico de conceptos).
+_SSPD_BASE = "https://normograma.info/sspd2024/compilacion/"
+_SSPD_SEEDS = [
+    "c-dcsdspd_superintendencia_servicios_publicos_domiciliarios_conceptos_orden_cronologico.html",
+    "c-dcsdspd_superintendencia_servicios_publicos_domiciliarios_resoluciones_orden_cronologico.html",
+    "c-dcsdspd_superintendencia_servicios_publicos_domiciliarios_circulares_orden_cronologico.html",
+]
 # Facetas del repositorio SIC (field_tipo_de_norma_value): 5 = circulares externas.
 _SIC_REPO = _SIC_BASE + "/repositorio-de-normatividad?field_tipo_de_norma_value=5"
 _FIN_LOADER = (
@@ -66,7 +83,9 @@ _TIPO_MAP = {
     "resolución": "RESOLUCION",
 }
 
-_ENTIDAD_LABEL = {"financiera": "SUPERFINANCIERA", "sic": "SIC"}
+_ENTIDAD_LABEL = {
+    "financiera": "SUPERFINANCIERA", "sic": "SIC", "sspd": "SSPD",
+}
 
 
 def _norm_tipo(raw: str) -> str:
@@ -81,7 +100,7 @@ class SuperintendenciasDiscoverer(BaseDiscoverer):
         entidades: subconjunto de ("financiera", "sic").
     """
 
-    def __init__(self, entidades: tuple[str, ...] = ("financiera", "sic")):
+    def __init__(self, entidades: tuple[str, ...] = ("sspd", "sic", "financiera")):
         unknown = set(entidades) - set(_ENTIDAD_LABEL)
         if unknown:
             raise ValueError(
@@ -152,6 +171,68 @@ class SuperintendenciasDiscoverer(BaseDiscoverer):
             )
         return seeds
 
+    # ── SSPD (Superservicios): BFS Normograma estático ──────────────────────
+    def _seed_from_sspd_doc(self, url: str) -> CatalogSeed | None:
+        name = url.rsplit("/", 1)[-1]
+        m = _NG_DOCNAME_RE.search(name)
+        if not m:
+            return None
+        tipo_raw, _ent, numero, anio = m.group(1).lower(), m.group(2), m.group(3), m.group(4)
+        if not (1900 <= int(anio) <= 2030):
+            return None
+        tipo = _NG_TIPO_MAP.get(tipo_raw, tipo_raw.upper().replace("_", " "))
+        # external_id = slug de la URL (host+path con "/"→"_"), igual que el
+        # NormogramaDiscoverer de creg/cra/dian; sin esto UrlIndexer marca
+        # "error: sin external_id" y la fila nunca se baja (url_scraper.py:62).
+        return self._make_seed(
+            "sspd", tipo, numero, anio, source_url=url,
+            external_id=url.split("://", 1)[-1].replace("/", "_"),
+        )
+
+    async def _crawl_sspd(self, client: httpx.AsyncClient, max_pages: int = 60) -> list[CatalogSeed]:
+        """BFS acotado sobre el Normograma de la SSPD (mismo motor que SUIN/DIAN)."""
+        base_host = urlparse(_SSPD_BASE).netloc
+        seen_idx: set[str] = set()
+        found: dict[str, CatalogSeed] = {}
+        queue: list[str] = []
+        for s in _SSPD_SEEDS:
+            u = urljoin(_SSPD_BASE, s)
+            seen_idx.add(u)
+            queue.append(u)
+        pages = 0
+        while queue and pages < max_pages:
+            url = queue.pop(0)
+            pages += 1
+            try:
+                r = await client.get(url)
+                if r.status_code != 200:
+                    continue
+                html = r.text
+            except Exception as e:
+                logger.debug("[superintendencias] SSPD idx fail %s: %s", url, e)
+                continue
+            for m in _NG_DOC_RE.finditer(html):
+                doc = urljoin(url, m.group(1))
+                if doc in found:
+                    continue
+                seed = self._seed_from_sspd_doc(doc)
+                if seed:
+                    found[doc] = seed
+            for m in _NG_IDX_RE.finditer(html):
+                nxt = urljoin(url, m.group(1))
+                if (
+                    nxt not in seen_idx
+                    and urlparse(nxt).netloc == base_host
+                    and nxt.startswith(_SSPD_BASE)
+                    and "docs/" not in nxt
+                ):
+                    seen_idx.add(nxt)
+                    queue.append(nxt)
+        logger.info(
+            "[superintendencias] SSPD: %d índices, %d documentos", pages, len(found)
+        )
+        return list(found.values())
+
     # ── helper ───────────────────────────────────────────────────────────────
     def _make_seed(
         self,
@@ -188,6 +269,11 @@ class SuperintendenciasDiscoverer(BaseDiscoverer):
             follow_redirects=True,
             verify=False,
         ) as client:
+            if "sspd" in self.entidades:
+                try:
+                    found.extend(await self._crawl_sspd(client))
+                except Exception as e:
+                    logger.warning("[superintendencias] SSPD no accesible: %s", e)
             if "sic" in self.entidades:
                 try:
                     r = await client.get(_SIC_REPO)

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = "";
 const PAGE_SIZE = 30;
 
 interface CatalogItem {

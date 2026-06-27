@@ -246,16 +246,34 @@ def _extract_articles(
         if not text_content or len(text_content.strip()) < 10:
             continue
 
-        # Extract article number from the <strong> tag
+        # Extract article number from the <strong> tag (formato moderno SUIN)
+        # o fallback: buscar "Artículo N" en el texto del toggle (formato viejo).
         strong = toggle_div.find("strong")
-        if not strong:
-            continue
-        strong_text = strong.get_text(strip=True)
+        strong_text = strong.get_text(strip=True) if strong else ""
 
         # Only process actual articles (not titles/divisions)
         art_num_norm = normalize_article_number(strong_text)
         if art_num_norm is None:
-            continue
+            # Fallback: parsear el número del texto del toggle div.
+            # Formato viejo SUIN: "Artículo 1. ..." o "Artículo 1º. ..." en <p>.
+            full_text = toggle_div.get_text(separator=" ", strip=True)
+            m_art = re.match(
+                r"^\s*Art[ií]culo\s+(?:Transitorio\s+)?(\d+|[IVXLCDM]+)",
+                full_text,
+                re.IGNORECASE,
+            )
+            if m_art:
+                art_num_raw = m_art.group(1)
+                if not art_num_raw.isdigit():
+                    from scrapper_leyes.models import _roman_to_int
+                    ri = _roman_to_int(art_num_raw)
+                    art_num_norm = str(ri) if ri is not None else None
+                else:
+                    art_num_norm = art_num_raw
+                if art_num_norm is None:
+                    continue
+            else:
+                continue
 
         # Record the art_id → number mapping for EVERY anchor (kept or not).
         art_id_to_number[art_id] = art_num_norm

@@ -110,8 +110,11 @@ class EVADiscoverer(BaseDiscoverer):
 
     SOURCE = "funcion_publica"
 
-    def __init__(self, max_pages: int = 12, follow_index_links: bool = True):
-        self.max_pages = max_pages
+    def __init__(self, max_pages: int | None = None, follow_index_links: bool = True):
+        # max_pages=None → sin límite (barrido completo del índice EVA).
+        # El default histórico era 12 (cortesía); para sembrar todo el corpus
+        # se debe pasar None o un número grande.
+        self.max_pages = max_pages if max_pages is not None else 5000
         self.follow_index_links = follow_index_links
 
     # ── parsing puro (offline) ──────────────────────────────────────────

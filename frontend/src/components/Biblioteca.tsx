@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, Search, Building2, Landmark, Scale } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = "";
 
 interface Entidad { nombre: string; key: string; total: number; }
 interface Cabeza { nombre: string; total: number; entidades: Entidad[]; }

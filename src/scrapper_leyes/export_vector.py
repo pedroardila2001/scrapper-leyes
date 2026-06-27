@@ -199,12 +199,29 @@ class VectorStoreExporter:
         self.ensure_collection(recreate=recreate)
         total = 0
         for batch in _batched(self.iter_chunks(tipo), _BATCH):
+            if not recreate:
+                chunk_ids = [c.uid for c in batch]
+                try:
+                    existing = self.client.retrieve(
+                        collection_name=self.collection_name,
+                        ids=chunk_ids,
+                        with_payload=False,
+                        with_vectors=False
+                    )
+                    existing_ids = {p.id for p in existing}
+                    batch = [c for c in batch if c.uid not in existing_ids]
+                except Exception as e:
+                    logger.warning("Failed to check existing ids: %s", e)
+            
+            if not batch:
+                continue
+                
             points = self._points_for(batch)
             if points:
                 self.client.upsert(collection_name=self.collection_name, points=points)
                 total += len(points)
                 logger.info("Upserted %d chunks (running total: %d)", len(points), total)
-        logger.info("Done. %d chunks in '%s'.", total, self.collection_name)
+        logger.info("Done. %d new chunks in '%s'.", total, self.collection_name)
         return total
 
 

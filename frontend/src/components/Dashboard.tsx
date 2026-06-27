@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BookOpen, Scale, Database, FileCheck } from "lucide-react";
 
-const API = "http://localhost:8000";
+const API = "";
 
 interface Stats {
   total_norms: number;

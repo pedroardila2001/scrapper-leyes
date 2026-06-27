@@ -24,3 +24,6 @@ venv/
 frontend/node_modules/
 frontend/dist/
 *.tgz
+
+# Datos de runtime (catalog.db, raw/, parsed.json) - grandes y cambian en vivo
+data/

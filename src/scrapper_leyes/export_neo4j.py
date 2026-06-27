@@ -532,10 +532,15 @@ class Neo4jExporter:
             )
 
         logger.info(
-            "Computando aristas de similitud (kNN Qdrant) para %d nodos (%s)...",
-            len(items), self.settings.embedding_model_dense,
+            "Computando aristas de similitud (kNN Qdrant) para %d nodos (backend=%s)...",
+            len(items), self.settings.embedding_backend,
         )
-        model = TextEmbedding(self.settings.embedding_model_dense)
+
+        # Usar el mismo backend dense que export_vector/search (fastembed local O
+        # OpenAI-compatible API como Qwen3-Embedding-4B en el túnel). Esto evita
+        # correr jina-embeddings en CPU que es extremadamente lento.
+        from scrapper_leyes.embeddings import get_dense_embedder
+        model = get_dense_embedder(self.settings)
 
         # Colección auxiliar de "representantes de documento" (1 vector por norma).
         rep_coll = f"{self.settings.qdrant_collection}__docreps"
@@ -547,7 +552,7 @@ class Neo4jExporter:
         BATCH = 256
         for start in range(0, len(items), BATCH):
             chunk = items[start:start + BATCH]
-            vecs = list(model.embed([t for _, t in chunk]))
+            vecs = model.embed_documents([t for _, t in chunk])
             if first:
                 size = len(vecs[0])
                 if client.collection_exists(rep_coll):

@@ -307,7 +307,17 @@ class LegalMapper:
 
         try:
             result = self.converter.convert(tmp_path)
-            return result.document.export_to_markdown()
+            md = result.document.export_to_markdown()
+            # Si Docling devuelve texto muy corto, probablemente falló silenciosamente
+            # (p.ej. sentencias viejas con encoding latin-1 o HTML malformado).
+            # Caer al fallback que es más robusto para estos casos.
+            if not md or len(md.strip()) < 200:
+                logger.warning(
+                    "Docling returned thin content for %s (%d chars), using fallback",
+                    source_id, len(md or ""),
+                )
+                return self._convert_fallback(html_content, source_id)
+            return md
         except Exception as e:
             logger.error(f"Docling conversion failed for {source_id}: {e}")
             return self._convert_fallback(html_content, source_id)
@@ -319,25 +329,59 @@ class LegalMapper:
         """Basic HTML to text extraction when Docling is not available."""
         try:
             from bs4 import BeautifulSoup
-            text = html_content.decode("utf-8", errors="replace")
+
+            # Detectar encoding: intentamos utf-8 primero, luego latin-1
+            # (sentencias viejas de la CC usan latin-1/iso-8859-1).
+            text = None
+            for enc in ("utf-8", "latin-1", "iso-8859-1", "cp1252"):
+                try:
+                    text = html_content.decode(enc)
+                    # Si decode no falla pero hay muchos reemplazos, probar otro
+                    if "\ufffd" not in text[:2000] or enc == "cp1252":
+                        break
+                except (UnicodeDecodeError, ValueError):
+                    continue
+            if text is None:
+                text = html_content.decode("utf-8", errors="replace")
+
             soup = BeautifulSoup(text, "html.parser")
 
-            # Remove scripts and styles
-            for tag in soup.find_all(["script", "style"]):
+            # Remove scripts, styles, y elementos de navegación
+            for tag in soup.find_all(["script", "style", "nav", "noscript"]):
                 tag.decompose()
 
             # Get text with some structure preserved
             lines = []
-            for elem in soup.find_all(["h1", "h2", "h3", "h4", "p", "li", "td"]):
+            # Patrón para detectar headings que NO están en <h*> tags: numeración
+            # romana o numeral seguido de título en mayúsculas
+            # (típico de sentencias viejas: "VI. CONSIDERACIONES Y FUNDAMENTOS")
+            _HEADING_LIKE_RE = re.compile(
+                r"^(?:#{1,6}\s+)?"  # opcional markdown heading
+                r"(?:[IVXLCDM]+|[0-9]+(?:\.[0-9]+)*|[A-Z][\)\.])"  # numeración
+                r"[\.\)\-º°]*\s*"  # separador opcional (. ) - ) espacio
+                r"([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{4,})",  # título en mayúsculas
+                re.UNICODE,
+            )
+            for elem in soup.find_all(["h1", "h2", "h3", "h4", "h5", "p", "li", "td", "div"]):
                 t = elem.get_text(strip=True)
-                if t:
-                    if elem.name.startswith("h"):
+                if t and len(t) > 2:
+                    if elem.name and elem.name.startswith("h"):
                         level = int(elem.name[1])
                         lines.append(f"{'#' * level} {t}")
-                    else:
-                        lines.append(t)
+                    elif elem.name != "div":
+                        # Detectar patrones tipo "VI. CONSIDERACIONES" o "1. ANTECEDENTES"
+                        # que deberían ser headings aunque estén en <p>
+                        m = _HEADING_LIKE_RE.match(t)
+                        if m and len(t) < 80:
+                            lines.append(f"## {t}")
+                        else:
+                            lines.append(t)
 
-            return "\n\n".join(lines) if lines else soup.get_text()
+            result = "\n\n".join(lines) if lines else soup.get_text(separator="\n", strip=True)
+            # Si después de todo no tenemos texto sustancial, devolver el texto crudo
+            if len(result.strip()) < 50:
+                result = soup.get_text(separator="\n", strip=True)
+            return result if result.strip() else None
         except Exception as e:
             logger.error(f"Fallback HTML extraction failed for {source_id}: {e}")
             return None
